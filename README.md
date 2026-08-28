@@ -16,11 +16,18 @@ python3 -m http.server 8000
 ## Structure
 
 ```
-index.html              All markup + the inline SVG icon sprite
-assets/css/style.css    Design tokens, components, responsive rules
-assets/js/main.js       Header, menus, scroll reveal, counters, form
+index.html              Home page
+about-us.html           About page
+assets/css/style.css    Design tokens + everything shared (header, footer, buttons, forms)
+assets/css/about.css    Only what the About page adds; loads after style.css
+assets/js/main.js       Header, menus, scroll reveal, counters, form — drives both pages
 assets/images/          Drop your photography here (see below)
 ```
+
+Both pages share one header, footer and script. The SVG icon sprite is inlined at the top
+of each HTML file — Chrome does not support external `<use href="sprite.svg#id">` references,
+so the sprite is duplicated rather than linked. **Keep the two `<svg class="svg-sprite">`
+blocks identical** when adding an icon.
 
 ## Adding images
 
@@ -37,6 +44,19 @@ is still missing.
 | `quality-lab.jpg` | Quality commitment | 800×600 |
 | `cat-tricycle.jpg` `cat-bicycle.jpg` `cat-motorcycle.jpg` `cat-fourwheeler.jpg` | Category cards | 600×800 (portrait) |
 | `model-m800.jpg` `model-t500.jpg` `model-b200.jpg` `model-q400.jpg` `model-m600.jpg` `model-t300.jpg` | Product cards | 600×400 |
+
+About page:
+
+| File | Used for | Suggested size |
+| --- | --- | --- |
+| `about-hero.jpg` | Page hero background | 1920×900 |
+| `story-hq.jpg` | Our Story collage — HQ building | 600×750 |
+| `story-design.jpg` | Our Story collage — design desk | 600×450 |
+| `story-welding.jpg` | Our Story collage — frame welding | 600×450 |
+| `story-electronics.jpg` | Our Story collage — controller board | 600×750 |
+| `retail-store.jpg` | Domestic strength — retail store | 900×600 |
+| `team-banner.jpg` | Factory scale — team banner | 1600×600 |
+| `rd-lab.jpg` | R&D Center | 800×600 |
 
 ## Design system
 
@@ -89,9 +109,10 @@ All of it is disabled under `prefers-reduced-motion: reduce`.
 
 ## Form
 
-`#inquiryForm` validates required fields and email format on the client, marks bad fields,
-and shows a success message. It does **not** submit anywhere — wire the block marked
-`Front-end only:` in `main.js` to your endpoint.
+Both pages carry an `#inquiryForm` — the light one on the home page, a translucent dark
+variant (`.field--dark`) on the About page. The same handler validates required fields and
+email format on the client, marks bad fields, and shows a success message. It does **not**
+submit anywhere — wire the block marked `Front-end only:` in `main.js` to your endpoint.
 
 ## Browser support
 
