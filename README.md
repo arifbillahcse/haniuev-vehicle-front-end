@@ -20,6 +20,7 @@ index.html                Home page
 about-us.html             About page
 contact.html              Contact page
 electric-bicycles.html    Electric Bicycles category page
+motors-controllers.html   Motors & Controllers category page
 assets/css/style.css      Design tokens + everything shared (header, footer, buttons, forms,
                            the compact page hero, contact-detail rows, product cards)
 assets/css/about.css      Only what the About page adds; loads after style.css
@@ -33,10 +34,12 @@ top of each HTML file — Chrome does not support external `<use href="sprite.sv
 references, so the sprite is duplicated rather than linked. **Keep every
 `<svg class="svg-sprite">` block identical** when adding an icon.
 
-`electric-bicycles.html` needed no new CSS at all — it's just the shared page hero plus the
-same `.prod-grid`/`.prod` card component the homepage's "Popular Models" section already
-uses. That's the pattern for any other single-category page (tricycles, motorcycles,
-four-wheelers): reuse `.prod-grid`, don't invent a new card.
+`electric-bicycles.html` and `motors-controllers.html` needed no new CSS at all — both are
+just the shared page hero plus the same `.prod-grid`/`.prod` card component the homepage's
+"Popular Models" section already uses. That's the pattern for any other single-category page
+(tricycles, motorcycles, four-wheelers, batteries, wiring harness, ...): copy one of these two
+files, swap the hero copy and the six cards' text/images, reuse `.prod-grid` — don't invent a
+new card.
 
 A component gets promoted from a page's own stylesheet into the shared `style.css` the
 moment a second page needs it — that's how the page hero (`.page-hero`, `.pill`,
@@ -84,6 +87,12 @@ Electric Bicycles page:
 | File | Used for | Suggested size |
 | --- | --- | --- |
 | `bike-urban.jpg` `bike-commuter.jpg` `bike-sport.jpg` `bike-city.jpg` `bike-cargo.jpg` `bike-folding.jpg` | Model cards | 600×400 |
+
+Motors & Controllers page:
+
+| File | Used for | Suggested size |
+| --- | --- | --- |
+| `motor-hub500.jpg` `motor-middrive800.jpg` `motor-cargo1500.jpg` `controller-350.jpg` `controller-1000.jpg` `controller-smart500.jpg` | Model cards | 600×400 |
 
 ## Design system
 
