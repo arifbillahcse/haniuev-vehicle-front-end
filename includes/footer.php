@@ -69,9 +69,10 @@ $ctaHref = $ctaHref ?? 'contact.php#contact-form';
       <div class="fcol" data-reveal data-reveal-delay="240">
         <h3 class="fcol__title"><span class="fcol__rule"></span>CONTACT US</h3>
         <ul class="fcontact">
-          <li><span class="fcontact__ico"><svg><use href="#i-pin"/></svg></span><span>Wuqing District, Tianjin,<br>China</span></li>
-          <li><a href="mailto:export@haniu.com"><span class="fcontact__ico"><svg><use href="#i-mail"/></svg></span><span>export@haniu.com</span></a></li>
-          <li><a href="tel:+8600000000000"><span class="fcontact__ico"><svg><use href="#i-phone"/></svg></span><span>+86 000 0000 0000</span></a></li>
+          <li><span class="fcontact__ico"><svg><use href="#i-users"/></svg></span><span>MD Nadimmahmud Jewel (胜利)<br>Foreign Trade Director</span></li>
+          <li><span class="fcontact__ico"><svg><use href="#i-pin"/></svg></span><span>哈牛电动车(福达路店)<br>天津市武清区京津科技谷福达路65号</span></li>
+          <li><a href="mailto:haniuev@gmail.com"><span class="fcontact__ico"><svg><use href="#i-mail"/></svg></span><span>haniuev@gmail.com</span></a></li>
+          <li><a href="tel:+8618841800421"><span class="fcontact__ico"><svg><use href="#i-phone"/></svg></span><span>+86 18841800421</span></a></li>
         </ul>
 
         <p class="fcol__mini fcol__mini--gap">FOLLOW US</p>

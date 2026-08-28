@@ -43,17 +43,17 @@ require __DIR__ . '/includes/header.php';
       <article class="info-card" data-reveal data-reveal-delay="0">
         <span class="info-card__icon"><svg><use href="#i-mail"/></svg></span>
         <h3 class="info-card__title">Email Us</h3>
-        <p class="info-card__text"><a href="mailto:export@haniu.com">export@haniu.com</a></p>
+        <p class="info-card__text"><a href="mailto:haniuev@gmail.com">haniuev@gmail.com</a></p>
       </article>
       <article class="info-card" data-reveal data-reveal-delay="80">
         <span class="info-card__icon"><svg><use href="#i-phone"/></svg></span>
-        <h3 class="info-card__title">Call / WhatsApp</h3>
-        <p class="info-card__text"><a href="tel:+8600000000000">+86 000 0000 0000</a></p>
+        <h3 class="info-card__title">Call / WhatsApp / WeChat</h3>
+        <p class="info-card__text"><a href="tel:+8618841800421">+86 18841800421</a></p>
       </article>
       <article class="info-card" data-reveal data-reveal-delay="160">
         <span class="info-card__icon"><svg><use href="#i-pin"/></svg></span>
         <h3 class="info-card__title">Visit Our Factory</h3>
-        <p class="info-card__text">Wuqing District, Tianjin, China</p>
+        <p class="info-card__text">哈牛电动车(福达路店)<br>天津市武清区京津科技谷福达路65号</p>
       </article>
       <article class="info-card" data-reveal data-reveal-delay="240">
         <span class="info-card__icon"><svg><use href="#i-clock"/></svg></span>
@@ -88,12 +88,20 @@ require __DIR__ . '/includes/header.php';
       <div class="contact-side__body">
         <ul class="contact-rows">
           <li>
+            <span class="contact-rows__icon"><svg><use href="#i-users"/></svg></span>
+            <div><p class="contact-rows__label">FOREIGN TRADE DIRECTOR</p><p class="contact-rows__value">MD Nadimmahmud Jewel (胜利)</p></div>
+          </li>
+          <li>
             <span class="contact-rows__icon"><svg><use href="#i-pin"/></svg></span>
-            <div><p class="contact-rows__label">HEADQUARTERS</p><p class="contact-rows__value">Wuqing District, Tianjin, China</p></div>
+            <div><p class="contact-rows__label">HEADQUARTERS</p><p class="contact-rows__value">哈牛电动车(福达路店)<br>天津市武清区京津科技谷福达路65号</p></div>
+          </li>
+          <li>
+            <span class="contact-rows__icon"><svg><use href="#i-phone"/></svg></span>
+            <div><p class="contact-rows__label">PHONE / WHATSAPP / WECHAT</p><a class="contact-rows__value" href="tel:+8618841800421">+86 18841800421</a></div>
           </li>
           <li>
             <span class="contact-rows__icon"><svg><use href="#i-mail"/></svg></span>
-            <div><p class="contact-rows__label">EMAIL</p><a class="contact-rows__value" href="mailto:export@haniu.com">export@haniu.com</a></div>
+            <div><p class="contact-rows__label">EMAIL</p><a class="contact-rows__value" href="mailto:haniuev@gmail.com">haniuev@gmail.com</a></div>
           </li>
         </ul>
 
