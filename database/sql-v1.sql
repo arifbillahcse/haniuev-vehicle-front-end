@@ -1,6 +1,6 @@
--- HANIU EV — database schema + seed data (MySQL).
--- Applied automatically on first request against an empty database
--- (see config.php: db()).
+-- HANIU EV — initial schema + seed data (MySQL).
+-- Migration v1 — runs once, tracked in _migrations (see config.php: run_migrations()).
+-- Never edit this file after it has shipped; add a new sql-vN.sql for schema changes.
 
 CREATE TABLE admins (
     id            INT AUTO_INCREMENT PRIMARY KEY,

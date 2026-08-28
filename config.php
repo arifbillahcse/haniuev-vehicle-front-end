@@ -3,8 +3,12 @@
  * Bootstrap: session, error display, PDO connection, tiny DB helpers.
  * Connects to MySQL using credentials from db-config.php (gitignored — copy
  * db-config.sample.php to create it and fill in your host's real values).
- * Tables are created automatically from schema.sql the first time any page
- * runs against an empty database; the database itself must already exist.
+ *
+ * Schema lives in database/sql-v1.sql, sql-v2.sql, ... — each file runs
+ * exactly once, in order, tracked in the _migrations table. A schema change
+ * is always a NEW sql-vN.sql file, never an edit to an already-shipped one,
+ * so a live database only ever gets the new piece applied, not re-run from
+ * scratch.
  */
 
 declare(strict_types=1);
@@ -39,14 +43,35 @@ function db(): PDO
         PDO::ATTR_EMULATE_PREPARES => false,
     ]);
 
-    try {
-        $pdo->query('SELECT 1 FROM admins LIMIT 1');
-    } catch (PDOException $e) {
-        // Fresh database — no tables yet. Create them from schema.sql.
-        $pdo->exec(file_get_contents(BASE_PATH . '/schema.sql'));
-    }
+    run_migrations($pdo);
 
     return $pdo;
+}
+
+/** Run any database/sql-vN.sql file not yet recorded in _migrations, in order. */
+function run_migrations(PDO $pdo): void
+{
+    $pdo->exec(
+        'CREATE TABLE IF NOT EXISTS _migrations (
+            id         INT AUTO_INCREMENT PRIMARY KEY,
+            filename   VARCHAR(190) NOT NULL UNIQUE,
+            applied_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4'
+    );
+
+    $applied = array_column($pdo->query('SELECT filename FROM _migrations')->fetchAll(), 'filename');
+
+    $files = glob(BASE_PATH . '/database/sql-v*.sql') ?: [];
+    natsort($files); // so sql-v2 runs before sql-v10, not after
+
+    foreach ($files as $file) {
+        $filename = basename($file);
+        if (in_array($filename, $applied, true)) {
+            continue;
+        }
+        $pdo->exec(file_get_contents($file));
+        $pdo->prepare('INSERT INTO _migrations (filename) VALUES (?)')->execute([$filename]);
+    }
 }
 
 /** SELECT many rows. */
