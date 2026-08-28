@@ -18,16 +18,25 @@ python3 -m http.server 8000
 ```
 index.html              Home page
 about-us.html           About page
-assets/css/style.css    Design tokens + everything shared (header, footer, buttons, forms)
+contact.html            Contact page
+assets/css/style.css    Design tokens + everything shared (header, footer, buttons, forms,
+                         the compact page hero, contact-detail rows)
 assets/css/about.css    Only what the About page adds; loads after style.css
-assets/js/main.js       Header, menus, scroll reveal, counters, form — drives both pages
+assets/css/contact.css  Only what the Contact page adds; loads after style.css
+assets/js/main.js       Header, menus, scroll reveal, counters, form — drives all three pages
 assets/images/          Drop your photography here (see below)
 ```
 
-Both pages share one header, footer and script. The SVG icon sprite is inlined at the top
-of each HTML file — Chrome does not support external `<use href="sprite.svg#id">` references,
-so the sprite is duplicated rather than linked. **Keep the two `<svg class="svg-sprite">`
-blocks identical** when adding an icon.
+All three pages share one header, footer and script. The SVG icon sprite is inlined at the
+top of each HTML file — Chrome does not support external `<use href="sprite.svg#id">`
+references, so the sprite is duplicated rather than linked. **Keep all three
+`<svg class="svg-sprite">` blocks identical** when adding an icon.
+
+A component gets promoted from a page's own stylesheet into the shared `style.css` the
+moment a second page needs it — that's how the page hero (`.page-hero`, `.pill`,
+`.hero-stats`) and the contact-detail rows (`.contact-rows`) ended up shared rather than
+duplicated. If you add a fourth page that reuses something from `about.css` or
+`contact.css`, move it to `style.css` the same way rather than copying it.
 
 ## Adding images
 
@@ -57,6 +66,12 @@ About page:
 | `retail-store.jpg` | Domestic strength — retail store | 900×600 |
 | `team-banner.jpg` | Factory scale — team banner | 1600×600 |
 | `rd-lab.jpg` | R&D Center | 800×600 |
+
+Contact page:
+
+| File | Used for | Suggested size |
+| --- | --- | --- |
+| `contact-map.jpg` | Find-us panel — location map | 600×400 |
 
 ## Design system
 
@@ -109,7 +124,7 @@ All of it is disabled under `prefers-reduced-motion: reduce`.
 
 ## Form
 
-Both pages carry an `#inquiryForm` — the light one on the home page, a translucent dark
+All three pages carry an `#inquiryForm` — light on Home and Contact, a translucent dark
 variant (`.field--dark`) on the About page. The same handler validates required fields and
 email format on the client, marks bad fields, and shows a success message. It does **not**
 submit anywhere — wire the block marked `Front-end only:` in `main.js` to your endpoint.

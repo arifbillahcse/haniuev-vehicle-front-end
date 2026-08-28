@@ -1,0 +1,71 @@
+/* ==========================================================================
+   HANIU — Contact page
+   Loads after style.css and only adds what this page introduces.
+   The page hero (.page-hero, .pill, .hero-stats) and the icon+label+value
+   rows (.contact-rows) are shared components defined in style.css.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. QUICK-REFERENCE INFO CARDS
+   ========================================================================== */
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.info-card{
+  padding:32px 28px;text-align:center;background:#fff;
+  border:1px solid var(--line);
+  transition:transform .42s var(--ease),box-shadow .42s var(--ease),border-color .42s var(--ease);
+}
+.info-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:transparent}
+.info-card__icon{
+  display:grid;place-items:center;width:50px;height:50px;margin:0 auto 20px;
+  background:var(--bg-alt);color:var(--red);
+  transition:background-color .35s var(--ease),color .35s var(--ease),transform .42s var(--ease);
+}
+.info-card__icon svg{width:22px;height:22px}
+.info-card:hover .info-card__icon{background:var(--red);color:#fff;transform:translateY(-3px)}
+.info-card__title{font-size:16.5px;margin-bottom:10px}
+.info-card__text{margin:0;font-size:14px;line-height:1.7;color:var(--body)}
+.info-card__text a{color:var(--body);transition:color .3s var(--ease)}
+.info-card__text a:hover{color:var(--red)}
+
+/* ==========================================================================
+   2. FORM + FIND-US LAYOUT
+   ========================================================================== */
+.contact-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:32px;align-items:start}
+
+.contact-form-card{
+  padding:44px 42px;background:#fff;
+  border:1px solid var(--line);box-shadow:var(--shadow-sm);
+}
+.contact-form-card__title{font-size:26px;margin-bottom:8px}
+.contact-form-card__sub{font-size:14.5px;color:var(--body);margin-bottom:30px}
+
+.contact-side{background:var(--navy-900);overflow:hidden}
+.contact-side__map{position:relative}
+.contact-side__map .media{background:linear-gradient(135deg,var(--navy-850),var(--navy-950))}
+.contact-side__body{padding:32px 30px}
+.contact-side__title{font-size:18px;color:#fff;margin-bottom:22px}
+
+.contact-side .contact-rows + .contact-side__title{margin-top:34px}
+
+.contact-side__mini{margin:0 0 14px;font-size:10.5px;font-weight:700;letter-spacing:.15em;color:var(--on-dark-faint);text-transform:uppercase}
+
+/* ==========================================================================
+   3. RESPONSIVE
+   ========================================================================== */
+@media (max-width:1080px){
+  .info-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media (max-width:960px){
+  .contact-grid{grid-template-columns:1fr;gap:26px}
+}
+
+@media (max-width:720px){
+  .info-grid{gap:16px}
+  .contact-form-card{padding:30px 24px}
+  .contact-side__body{padding:26px 22px}
+}
+
+@media (max-width:480px){
+  .info-grid{grid-template-columns:1fr}
+}

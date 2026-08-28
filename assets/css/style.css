@@ -427,6 +427,59 @@ sup{font-size:.55em;vertical-align:super;line-height:0}
 @keyframes scrollLine{0%{top:-46px}60%,100%{top:46px}}
 
 /* ==========================================================================
+   9A. PAGE HERO — compact interior-page hero (About, Contact, ...)
+   ========================================================================== */
+.rule-red{display:block;width:56px;height:3px;background:var(--red);margin:0 0 26px}
+.h2 + .rule-red{margin-top:20px}
+
+.page-hero{
+  position:relative;
+  padding:calc(var(--header-h) + 92px) 0 92px;
+  background:var(--navy-950);overflow:hidden;
+}
+.page-hero__bg{position:absolute;inset:-8% 0;will-change:transform}
+.page-hero__scrim{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(100deg,rgba(8,17,30,.96) 0%,rgba(8,17,30,.86) 46%,rgba(8,17,30,.62) 100%),
+    linear-gradient(to top,rgba(8,17,30,.9),transparent 55%);
+}
+.page-hero__inner{position:relative;z-index:2;max-width:830px}
+
+.pill{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:8px 18px;margin-bottom:26px;
+  border:1px solid rgba(218,26,45,.55);border-radius:999px;
+  font-size:11.5px;font-weight:700;letter-spacing:.17em;color:var(--red);
+  background:rgba(218,26,45,.10);text-transform:uppercase;
+}
+.pill i{
+  width:6px;height:6px;border-radius:50%;background:var(--red);
+  animation:pulse 2.4s var(--ease) infinite;
+}
+
+.page-hero__title{
+  font-size:clamp(34px,4.8vw,60px);line-height:1.06;color:#fff;
+  margin:0 0 24px;letter-spacing:-.4px;
+}
+.page-hero__title span{display:block}
+.page-hero__title em{font-style:normal;color:#94a3b6}
+.page-hero__lead{font-size:16.5px;line-height:1.8;color:#b9c7d8;max-width:64ch;margin:0 0 38px}
+
+.hero-stats{display:flex;flex-wrap:wrap;gap:0}
+.hero-stat{padding:0 34px}
+.hero-stat:first-child{padding-left:0}
+.hero-stat + .hero-stat{border-left:1px solid rgba(255,255,255,.16)}
+.hero-stat__num{
+  font-family:var(--font-display);font-weight:700;font-size:30px;line-height:1;
+  color:#fff;margin:0 0 6px;
+}
+.hero-stat__label{
+  margin:0;font-size:10.5px;font-weight:600;letter-spacing:.14em;
+  color:#8fa3bd;text-transform:uppercase;
+}
+
+/* ==========================================================================
    10. SPLIT SECTIONS
    ========================================================================== */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
@@ -796,6 +849,29 @@ sup{font-size:.55em;vertical-align:super;line-height:0}
 .btn.is-loading .btn__label::after{content:"…"}
 
 /* ==========================================================================
+   19A. CONTACT DETAIL ROWS — icon + label + value (About, Contact, ...)
+   ========================================================================== */
+.contact-rows{display:flex;flex-direction:column;gap:20px}
+.contact-rows li{display:flex;align-items:flex-start;gap:16px}
+.contact-rows__icon{
+  flex:none;display:grid;place-items:center;width:42px;height:42px;
+  background:rgba(218,26,45,.14);color:var(--red);
+  transition:background-color .35s var(--ease),color .35s var(--ease),transform .35s var(--ease);
+}
+.contact-rows__icon svg{width:19px;height:19px}
+.contact-rows li:hover .contact-rows__icon{background:var(--red);color:#fff;transform:translateY(-3px)}
+.contact-rows__label{margin:0 0 5px;font-size:10.5px;font-weight:700;letter-spacing:.14em;color:var(--on-dark-faint);text-transform:uppercase}
+.contact-rows__value{
+  display:block;margin:0;font-family:var(--font-display);font-weight:600;font-size:17px;color:#fff;
+  transition:color .3s var(--ease);
+}
+a.contact-rows__value:hover{color:var(--red)}
+
+/* light-surface variant, for use outside a dark section */
+.contact-rows--light .contact-rows__value{color:var(--ink)}
+.contact-rows--light .contact-rows__label{color:var(--muted)}
+
+/* ==========================================================================
    20. FOOTER
    ========================================================================== */
 .footer{background:var(--navy-900);color:var(--on-dark-soft)}
@@ -989,6 +1065,7 @@ sup{font-size:.55em;vertical-align:super;line-height:0}
   .oem__body{padding:44px 34px}
   .oem__visual{padding:44px 34px}
   .sec-head--row{flex-direction:column;align-items:flex-start;gap:16px}
+  .page-hero{padding:calc(var(--header-h) + 64px) 0 68px}
 }
 
 @media (max-width:720px){
@@ -1016,6 +1093,8 @@ sup{font-size:.55em;vertical-align:super;line-height:0}
   .to-top{right:16px;bottom:16px}
   .pin{font-size:9px;padding:3px 7px;gap:5px}
   .pin i{width:5px;height:5px}
+  .hero-stat{padding:0 20px}
+  .hero-stat__num{font-size:25px}
 }
 
 @media (max-width:420px){
@@ -1024,6 +1103,9 @@ sup{font-size:.55em;vertical-align:super;line-height:0}
   .cert-grid{grid-template-columns:1fr}
   .btn{padding:15px 20px;font-size:14.5px}
   .footer-cta__inner .btn,.oem__body .btn{width:100%;justify-content:center}
+  .hero-stats{gap:14px 0}
+  .hero-stat{flex:1 0 42%;padding:0 14px}
+  .hero-stat:nth-child(odd){padding-left:0;border-left:0}
 }
 
 /* ==========================================================================
