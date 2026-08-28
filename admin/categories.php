@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_category'])) {
 }
 
 $pageTitle = 'Categories';
-$activeAdminNav = 'categories';
+$activeAdminNav = 'products';
 require __DIR__ . '/includes/chrome-top.php';
 
 if (isset($_GET['saved'])) echo '<div class="flash flash--ok">Category saved.</div>';

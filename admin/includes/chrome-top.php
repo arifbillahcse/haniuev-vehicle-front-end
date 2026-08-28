@@ -18,7 +18,6 @@ $navClass = fn(string $key) => $activeAdminNav === $key ? 'is-active' : '';
   <div class="admin-bar__brand">HANIU <span>ADMIN</span></div>
   <nav class="admin-nav">
     <a class="<?= $navClass('dashboard') ?>" href="index.php">Dashboard</a>
-    <a class="<?= $navClass('categories') ?>" href="categories.php">Categories</a>
     <a class="<?= $navClass('products') ?>" href="products.php">Products</a>
     <a class="<?= $navClass('posts') ?>" href="posts.php">Blog Posts</a>
     <a class="<?= $navClass('messages') ?>" href="messages.php">Messages</a>

@@ -180,7 +180,10 @@ $products = db_all('SELECT * FROM products ORDER BY category, sort_order, id');
     <h1>Products</h1>
     <p>Vehicles and parts shown on the homepage and category pages.</p>
   </div>
-  <a class="btn btn--red" href="products.php?action=new">+ Add Product</a>
+  <div style="display:flex;gap:10px">
+    <a class="btn btn--ghost" href="categories.php">Categories</a>
+    <a class="btn btn--red" href="products.php?action=new">+ Add Product</a>
+  </div>
 </div>
 
 <?php if (!$products): ?>
