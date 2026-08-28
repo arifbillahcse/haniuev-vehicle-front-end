@@ -419,6 +419,25 @@ require __DIR__ . '/includes/header.php';
 </section>
 
 <!-- ============================================================
+     PROMOTIONAL VIDEO
+     ============================================================ -->
+<section class="section section--alt" id="video">
+  <div class="container">
+    <header class="sec-head">
+      <p class="eyebrow eyebrow--center" data-reveal><span class="eyebrow__rule"></span>SEE HANIU IN ACTION<span class="eyebrow__rule"></span></p>
+      <h2 class="h2" data-reveal data-reveal-delay="80">Watch Our Story</h2>
+      <p class="sec-head__sub" data-reveal data-reveal-delay="140">
+        A closer look at our manufacturing base, product range, and commitment to quality.
+      </p>
+    </header>
+
+    <div class="video-embed" data-reveal data-reveal-delay="180">
+      <iframe src="https://www.youtube.com/embed/Zn6scKf7k_0" title="HANIU Electric Vehicle promotional video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      QUALITY ASSURANCE
      ============================================================ -->
 <section class="section section--dark" id="quality">
