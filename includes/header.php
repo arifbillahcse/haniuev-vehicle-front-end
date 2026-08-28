@@ -89,11 +89,10 @@ $isActive = fn(string $key) => $activeNav === $key ? ' is-active' : '';
           </button>
           <div class="dropdown">
             <ul class="dropdown__list">
-              <li><a href="index.php#portfolio"><span class="dropdown__dot"></span>Electric Tricycles<small>Cargo &amp; utility</small></a></li>
-              <li><a href="electric-bicycles.php"><span class="dropdown__dot"></span>Electric Bicycles<small>Urban mobility</small></a></li>
-              <li><a href="index.php#portfolio"><span class="dropdown__dot"></span>Electric Motorcycles<small>High performance</small></a></li>
-              <li><a href="index.php#portfolio"><span class="dropdown__dot"></span>Four-Wheelers<small>Leisure &amp; transport</small></a></li>
-              <li><a href="index.php#models" class="dropdown__all">View all products <svg><use href="#i-arrow-right"/></svg></a></li>
+              <li><a href="electric-bicycles.php"><span class="dropdown__dot"></span>Electric Bicycle<small>Urban mobility</small></a></li>
+              <li><a href="index.php#portfolio"><span class="dropdown__dot"></span>Electric Bike<small>High performance</small></a></li>
+              <li><a href="index.php#portfolio"><span class="dropdown__dot"></span>Electric Three Wheeler<small>Cargo &amp; utility</small></a></li>
+              <li><a href="index.php#portfolio"><span class="dropdown__dot"></span>Electric Four Wheeler<small>Leisure &amp; transport</small></a></li>
             </ul>
           </div>
         </li>
