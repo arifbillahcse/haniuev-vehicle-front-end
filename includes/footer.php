@@ -46,24 +46,16 @@ $ctaHref = $ctaHref ?? 'contact.php#contact-form';
           <li><a href="electric-bicycles.php"><svg><use href="#i-chevron-right"/></svg>Electric Bicycles</a></li>
           <li><a href="index.php#portfolio"><svg><use href="#i-chevron-right"/></svg>Electric Tricycles</a></li>
           <li><a href="index.php#portfolio"><svg><use href="#i-chevron-right"/></svg>Four-Wheelers</a></li>
-          <li><a href="index.php#oem"><svg><use href="#i-chevron-right"/></svg>OEM / ODM Solutions</a></li>
         </ul>
-        <h3 class="fcol__title fcol__title--gap"><span class="fcol__rule"></span>COMPANY</h3>
+      </div>
+
+      <div class="fcol" data-reveal data-reveal-delay="160">
+        <h3 class="fcol__title"><span class="fcol__rule"></span>COMPANY</h3>
         <ul class="flist">
           <li><a href="about-us.php"><svg><use href="#i-chevron-right"/></svg>About HANIU</a></li>
           <li><a href="index.php#factory"><svg><use href="#i-chevron-right"/></svg>Factory Tour</a></li>
           <li><a href="blog.php"><svg><use href="#i-chevron-right"/></svg>News &amp; Updates</a></li>
           <li><a href="contact.php"><svg><use href="#i-chevron-right"/></svg>Contact Us</a></li>
-        </ul>
-      </div>
-
-      <div class="fcol" data-reveal data-reveal-delay="160">
-        <h3 class="fcol__title"><span class="fcol__rule"></span>MARKETS</h3>
-        <ul class="flist">
-          <li><a href="index.php#markets"><svg><use href="#i-chevron-right"/></svg>Europe</a></li>
-          <li><a href="index.php#markets"><svg><use href="#i-chevron-right"/></svg>South America</a></li>
-          <li><a href="index.php#markets"><svg><use href="#i-chevron-right"/></svg>Middle Asia</a></li>
-          <li><a href="index.php#markets"><svg><use href="#i-chevron-right"/></svg>Southeast Asia</a></li>
         </ul>
 
         <div class="highlights">
@@ -99,11 +91,6 @@ $ctaHref = $ctaHref ?? 'contact.php#contact-form';
   <div class="footer-bottom">
     <div class="container footer-bottom__inner">
       <p>© <span id="year"><?= date('Y') ?></span> HANIU Electric Vehicle Co., Ltd. All rights reserved. · Tianjin Wuqing, China</p>
-      <ul class="footer-legal">
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Use</a></li>
-        <li><a href="#">Sitemap</a></li>
-      </ul>
     </div>
   </div>
 </footer>

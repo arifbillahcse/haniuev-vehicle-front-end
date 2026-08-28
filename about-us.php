@@ -499,7 +499,6 @@ require __DIR__ . '/includes/header.php';
 
       <div class="partner__actions" data-reveal data-reveal-delay="350">
         <a class="btn btn--red" href="#inquiry">Request Product Catalog <svg><use href="#i-arrow-right"/></svg></a>
-        <a class="btn btn--ghost" href="index.php#oem">Get OEM Quote</a>
       </div>
     </div>
 

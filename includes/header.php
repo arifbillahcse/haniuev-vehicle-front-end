@@ -113,7 +113,6 @@ $isActive = fn(string $key) => $activeNav === $key ? ' is-active' : '';
           </div>
         </li>
 
-        <li class="nav__item"><a class="nav__link" href="index.php#oem">OEM/ODM</a></li>
         <li class="nav__item"><a class="nav__link<?= $isActive('blog') ?>" href="blog.php"<?= $activeNav === 'blog' ? ' aria-current="page"' : '' ?>>Blog</a></li>
         <li class="nav__item nav__item--cta"><a class="btn btn--red btn--sm" href="contact.php">Contact</a></li>
       </ul>

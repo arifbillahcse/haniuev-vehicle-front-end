@@ -161,10 +161,6 @@ require __DIR__ . '/includes/header.php';
         <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
       </a>
     </div>
-
-    <div class="center" data-reveal>
-      <a class="btn btn--navy" href="#inquiry">Request Full Product Catalog <svg><use href="#i-arrow-right"/></svg></a>
-    </div>
   </div>
 </section>
 
@@ -362,56 +358,6 @@ require __DIR__ . '/includes/header.php';
         <span class="pin" style="--x:14%;--y:70%" data-reveal data-reveal-delay="520"><i></i>Colombia</span>
         <span class="pin" style="--x:36%;--y:70%" data-reveal data-reveal-delay="560"><i></i>Brazil</span>
         <span class="pin" style="--x:19%;--y:86%" data-reveal data-reveal-delay="600"><i></i>Peru</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     OEM / ODM
-     ============================================================ -->
-<section class="section section--alt" id="oem">
-  <div class="container">
-    <div class="oem">
-      <div class="oem__visual" data-reveal>
-        <span class="tag tag--red oem__tag">OEM / ODM</span>
-        <div class="oem__ring">
-          <div class="media media--circle media--zoom" data-label="R&amp;D team">
-            <img src="assets/images/oem-team.jpg" alt="HANIU engineering team reviewing production drawings">
-          </div>
-        </div>
-      </div>
-
-      <div class="oem__body">
-        <p class="eyebrow" data-reveal><span class="eyebrow__rule"></span>CUSTOM MANUFACTURING</p>
-        <h2 class="h2" data-reveal data-reveal-delay="80">Your Brand,<br>Our Expertise</h2>
-        <p class="lead" data-reveal data-reveal-delay="140">
-          HANIU offers comprehensive OEM and ODM services for overseas brands, importers, and project
-          buyers. From concept to container, we manage the entire production process under your
-          specifications.
-        </p>
-
-        <div class="checklist">
-          <div class="chk" data-reveal data-reveal-delay="180">
-            <span class="chk__box"></span>
-            <div><h3 class="chk__title">Private Label Branding</h3><p class="chk__text">Custom logo, color schemes, and packaging tailored to your brand identity.</p></div>
-          </div>
-          <div class="chk" data-reveal data-reveal-delay="240">
-            <span class="chk__box"></span>
-            <div><h3 class="chk__title">Product Customization</h3><p class="chk__text">Modify specifications, components, and features to meet local market requirements.</p></div>
-          </div>
-          <div class="chk" data-reveal data-reveal-delay="300">
-            <span class="chk__box"></span>
-            <div><h3 class="chk__title">Exclusive Model Development</h3><p class="chk__text">Work with our R&amp;D team to develop entirely new models exclusive to your market.</p></div>
-          </div>
-          <div class="chk" data-reveal data-reveal-delay="360">
-            <span class="chk__box"></span>
-            <div><h3 class="chk__title">Compliance &amp; Certification Support</h3><p class="chk__text">We assist with EEC, COC, and other regional certifications required for import.</p></div>
-          </div>
-        </div>
-
-        <hr class="rule" data-reveal>
-        <a class="btn btn--red" href="#inquiry" data-reveal data-reveal-delay="60">Discuss OEM Requirements <svg><use href="#i-arrow-right"/></svg></a>
       </div>
     </div>
   </div>
