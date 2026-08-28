@@ -1,4 +1,3 @@
-# The SQLite database is generated automatically from schema.sql on first
-# request (see config.php) — never commit the live data file itself.
-/data/*.sqlite
-/data/*.sqlite-journal
+# Real MySQL credentials — copy db-config.sample.php to create this file.
+# Never commit it.
+/db-config.php

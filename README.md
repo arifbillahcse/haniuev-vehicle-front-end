@@ -1,23 +1,30 @@
 # HANIU EV — Website + Admin
 
 Raw PHP site for HANIU, a China-based B2B electric vehicle manufacturer (e-tricycles,
-e-bicycles, e-motorcycles, four-wheelers). No framework — plain PHP with a PDO/SQLite
-database, chosen so it deploys on literally any budget PHP host (no Composer, no SSH,
-no separate database server to provision). Vehicles, parts, and blog posts are managed
-through a small login-gated admin dashboard at `/admin`.
+e-bicycles, e-motorcycles, four-wheelers). No framework — plain PHP with a PDO/MySQL
+database, chosen so it deploys on virtually any budget PHP host (no Composer, no SSH).
+Vehicles, parts, and blog posts are managed through a small login-gated admin dashboard
+at `/admin`.
 
 ## Running it locally
 
-Requires PHP 8.1+ with `pdo_sqlite` (bundled by default in virtually every PHP install).
+Requires PHP 8.1+ with `pdo_mysql`, and a MySQL/MariaDB database already created (this app
+creates the tables inside it, but not the database itself).
 
-```bash
-php -S localhost:8000
-# → http://localhost:8000
-```
+1. Copy `db-config.sample.php` to `db-config.php` and fill in your host, database name,
+   username, and password.
+2. Start PHP:
+   ```bash
+   php -S localhost:8000
+   # → http://localhost:8000
+   ```
 
-The database (`data/haniu.sqlite`) is created automatically from `schema.sql` — with seed
-products, sample blog posts, and one admin login — the first time any page runs. Nothing to
-install, migrate, or configure by hand.
+Tables and seed data (sample products, blog posts, and one admin login) are created
+automatically from `schema.sql` the first time any page runs against an empty database.
+`db-config.php` is gitignored, so real credentials never get committed — only the
+`db-config.sample.php` template is. If your host disables multi-statement queries and the
+auto-bootstrap doesn't run, just import `schema.sql` once yourself through phpMyAdmin (or
+`mysql -u user -p dbname < schema.sql`) — everything else works the same either way.
 
 **Default admin login:** `admin` / `ChangeMe123!` at `/admin/login.php` — change it from the
 dashboard immediately after first login.
@@ -29,9 +36,11 @@ index.php, about-us.php,        Public pages. Each is: config.php → header.php
   contact.php, blog.php,        page content → footer.php.
   post.php, electric-bicycles.php,
   motors-controllers.php
-config.php                      PDO connection, schema auto-bootstrap, db_all/db_one/db_run
-                                 helpers, h()/slugify()/unique_slug() helpers
-schema.sql                      Table definitions + seed data
+config.php                      PDO/MySQL connection, schema auto-bootstrap, db_all/db_one/
+                                 db_run helpers, h()/slugify()/unique_slug() helpers
+db-config.sample.php            Template for db-config.php (gitignored) — your real MySQL
+                                 host/name/user/password
+schema.sql                      Table definitions + seed data (MySQL)
 includes/header.php             <head>, SVG icon sprite, nav — shared by every public page
 includes/footer.php             Footer + closing tags — shared by every public page
 includes/auth.php               require_admin() / attempt_login() / logout()
@@ -49,8 +58,6 @@ assets/css/about.css            Only what the About page adds; loads after style
 assets/css/contact.css          Only what the Contact page adds; loads after style.css
 assets/js/main.js               Header, menus, scroll reveal, counters, form — every page
 assets/images/                  Drop your photography here (see below)
-data/                           SQLite file lives here; .htaccess + index.php block direct
-                                 HTTP access to it (see "Security notes")
 ```
 
 All pages share one header, footer, and script via PHP `require`, so the SVG icon sprite and
@@ -218,13 +225,9 @@ fall back to visible content if `IntersectionObserver` is missing.
   plain text.
 - **SQL** is 100% parameterized through `db_all`/`db_one`/`db_run` (PDO prepared statements)
   — no string-concatenated queries anywhere, including in the admin forms.
-- **The SQLite file** (`data/haniu.sqlite`) is blocked from direct HTTP access by
-  `data/.htaccess` (`Require all denied`) on Apache — the standard, correct fix on the
-  overwhelming majority of budget PHP hosts. Two caveats: it does **not** apply on PHP's
-  built-in dev server (`php -S`), which ignores `.htaccess` entirely and will serve the file
-  directly — that's fine for local development but never expose `php -S` to the internet. And
-  it does **not** apply on Nginx, which doesn't read `.htaccess` at all — if you deploy there,
-  add an equivalent block yourself, e.g. `location ^~ /data/ { deny all; }` in the server config.
+- **`db-config.php`** holds your real database password in plain text — it's gitignored so it
+  never reaches GitHub, and it lives outside `assets/` so nothing links to it publicly. Still,
+  don't set the file world-readable on a shared host.
 - **CSRF protection is intentionally omitted** to keep the admin small, on the judgment that a
   single low-privilege internal user is a low target. If that changes (multiple admin accounts,
   more sensitive actions), add a token check before mutating requests in `admin/*.php`.

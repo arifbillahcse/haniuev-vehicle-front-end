@@ -1,14 +1,10 @@
 <?php
 /**
  * Bootstrap: session, error display, PDO connection, tiny DB helpers.
- * SQLite lives in data/haniu.sqlite — a single file, no DB server needed.
- * data/.htaccess denies all HTTP access to it; never move it into a public path.
- *
- * To move to MySQL later (if your host requires it): change DB_DSN below to
- * "mysql:host=localhost;dbname=haniu;charset=utf8mb4" with matching
- * DB_USER/DB_PASS, then re-run schema.sql against that database. Every query
- * in this project uses plain, portable SQL and PDO placeholders, so nothing
- * else needs to change.
+ * Connects to MySQL using credentials from db-config.php (gitignored — copy
+ * db-config.sample.php to create it and fill in your host's real values).
+ * Tables are created automatically from schema.sql the first time any page
+ * runs against an empty database; the database itself must already exist.
  */
 
 declare(strict_types=1);
@@ -21,8 +17,14 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 define('BASE_PATH', __DIR__);
-define('DB_PATH', BASE_PATH . '/data/haniu.sqlite');
-define('DB_DSN', 'sqlite:' . DB_PATH);
+
+if (!file_exists(BASE_PATH . '/db-config.php')) {
+    http_response_code(500);
+    exit('Missing db-config.php. Copy db-config.sample.php to db-config.php and fill in your MySQL credentials.');
+}
+require BASE_PATH . '/db-config.php';
+
+define('DB_DSN', 'mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME . ';charset=utf8mb4');
 
 function db(): PDO
 {
@@ -31,18 +33,16 @@ function db(): PDO
         return $pdo;
     }
 
-    $isNew = !file_exists(DB_PATH);
-    if ($isNew && !is_dir(dirname(DB_PATH))) {
-        mkdir(dirname(DB_PATH), 0755, true);
-    }
-
-    $pdo = new PDO(DB_DSN, null, null, [
+    $pdo = new PDO(DB_DSN, DB_USER, DB_PASS, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES => false,
     ]);
-    $pdo->exec('PRAGMA foreign_keys = ON');
 
-    if ($isNew) {
+    try {
+        $pdo->query('SELECT 1 FROM admins LIMIT 1');
+    } catch (PDOException $e) {
+        // Fresh database — no tables yet. Create them from schema.sql.
         $pdo->exec(file_get_contents(BASE_PATH . '/schema.sql'));
     }
 

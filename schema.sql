@@ -1,14 +1,13 @@
--- HANIU EV — database schema + seed data.
--- Applied automatically on first request (see config.php: db()).
--- Portable SQL — no SQLite-only syntax beyond AUTOINCREMENT, which has a
--- direct MySQL equivalent (AUTO_INCREMENT) if you migrate later.
+-- HANIU EV — database schema + seed data (MySQL).
+-- Applied automatically on first request against an empty database
+-- (see config.php: db()).
 
 CREATE TABLE admins (
-    id            INTEGER PRIMARY KEY AUTOINCREMENT,
-    username      TEXT NOT NULL UNIQUE,
-    password_hash TEXT NOT NULL,
-    created_at    TEXT NOT NULL DEFAULT (datetime('now'))
-);
+    id            INT AUTO_INCREMENT PRIMARY KEY,
+    username      VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Default login: admin / ChangeMe123!
 -- Change this immediately from the admin dashboard after first login.
@@ -16,19 +15,19 @@ INSERT INTO admins (username, password_hash) VALUES
     ('admin', '$2y$12$.Pb7X8uu8JeB5m7saB.a0OxnQipPmGOk222UcmCX/QMPuWxKsOo2i');
 
 CREATE TABLE products (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    category    TEXT NOT NULL,   -- tricycle | bicycle | motorcycle | four-wheeler | motor | controller
-    name        TEXT NOT NULL,   -- e.g. "HN-B200 Urban"
-    slug        TEXT NOT NULL UNIQUE,
-    cat_label   TEXT NOT NULL,   -- small kicker shown on the card, e.g. "E-BICYCLE"
-    spec        TEXT NOT NULL,   -- spec line, e.g. "500W Motor · 48V · 80km Range"
-    badge_text  TEXT NOT NULL DEFAULT '',
-    badge_color TEXT NOT NULL DEFAULT 'navy', -- red | navy | green | blue
-    image       TEXT NOT NULL DEFAULT '',     -- filename inside assets/images/
-    featured    INTEGER NOT NULL DEFAULT 0,   -- shown in the homepage "Popular Models" grid
-    sort_order  INTEGER NOT NULL DEFAULT 0,
-    created_at  TEXT NOT NULL DEFAULT (datetime('now'))
-);
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    category    VARCHAR(50) NOT NULL,   -- tricycle | bicycle | motorcycle | four-wheeler | motor | controller
+    name        VARCHAR(150) NOT NULL,  -- e.g. "HN-B200 Urban"
+    slug        VARCHAR(190) NOT NULL UNIQUE,
+    cat_label   VARCHAR(100) NOT NULL,  -- small kicker shown on the card, e.g. "E-BICYCLE"
+    spec        VARCHAR(255) NOT NULL,  -- spec line, e.g. "500W Motor · 48V · 80km Range"
+    badge_text  VARCHAR(50) NOT NULL DEFAULT '',
+    badge_color VARCHAR(20) NOT NULL DEFAULT 'navy', -- red | navy | green | blue
+    image       VARCHAR(255) NOT NULL DEFAULT '',    -- filename inside assets/images/
+    featured    TINYINT(1) NOT NULL DEFAULT 0,        -- shown in the homepage "Popular Models" grid
+    sort_order  INT NOT NULL DEFAULT 0,
+    created_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO products (category, name, slug, cat_label, spec, badge_text, badge_color, image, featured, sort_order) VALUES
     ('motorcycle',   'HN-M800 Sport',    'hn-m800-sport',    'E-MOTORCYCLE',  '3000W Motor · 72V · 80km/h',            'BEST SELLER',   'red',   'model-m800.jpg', 1, 10),
@@ -52,15 +51,15 @@ INSERT INTO products (category, name, slug, cat_label, spec, badge_text, badge_c
     ('controller', 'HN-CT500 Smart','hn-ct500-smart','CONTROLLER',     '500W · 48V · Bluetooth-Enabled Controller',  'EEC CERTIFIED','red',  'controller-smart500.jpg', 0, 250);
 
 CREATE TABLE posts (
-    id             INTEGER PRIMARY KEY AUTOINCREMENT,
-    title          TEXT NOT NULL,
-    slug           TEXT NOT NULL UNIQUE,
-    excerpt        TEXT NOT NULL,
+    id             INT AUTO_INCREMENT PRIMARY KEY,
+    title          VARCHAR(200) NOT NULL,
+    slug           VARCHAR(190) NOT NULL UNIQUE,
+    excerpt        VARCHAR(500) NOT NULL,
     body           TEXT NOT NULL,     -- plain paragraphs, one per line; rendered as <p>
-    cover_image    TEXT NOT NULL DEFAULT '',
-    published_at   TEXT NOT NULL DEFAULT (date('now')),
-    created_at     TEXT NOT NULL DEFAULT (datetime('now'))
-);
+    cover_image    VARCHAR(255) NOT NULL DEFAULT '',
+    published_at   DATE NOT NULL,
+    created_at     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO posts (title, slug, excerpt, body, cover_image, published_at) VALUES
 (
@@ -77,14 +76,14 @@ Our export team is ready to discuss shipment timelines and country-specific docu
     'Inside Our Wuxi Powertrain Base',
     'inside-wuxi-powertrain-base',
     'A look at how HANIU develops and tests every motor and controller before it reaches a vehicle.',
-    'Our Wuxi facility sits in the heart of the Yangtze River Delta, China''s most advanced electronics manufacturing corridor.
+    'Our Wuxi facility sits in the heart of the Yangtze River Delta, China\'s most advanced electronics manufacturing corridor.
 Every hub motor, mid-drive unit, and controller that ships in a HANIU vehicle is designed, wound, and bench-tested at this site before it ever reaches an assembly line.
 This vertical integration is what lets us hold tight tolerances on power output and efficiency, and respond quickly when an OEM partner needs a custom spec.',
     'blog-wuxi-powertrain.jpg',
     '2025-12-02'
 ),
 (
-    'A Distributor''s Guide to HANIU MOQs',
+    'A Distributor\'s Guide to HANIU MOQs',
     'distributor-guide-moqs',
     'What minimum order quantities actually look like for new partners, by product category.',
     'One of the most common questions from new distributors is simple: how many units do I need to order to get started?
@@ -95,13 +94,13 @@ Reach out through our contact form with your target market and expected volume, 
 );
 
 CREATE TABLE messages (
-    id         INTEGER PRIMARY KEY AUTOINCREMENT,
-    full_name  TEXT NOT NULL,
-    company    TEXT NOT NULL DEFAULT '',
-    email      TEXT NOT NULL,
-    country    TEXT NOT NULL,
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    full_name  VARCHAR(150) NOT NULL,
+    company    VARCHAR(150) NOT NULL DEFAULT '',
+    email      VARCHAR(190) NOT NULL,
+    country    VARCHAR(100) NOT NULL,
     message    TEXT NOT NULL,
-    source     TEXT NOT NULL DEFAULT '', -- which page the inquiry came from
-    is_read    INTEGER NOT NULL DEFAULT 0,
-    created_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
+    source     VARCHAR(100) NOT NULL DEFAULT '', -- which page the inquiry came from
+    is_read    TINYINT(1) NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
