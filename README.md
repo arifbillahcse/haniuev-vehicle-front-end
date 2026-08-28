@@ -37,7 +37,7 @@ is still missing.
 
 | File | Used for | Suggested size |
 | --- | --- | --- |
-| `hero-factory.jpg` | Hero background | 1920×1080 |
+| `home-hero.jpg` | Hero background | 1920×1080 |
 | `hq-aerial.jpg` | Brand positioning — aerial HQ | 1200×675 |
 | `factory-floor.jpg` | Factory strength — assembly hall | 1200×900 |
 | `oem-team.jpg` | OEM/ODM — engineering team | 800×800 (square, shown circular) |
