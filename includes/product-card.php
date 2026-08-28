@@ -18,7 +18,7 @@ $img = $product['image'] !== '' ? 'assets/images/' . $product['image'] : '';
     <h3 class="prod__name"><?= h($product['name']) ?></h3>
     <p class="prod__spec"><?= h($product['spec']) ?></p>
     <div class="prod__foot">
-      <a class="prod__cta" href="contact.php#contact-form">Get Wholesale Price <svg><use href="#i-arrow-right"/></svg></a>
+      <a class="prod__cta" href="product.php?slug=<?= urlencode($product['slug']) ?>">View More <svg><use href="#i-arrow-right"/></svg></a>
       <span class="prod__moq">MOQ AVAILABLE</span>
     </div>
   </div>

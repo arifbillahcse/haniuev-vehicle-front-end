@@ -384,7 +384,29 @@
   }
 
   /* ------------------------------------------------------------------
-     11. FOOTER YEAR
+     11. PRODUCT GALLERY
+     Clicking a thumbnail on a product detail page swaps the main image.
+     No-ops on any page without a .product-gallery.
+     ------------------------------------------------------------------ */
+  function initProductGallery() {
+    var main = $('#productMainImg');
+    var thumbs = $$('.product-gallery__thumb');
+    if (!main || !thumbs.length) return;
+
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        var src = thumb.getAttribute('data-img');
+        if (!src) return;
+        main.src = src;
+        main.closest('.media').classList.remove('is-empty');
+        thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+        thumb.classList.add('is-active');
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     12. FOOTER YEAR
      ------------------------------------------------------------------ */
   function initYear() {
     var el = $('#year');
@@ -404,6 +426,7 @@
     initSmoothScroll();
     initToTop();
     initImageFallback();
+    initProductGallery();
     initForm();
     initYear();
   }

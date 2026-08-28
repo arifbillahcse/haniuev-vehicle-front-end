@@ -4,6 +4,10 @@ require __DIR__ . '/../includes/auth.php';
 require_admin();
 
 const BADGE_COLORS = ['red', 'navy', 'green', 'blue'];
+const IMAGE_EXTS = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+const PDF_EXTS = ['pdf'];
+const IMAGE_DIR = __DIR__ . '/../assets/images';
+const CATALOG_DIR = __DIR__ . '/../assets/catalogs';
 
 // Categories are managed from admin/categories.php — add/edit/remove them there.
 $allCategories = db_all('SELECT slug, name FROM categories ORDER BY sort_order, name');
@@ -22,21 +26,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     exit;
 }
 
+// ---- delete one gallery image ---------------------------------------
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_gallery_id'])) {
+    $gid = (int) $_POST['delete_gallery_id'];
+    $backToId = (int) $_POST['product_id'];
+    $row = db_one('SELECT image FROM product_images WHERE id = ?', [$gid]);
+    if ($row) {
+        db_run('DELETE FROM product_images WHERE id = ?', [$gid]);
+        @unlink(IMAGE_DIR . '/' . $row['image']);
+    }
+    header('Location: products.php?action=edit&id=' . $backToId . '&gallery_updated=1');
+    exit;
+}
+
+// ---- add gallery images to an existing product -----------------------
+// Kept separate from the main save below so adding a photo never has to
+// re-validate/re-save every other field on the product.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_gallery_images'])) {
+    $pid = (int) $_POST['product_id'];
+    if ($pid && !empty($_FILES['gallery_images']['name'][0])) {
+        $nextOrder = (int) (db_one('SELECT COALESCE(MAX(sort_order), 0) AS m FROM product_images WHERE product_id = ?', [$pid])['m']);
+        foreach ($_FILES['gallery_images']['name'] as $i => $name) {
+            $file = [
+                'name'     => $_FILES['gallery_images']['name'][$i],
+                'type'     => $_FILES['gallery_images']['type'][$i],
+                'tmp_name' => $_FILES['gallery_images']['tmp_name'][$i],
+                'error'    => $_FILES['gallery_images']['error'][$i],
+                'size'     => $_FILES['gallery_images']['size'][$i],
+            ];
+            $filename = save_uploaded_file($file, IMAGE_DIR, IMAGE_EXTS, true);
+            if ($filename !== null) {
+                $nextOrder += 10;
+                db_run('INSERT INTO product_images (product_id, image, sort_order) VALUES (?,?,?)', [$pid, $filename, $nextOrder]);
+            }
+        }
+    }
+    header('Location: products.php?action=edit&id=' . $pid . '&gallery_updated=1');
+    exit;
+}
+
 // ---- create / update --------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_product'])) {
     $editingId = $_POST['id'] !== '' ? (int) $_POST['id'] : null;
+    $existing = $editingId ? db_one('SELECT * FROM products WHERE id = ?', [$editingId]) : null;
 
     $data = [
         'category'    => trim((string) ($_POST['category'] ?? '')),
         'name'        => trim((string) ($_POST['name'] ?? '')),
         'cat_label'   => trim((string) ($_POST['cat_label'] ?? '')),
         'spec'        => trim((string) ($_POST['spec'] ?? '')),
+        'description' => trim((string) ($_POST['description'] ?? '')),
         'badge_text'  => trim((string) ($_POST['badge_text'] ?? '')),
         'badge_color' => in_array($_POST['badge_color'] ?? '', BADGE_COLORS, true) ? $_POST['badge_color'] : 'navy',
-        'image'       => trim((string) ($_POST['image'] ?? '')),
         'featured'    => isset($_POST['featured']) ? 1 : 0,
         'sort_order'  => (int) ($_POST['sort_order'] ?? 0),
     ];
+
+    // New file uploads are optional — keep the existing file if none was chosen.
+    $uploadedImage = save_uploaded_file($_FILES['image_file'] ?? [], IMAGE_DIR, IMAGE_EXTS, true);
+    $data['image'] = $uploadedImage ?? ($existing['image'] ?? '');
+
+    $uploadedPdf = save_uploaded_file($_FILES['catalog_pdf_file'] ?? [], CATALOG_DIR, PDF_EXTS, false);
+    $data['catalog_pdf'] = $uploadedPdf ?? ($existing['catalog_pdf'] ?? '');
 
     if (!in_array($data['category'], $categorySlugsValid, true)) {
         $errors[] = 'Please choose a valid category.';
@@ -55,15 +106,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_product'])) {
         $slug = unique_slug($data['name'], 'products', $editingId);
         if ($editingId) {
             db_run(
-                'UPDATE products SET category=?, name=?, slug=?, cat_label=?, spec=?, badge_text=?, badge_color=?, image=?, featured=?, sort_order=? WHERE id=?',
-                [$data['category'], $data['name'], $slug, $data['cat_label'], $data['spec'], $data['badge_text'], $data['badge_color'], $data['image'], $data['featured'], $data['sort_order'], $editingId]
+                'UPDATE products SET category=?, name=?, slug=?, cat_label=?, spec=?, description=?, badge_text=?, badge_color=?, image=?, catalog_pdf=?, featured=?, sort_order=? WHERE id=?',
+                [$data['category'], $data['name'], $slug, $data['cat_label'], $data['spec'], $data['description'], $data['badge_text'], $data['badge_color'], $data['image'], $data['catalog_pdf'], $data['featured'], $data['sort_order'], $editingId]
             );
+            $productId = $editingId;
         } else {
             db_run(
-                'INSERT INTO products (category, name, slug, cat_label, spec, badge_text, badge_color, image, featured, sort_order) VALUES (?,?,?,?,?,?,?,?,?,?)',
-                [$data['category'], $data['name'], $slug, $data['cat_label'], $data['spec'], $data['badge_text'], $data['badge_color'], $data['image'], $data['featured'], $data['sort_order']]
+                'INSERT INTO products (category, name, slug, cat_label, spec, description, badge_text, badge_color, image, catalog_pdf, featured, sort_order) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
+                [$data['category'], $data['name'], $slug, $data['cat_label'], $data['spec'], $data['description'], $data['badge_text'], $data['badge_color'], $data['image'], $data['catalog_pdf'], $data['featured'], $data['sort_order']]
             );
+            $productId = (int) db()->lastInsertId();
         }
+
+        // Gallery photos — append any newly uploaded ones after existing sort orders.
+        if (!empty($_FILES['gallery_images']['name'][0])) {
+            $nextOrder = (int) (db_one('SELECT COALESCE(MAX(sort_order), 0) AS m FROM product_images WHERE product_id = ?', [$productId])['m']);
+            foreach ($_FILES['gallery_images']['name'] as $i => $name) {
+                $file = [
+                    'name'     => $_FILES['gallery_images']['name'][$i],
+                    'type'     => $_FILES['gallery_images']['type'][$i],
+                    'tmp_name' => $_FILES['gallery_images']['tmp_name'][$i],
+                    'error'    => $_FILES['gallery_images']['error'][$i],
+                    'size'     => $_FILES['gallery_images']['size'][$i],
+                ];
+                $filename = save_uploaded_file($file, IMAGE_DIR, IMAGE_EXTS, true);
+                if ($filename !== null) {
+                    $nextOrder += 10;
+                    db_run('INSERT INTO product_images (product_id, image, sort_order) VALUES (?,?,?)', [$productId, $filename, $nextOrder]);
+                }
+            }
+        }
+
         header('Location: products.php?saved=1');
         exit;
     }
@@ -86,15 +159,18 @@ foreach ($errors as $e) echo '<div class="flash flash--err">' . h($e) . '</div>'
 // =====================================================================
 if ($action === 'new' || $action === 'edit') {
     $product = $data ?? ($id ? db_one('SELECT * FROM products WHERE id = ?', [$id]) : null);
-    $product = $product ?? ['category' => 'bicycle', 'name' => '', 'cat_label' => '', 'spec' => '', 'badge_text' => '', 'badge_color' => 'navy', 'image' => '', 'featured' => 0, 'sort_order' => 0];
+    $product = $product ?? ['category' => 'bicycle', 'name' => '', 'cat_label' => '', 'spec' => '', 'description' => '', 'badge_text' => '', 'badge_color' => 'navy', 'image' => '', 'catalog_pdf' => '', 'featured' => 0, 'sort_order' => 0];
+    $gallery = $id ? db_all('SELECT * FROM product_images WHERE product_id = ? ORDER BY sort_order, id', [$id]) : [];
     ?>
     <div class="admin-head">
       <div><h1><?= $id ? 'Edit Product' : 'Add Product' ?></h1></div>
       <a class="btn btn--ghost btn--sm" href="products.php">&larr; Back to list</a>
     </div>
 
+    <?php if (isset($_GET['gallery_updated'])): ?><div class="flash flash--ok">Gallery updated.</div><?php endif; ?>
+
     <div class="card" style="max-width:640px">
-      <form method="post">
+      <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="save_product" value="1">
         <input type="hidden" name="id" value="<?= h((string) ($id ?? '')) ?>">
 
@@ -141,10 +217,37 @@ if ($action === 'new' || $action === 'edit') {
         </div>
 
         <div class="field">
-          <label for="image">Image Filename</label>
-          <input type="text" id="image" name="image" value="<?= h($product['image']) ?>" placeholder="e.g. bike-urban.jpg">
-          <small>Upload the file to <code>assets/images/</code> via FTP first, then enter its filename here. Leave blank to show a placeholder.</small>
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="5" placeholder="Full product description shown on its detail page. Leave a blank line between paragraphs."><?= h($product['description'] ?? '') ?></textarea>
         </div>
+
+        <div class="field">
+          <label for="image_file">Main Image</label>
+          <?php if ($product['image'] !== ''): ?>
+            <div style="margin-bottom:8px">
+              <img class="thumb" src="../assets/images/<?= h($product['image']) ?>" alt="" style="height:60px;width:auto">
+            </div>
+          <?php endif; ?>
+          <input type="file" id="image_file" name="image_file" accept=".jpg,.jpeg,.png,.webp,.gif">
+          <small><?= $product['image'] !== '' ? 'Choose a file to replace the current image, or leave blank to keep it.' : 'Leave blank to show a placeholder.' ?></small>
+        </div>
+
+        <div class="field">
+          <label for="catalog_pdf_file">Catalog PDF</label>
+          <?php if (($product['catalog_pdf'] ?? '') !== ''): ?>
+            <p style="margin:0 0 8px"><a href="../assets/catalogs/<?= h($product['catalog_pdf']) ?>" target="_blank" rel="noopener">Current file &#8599;</a></p>
+          <?php endif; ?>
+          <input type="file" id="catalog_pdf_file" name="catalog_pdf_file" accept=".pdf">
+          <small>Optional. Shown as a "Download Catalog" button on the product page.</small>
+        </div>
+
+        <?php if (!$id): ?>
+        <div class="field">
+          <label>Gallery Images</label>
+          <input type="file" name="gallery_images[]" accept=".jpg,.jpeg,.png,.webp,.gif" multiple>
+          <small>Optional. You can also add more gallery photos later from the edit screen.</small>
+        </div>
+        <?php endif; ?>
 
         <div class="form-grid">
           <div class="field">
@@ -164,6 +267,41 @@ if ($action === 'new' || $action === 'edit') {
         <button type="submit" class="btn btn--red"><?= $id ? 'Save Changes' : 'Add Product' ?></button>
       </form>
     </div>
+
+    <?php if ($id): ?>
+    <div class="card" style="max-width:640px;margin-top:20px">
+      <h2 style="font-size:16px;margin:0 0 6px">Gallery Images</h2>
+      <p style="margin:0 0 14px;color:var(--muted);font-size:13.5px">Extra photos shown on this product's public detail page.</p>
+
+      <?php if ($gallery): ?>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px">
+          <?php foreach ($gallery as $g): ?>
+            <div style="text-align:center">
+              <img class="thumb" src="../assets/images/<?= h($g['image']) ?>" alt="" style="display:block;margin-bottom:6px;width:90px;height:60px">
+              <form method="post" onsubmit="return confirm('Remove this gallery image?');">
+                <input type="hidden" name="delete_gallery_id" value="<?= (int) $g['id'] ?>">
+                <input type="hidden" name="product_id" value="<?= (int) $id ?>">
+                <button type="submit" class="btn btn--ghost btn--sm">Delete</button>
+              </form>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php else: ?>
+        <p style="margin:0 0 14px;color:var(--muted);font-size:13.5px">No gallery images yet.</p>
+      <?php endif; ?>
+
+      <form method="post" enctype="multipart/form-data">
+        <input type="hidden" name="add_gallery_images" value="1">
+        <input type="hidden" name="product_id" value="<?= (int) $id ?>">
+        <div class="field">
+          <label for="gallery_images">Add Photos</label>
+          <input type="file" id="gallery_images" name="gallery_images[]" accept=".jpg,.jpeg,.png,.webp,.gif" multiple>
+          <small>Select one or more image files. They're added to the gallery, not replaced.</small>
+        </div>
+        <button type="submit" class="btn btn--red">Upload</button>
+      </form>
+    </div>
+    <?php endif; ?>
     <?php
     require __DIR__ . '/includes/chrome-bottom.php';
     exit;

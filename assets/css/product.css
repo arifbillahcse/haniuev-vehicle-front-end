@@ -1,0 +1,28 @@
+/* ==========================================================================
+   HANIU — Product detail page
+   Loads after style.css (and contact.css, reused as-is for the embedded
+   inquiry form card) and only adds what this page introduces.
+   ========================================================================== */
+
+.product-detail{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+
+.product-gallery__thumbs{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.product-gallery__thumb{
+  width:72px;height:72px;padding:0;border:2px solid transparent;background:none;
+  cursor:pointer;overflow:hidden;opacity:.6;flex-shrink:0;
+  transition:opacity .25s var(--ease),border-color .25s var(--ease);
+}
+.product-gallery__thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.product-gallery__thumb:hover{opacity:1}
+.product-gallery__thumb.is-active{opacity:1;border-color:var(--red)}
+
+.product-info__name{font-size:34px;margin:14px 0 8px}
+.product-info__spec{font-size:15px;color:var(--body);margin:0 0 20px}
+.product-info__desc{margin:22px 0}
+.product-info__actions{margin:0 0 26px}
+
+.product-related{margin-top:16px}
+
+@media (max-width:960px){
+  .product-detail{grid-template-columns:1fr;gap:36px}
+}

@@ -99,6 +99,41 @@ function db_run(string $sql, array $params = []): int
     return $stmt->rowCount();
 }
 
+/**
+ * Move an uploaded file (one entry from $_FILES) into $destDir with a
+ * randomly generated filename — the original filename is never trusted or
+ * reused. Returns the new filename, or null if no file was sent, the
+ * extension isn't in $allowedExt, or (when $isImage) the content doesn't
+ * actually decode as an image. Used for product images, gallery photos, and
+ * catalog PDFs uploaded from the admin.
+ */
+function save_uploaded_file(array $file, string $destDir, array $allowedExt, bool $isImage): ?string
+{
+    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+        return null;
+    }
+
+    $ext = strtolower(pathinfo((string) $file['name'], PATHINFO_EXTENSION));
+    if (!in_array($ext, $allowedExt, true)) {
+        return null;
+    }
+
+    if ($isImage) {
+        if (@getimagesize($file['tmp_name']) === false) {
+            return null;
+        }
+    } elseif (substr((string) file_get_contents($file['tmp_name'], false, null, 0, 4), 0, 4) !== '%PDF') {
+        return null;
+    }
+
+    if (!is_dir($destDir)) {
+        mkdir($destDir, 0755, true);
+    }
+
+    $filename = bin2hex(random_bytes(8)) . '.' . $ext;
+    return move_uploaded_file($file['tmp_name'], $destDir . '/' . $filename) ? $filename : null;
+}
+
 /** Escape for safe HTML output. */
 function h(?string $value): string
 {
