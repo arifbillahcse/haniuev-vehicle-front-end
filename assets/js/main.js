@@ -369,27 +369,17 @@
       field.addEventListener('input', function () { clearError(field); });
     });
 
+    // Client-side validation only gates the submit; a real POST to this
+    // same PHP page does the actual save (see includes/inquiry-handler.php).
+    // Only block the browser's default submit when validation fails.
     form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
       if (!validate()) {
+        e.preventDefault();
         var firstBad = $('.field.has-error input, .field.has-error textarea', form);
         if (firstBad) firstBad.focus();
         return;
       }
-
-      // Front-end only: swap this block for your real endpoint.
-      submit.classList.add('is-loading');
-      if (status) status.classList.remove('is-shown');
-
-      window.setTimeout(function () {
-        submit.classList.remove('is-loading');
-        form.reset();
-        if (status) {
-          status.textContent = 'Thank you — your inquiry has been received. Our export team will reply within 24 hours.';
-          status.classList.add('is-shown');
-        }
-      }, 900);
+      if (submit) submit.classList.add('is-loading');
     });
   }
 

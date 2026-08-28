@@ -1120,7 +1120,18 @@ a.contact-rows__value:hover{color:var(--red)}
 }
 
 /* ==========================================================================
-   24. PRINT
+   24. PROSE  (long-form reading column — blog post body)
+   ========================================================================== */
+.prose{max-width:760px;margin:0 auto}
+.prose p{font-size:16.5px;line-height:1.85;color:var(--body);margin:0 0 22px}
+.prose p:last-child{margin-bottom:0}
+.prose__meta{
+  display:flex;align-items:center;gap:10px;margin:0 0 36px;
+  font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;
+}
+
+/* ==========================================================================
+   25. PRINT
    ========================================================================== */
 @media print{
   .site-header,.to-top,.hero__scroll,.nav-scrim{display:none}

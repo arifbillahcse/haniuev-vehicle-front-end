@@ -1,51 +1,95 @@
-# HANIU EV — Front End
+# HANIU EV — Website + Admin
 
-Static front end for HANIU, a China-based B2B electric vehicle manufacturer (e-tricycles,
-e-bicycles, e-motorcycles, four-wheelers). Built from the reference design as plain
-HTML / CSS / JavaScript — no build step, no framework, no dependencies.
+Raw PHP site for HANIU, a China-based B2B electric vehicle manufacturer (e-tricycles,
+e-bicycles, e-motorcycles, four-wheelers). No framework — plain PHP with a PDO/SQLite
+database, chosen so it deploys on literally any budget PHP host (no Composer, no SSH,
+no separate database server to provision). Vehicles, parts, and blog posts are managed
+through a small login-gated admin dashboard at `/admin`.
 
-## Running it
+## Running it locally
 
-Open `index.html` directly, or serve the folder:
+Requires PHP 8.1+ with `pdo_sqlite` (bundled by default in virtually every PHP install).
 
 ```bash
-python3 -m http.server 8000
+php -S localhost:8000
 # → http://localhost:8000
 ```
+
+The database (`data/haniu.sqlite`) is created automatically from `schema.sql` — with seed
+products, sample blog posts, and one admin login — the first time any page runs. Nothing to
+install, migrate, or configure by hand.
+
+**Default admin login:** `admin` / `ChangeMe123!` at `/admin/login.php` — change it from the
+dashboard immediately after first login.
 
 ## Structure
 
 ```
-index.html                Home page
-about-us.html             About page
-contact.html              Contact page
-electric-bicycles.html    Electric Bicycles category page
-motors-controllers.html   Motors & Controllers category page
-assets/css/style.css      Design tokens + everything shared (header, footer, buttons, forms,
-                           the compact page hero, contact-detail rows, product cards)
-assets/css/about.css      Only what the About page adds; loads after style.css
-assets/css/contact.css    Only what the Contact page adds; loads after style.css
-assets/js/main.js         Header, menus, scroll reveal, counters, form — drives every page
-assets/images/            Drop your photography here (see below)
+index.php, about-us.php,        Public pages. Each is: config.php → header.php →
+  contact.php, blog.php,        page content → footer.php.
+  post.php, electric-bicycles.php,
+  motors-controllers.php
+config.php                      PDO connection, schema auto-bootstrap, db_all/db_one/db_run
+                                 helpers, h()/slugify()/unique_slug() helpers
+schema.sql                      Table definitions + seed data
+includes/header.php             <head>, SVG icon sprite, nav — shared by every public page
+includes/footer.php             Footer + closing tags — shared by every public page
+includes/auth.php               require_admin() / attempt_login() / logout()
+includes/inquiry-handler.php    Server-side validation + save for the contact form
+includes/inquiry-fields.php     The Full Name/Company/Email/Country/Message fields, shared
+                                 by every page's #inquiryForm (light and About's dark variant)
+includes/product-card.php       Renders one .prod card from a products row
+includes/post-card.php          Renders one .prod card from a posts row (same component)
+includes/category-template.php Hero + product grid for a single category — electric-bicycles.php
+                                 and motors-controllers.php are ~15-line wrappers around this
+admin/                          Login-gated dashboard — see "Admin dashboard" below
+assets/css/style.css            Design tokens + everything shared (header, footer, buttons,
+                                 forms, page hero, contact-detail rows, product cards, prose)
+assets/css/about.css            Only what the About page adds; loads after style.css
+assets/css/contact.css          Only what the Contact page adds; loads after style.css
+assets/js/main.js               Header, menus, scroll reveal, counters, form — every page
+assets/images/                  Drop your photography here (see below)
+data/                           SQLite file lives here; .htaccess + index.php block direct
+                                 HTTP access to it (see "Security notes")
 ```
 
-All pages share one header, footer and script. The SVG icon sprite is inlined at the
-top of each HTML file — Chrome does not support external `<use href="sprite.svg#id">`
-references, so the sprite is duplicated rather than linked. **Keep every
-`<svg class="svg-sprite">` block identical** when adding an icon.
+All pages share one header, footer, and script via PHP `require`, so the SVG icon sprite and
+nav now live in exactly one place (`includes/header.php`) instead of being hand-duplicated
+across files.
 
-`electric-bicycles.html` and `motors-controllers.html` needed no new CSS at all — both are
-just the shared page hero plus the same `.prod-grid`/`.prod` card component the homepage's
-"Popular Models" section already uses. That's the pattern for any other single-category page
-(tricycles, motorcycles, four-wheelers, batteries, wiring harness, ...): copy one of these two
-files, swap the hero copy and the six cards' text/images, reuse `.prod-grid` — don't invent a
-new card.
+`electric-bicycles.php` and `motors-controllers.php` are thin wrappers that set a category
+slug (or array of slugs) and hero copy, then `require includes/category-template.php`, which
+queries `products` and renders the same `.prod-grid` the homepage's "Popular Models" uses. To
+add another category page (tricycles, four-wheelers, batteries, ...), copy one of those two
+files and change three variables — no new template, no new CSS.
 
 A component gets promoted from a page's own stylesheet into the shared `style.css` the
 moment a second page needs it — that's how the page hero (`.page-hero`, `.pill`,
 `.hero-stats`) and the contact-detail rows (`.contact-rows`) ended up shared rather than
-duplicated. If you add a fourth page that reuses something from `about.css` or
-`contact.css`, move it to `style.css` the same way rather than copying it.
+duplicated. Follow the same rule for anything new.
+
+## Admin dashboard
+
+Everything under `/admin` requires login (`includes/auth.php`'s `require_admin()`, checked
+at the top of every page except `login.php`).
+
+| Page | Does |
+| --- | --- |
+| `admin/index.php` | Dashboard: counts, quick links, change-password form |
+| `admin/products.php` | List/add/edit/delete vehicles and parts (feeds the homepage grid + category pages) |
+| `admin/posts.php` | List/add/edit/delete blog posts (feeds `blog.php` / `post.php`) |
+| `admin/messages.php` | Read/delete contact-form inquiries; visiting the inbox marks them read |
+
+Each list+form page is one file using `$_GET['action']` (`list` / `new` / `edit`) and a
+POST-redirect-GET pattern on save, so there's no separate "form" file to keep in sync with
+the "list" file. Product/post images are entered as a filename (upload the file to
+`assets/images/` yourself, then type its name) rather than a file-upload widget — deliberately
+kept simple, and consistent with the placeholder-on-missing-image behavior the public site
+already has everywhere else.
+
+**To add a new category** (e.g. "Batteries & Chargers"): add its slug to the `CATEGORIES`
+array at the top of `admin/products.php`, then create products in that category from the
+dashboard — no database migration needed, `products.category` is a plain text column.
 
 ## Adding images
 
@@ -93,6 +137,15 @@ Motors & Controllers page:
 | File | Used for | Suggested size |
 | --- | --- | --- |
 | `motor-hub500.jpg` `motor-middrive800.jpg` `motor-cargo1500.jpg` `controller-350.jpg` `controller-1000.jpg` `controller-smart500.jpg` | Model cards | 600×400 |
+
+Blog (seed posts reference these; also settable per-post from `admin/posts.php`):
+
+| File | Used for | Suggested size |
+| --- | --- | --- |
+| `blog-eec-certification.jpg` `blog-wuxi-powertrain.jpg` `blog-moq-guide.jpg` | Post cover images | 1200×800 |
+
+New products/posts added from the admin dashboard follow the same convention: upload the
+image to `assets/images/` via FTP, then type its filename into the product/post form.
 
 ## Design system
 
@@ -145,16 +198,38 @@ All of it is disabled under `prefers-reduced-motion: reduce`.
 
 ## Form
 
-All three pages carry an `#inquiryForm` — light on Home and Contact, a translucent dark
-variant (`.field--dark`) on the About page. The same handler validates required fields and
-email format on the client, marks bad fields, and shows a success message. It does **not**
-submit anywhere — wire the block marked `Front-end only:` in `main.js` to your endpoint.
+Home, About, and Contact each carry an `#inquiryForm` — light on Home and Contact, a
+translucent dark variant (`.field--dark`) on About — built from the shared
+`includes/inquiry-fields.php` partial. Submission is a real HTTP POST (not JavaScript): `main.js`
+only blocks the browser's default submit when client-side validation fails; a valid submit goes
+through normally to `includes/inquiry-handler.php`, which re-validates server-side (never trust
+the client), saves the row to the `messages` table, and re-renders the page with a server-side
+success banner and the form cleared. Every inquiry is readable in `admin/messages.php`.
 
 ## Browser support
 
 Modern evergreen browsers. Uses `IntersectionObserver`, CSS custom properties, `aspect-ratio`,
 `backdrop-filter` and SVG sprite `<use href>`; all degrade gracefully — the reveal animations
 fall back to visible content if `IntersectionObserver` is missing.
+
+## Security notes
+
+- **Passwords** are hashed with `password_hash()` (bcrypt) — never stored or compared in
+  plain text.
+- **SQL** is 100% parameterized through `db_all`/`db_one`/`db_run` (PDO prepared statements)
+  — no string-concatenated queries anywhere, including in the admin forms.
+- **The SQLite file** (`data/haniu.sqlite`) is blocked from direct HTTP access by
+  `data/.htaccess` (`Require all denied`) on Apache — the standard, correct fix on the
+  overwhelming majority of budget PHP hosts. Two caveats: it does **not** apply on PHP's
+  built-in dev server (`php -S`), which ignores `.htaccess` entirely and will serve the file
+  directly — that's fine for local development but never expose `php -S` to the internet. And
+  it does **not** apply on Nginx, which doesn't read `.htaccess` at all — if you deploy there,
+  add an equivalent block yourself, e.g. `location ^~ /data/ { deny all; }` in the server config.
+- **CSRF protection is intentionally omitted** to keep the admin small, on the judgment that a
+  single low-privilege internal user is a low target. If that changes (multiple admin accounts,
+  more sensitive actions), add a token check before mutating requests in `admin/*.php`.
+- Product/post images are entered as filenames, not uploaded through a form — there is no
+  file-upload code to secure because there is no file upload.
 
 ## Notes on the reference
 
