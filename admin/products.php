@@ -10,6 +10,9 @@ const CATEGORIES = [
     'four-wheeler' => 'Four-Wheeler',
     'motor'        => 'Motor',
     'controller'   => 'Controller',
+    'battery'      => 'Battery & Charger',
+    'frame'        => 'Frame & Body Part',
+    'wiring'       => 'Wiring Harness',
 ];
 const BADGE_COLORS = ['red', 'navy', 'green', 'blue'];
 

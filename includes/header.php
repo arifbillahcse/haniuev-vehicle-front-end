@@ -104,10 +104,10 @@ $isActive = fn(string $key) => $activeNav === $key ? ' is-active' : '';
           <div class="dropdown">
             <ul class="dropdown__list">
               <li><a href="motors-controllers.php"><span class="dropdown__dot"></span>Motors &amp; Controllers<small>Wuxi powertrain base</small></a></li>
-              <li><a href="index.php#factory"><span class="dropdown__dot"></span>Batteries &amp; Chargers<small>Lithium &amp; lead-acid</small></a></li>
-              <li><a href="index.php#factory"><span class="dropdown__dot"></span>Frames &amp; Body Parts<small>In-house welding</small></a></li>
-              <li><a href="index.php#factory"><span class="dropdown__dot"></span>Wiring Harness<small>Custom looms</small></a></li>
-              <li><a href="contact.php#contact-form" class="dropdown__all">Request spare parts list <svg><use href="#i-arrow-right"/></svg></a></li>
+              <li><a href="batteries-chargers.php"><span class="dropdown__dot"></span>Batteries &amp; Chargers<small>Lithium &amp; lead-acid</small></a></li>
+              <li><a href="frames-body-parts.php"><span class="dropdown__dot"></span>Frames &amp; Body Parts<small>In-house welding</small></a></li>
+              <li><a href="wiring-harness.php"><span class="dropdown__dot"></span>Wiring Harness<small>Custom looms</small></a></li>
+              <li><a href="all-parts.php" class="dropdown__all">View All Parts <svg><use href="#i-arrow-right"/></svg></a></li>
             </ul>
           </div>
         </li>
