@@ -51,6 +51,8 @@ includes/product-card.php       Renders one .prod card from a products row
 includes/post-card.php          Renders one .prod card from a posts row (same component)
 includes/category-template.php Hero + product grid for a single category — electric-bicycles.php
                                  and motors-controllers.php are ~15-line wrappers around this
+category.php                    Generic ?slug= category page — the automatic public URL for any
+                                 category added from admin/categories.php
 admin/                          Login-gated dashboard — see "Admin dashboard" below
 assets/css/style.css            Design tokens + everything shared (header, footer, buttons,
                                  forms, page hero, contact-detail rows, product cards, prose)
@@ -83,6 +85,7 @@ at the top of every page except `login.php`).
 | Page | Does |
 | --- | --- |
 | `admin/index.php` | Dashboard: counts, quick links, change-password form |
+| `admin/categories.php` | List/add/edit/delete product categories (feeds the Category dropdown on `admin/products.php` and the category dropdown menus) |
 | `admin/products.php` | List/add/edit/delete vehicles and parts (feeds the homepage grid + category pages) |
 | `admin/posts.php` | List/add/edit/delete blog posts (feeds `blog.php` / `post.php`) |
 | `admin/messages.php` | Read/delete contact-form inquiries; visiting the inbox marks them read |
@@ -94,9 +97,14 @@ the "list" file. Product/post images are entered as a filename (upload the file 
 kept simple, and consistent with the placeholder-on-missing-image behavior the public site
 already has everywhere else.
 
-**To add a new category** (e.g. "Batteries & Chargers"): add its slug to the `CATEGORIES`
-array at the top of `admin/products.php`, then create products in that category from the
-dashboard — no database migration needed, `products.category` is a plain text column.
+**Adding a category**: go to `admin/categories.php` → Add Category, give it a name (and
+optionally a hero label/description). It's immediately selectable when adding a product, and
+gets a working public page for free at `category.php?slug=your-category` — no code, no
+migration. A category can't be deleted while products still use it. Deliberately separate from
+the site's hand-built menus (`index.php`, `about-us.php`, the Vehicles/Parts nav dropdowns) —
+adding a new category doesn't automatically add a nav link or a pretty dedicated URL like
+`electric-bicycles.php`; that's still a short code change, by design, since the menus are
+curated rather than auto-generated.
 
 ## Adding images
 

@@ -14,9 +14,30 @@ CREATE TABLE admins (
 INSERT INTO admins (username, password_hash) VALUES
     ('admin', '$2y$12$.Pb7X8uu8JeB5m7saB.a0OxnQipPmGOk222UcmCX/QMPuWxKsOo2i');
 
+CREATE TABLE categories (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    slug       VARCHAR(60) NOT NULL UNIQUE,
+    name       VARCHAR(100) NOT NULL,
+    pill       VARCHAR(100) NOT NULL DEFAULT '', -- small eyebrow label shown on the category page hero
+    lead       VARCHAR(500) NOT NULL DEFAULT '', -- hero paragraph shown on the category page
+    sort_order INT NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO categories (slug, name, pill, lead, sort_order) VALUES
+    ('tricycle',     'Tricycle',          'CARGO & UTILITY',      'Electric tricycles engineered for heavy loads and daily hauling -- available for wholesale, distribution, and OEM/ODM branding.', 10),
+    ('bicycle',      'Bicycle',           'URBAN MOBILITY',       'Electric bicycles built for everyday city riding -- available for wholesale, distribution, and OEM/ODM branding.', 20),
+    ('motorcycle',   'Motorcycle',        'HIGH PERFORMANCE',     'Powerful, factory-direct electric bikes built for speed and range -- available for wholesale, distribution, and OEM/ODM branding.', 30),
+    ('four-wheeler', 'Four-Wheeler',      'LEISURE & TRANSPORT',  'Comfortable electric four-wheelers built for leisure and short-haul transport -- available for wholesale, distribution, and OEM/ODM branding.', 40),
+    ('motor',        'Motor',             'POWERTRAIN',           'Hub motors and mid-drive motors engineered and tested in-house at our Wuxi powertrain base.', 50),
+    ('controller',   'Controller',        'POWERTRAIN',           'Programmable controllers engineered and tested in-house at our Wuxi powertrain base.', 60),
+    ('battery',      'Battery & Charger', 'LITHIUM & LEAD-ACID',  'Lithium and lead-acid battery packs and matching chargers, factory-tested for range and cycle life.', 70),
+    ('frame',        'Frame & Body Part', 'IN-HOUSE WELDING',     'Welded frames and body panels produced in-house on our own production lines.', 80),
+    ('wiring',       'Wiring Harness',    'CUSTOM LOOMS',         'Custom wiring looms built to spec for every model in our lineup.', 90);
+
 CREATE TABLE products (
     id          INT AUTO_INCREMENT PRIMARY KEY,
-    category    VARCHAR(50) NOT NULL,   -- tricycle | bicycle | motorcycle | four-wheeler | motor | controller
+    category    VARCHAR(50) NOT NULL,   -- slug of a row in categories
     name        VARCHAR(150) NOT NULL,  -- e.g. "HN-B200 Urban"
     slug        VARCHAR(190) NOT NULL UNIQUE,
     cat_label   VARCHAR(100) NOT NULL,  -- small kicker shown on the card, e.g. "E-BICYCLE"

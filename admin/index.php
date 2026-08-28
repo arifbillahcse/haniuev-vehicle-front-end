@@ -4,6 +4,7 @@ require __DIR__ . '/../includes/auth.php';
 $admin = require_admin();
 
 $counts = [
+    'categories' => db_one('SELECT COUNT(*) AS n FROM categories')['n'],
     'products' => db_one('SELECT COUNT(*) AS n FROM products')['n'],
     'posts'    => db_one('SELECT COUNT(*) AS n FROM posts')['n'],
     'messages' => db_one('SELECT COUNT(*) AS n FROM messages')['n'],
@@ -45,6 +46,7 @@ require __DIR__ . '/includes/chrome-top.php';
 </div>
 
 <div class="stat-grid">
+  <div class="stat"><b><?= (int) $counts['categories'] ?></b><span>Categories</span></div>
   <div class="stat"><b><?= (int) $counts['products'] ?></b><span>Products</span></div>
   <div class="stat"><b><?= (int) $counts['posts'] ?></b><span>Blog Posts</span></div>
   <div class="stat"><b><?= (int) $counts['messages'] ?></b><span>Total Messages</span></div>
@@ -54,7 +56,8 @@ require __DIR__ . '/includes/chrome-top.php';
 <div class="card">
   <h2 style="font-size:16px">Quick Links</h2>
   <p style="margin:0 0 14px;color:var(--muted);font-size:13.5px">Add new content or review recent inquiries.</p>
-  <a class="btn btn--red btn--sm" href="products.php?action=new">+ Add Product</a>
+  <a class="btn btn--red btn--sm" href="categories.php?action=new">+ Add Category</a>
+  <a class="btn btn--ghost btn--sm" href="products.php?action=new">+ Add Product</a>
   <a class="btn btn--ghost btn--sm" href="posts.php?action=new">+ Add Blog Post</a>
   <a class="btn btn--ghost btn--sm" href="messages.php">View Messages</a>
 </div>

@@ -3,18 +3,12 @@ require __DIR__ . '/../config.php';
 require __DIR__ . '/../includes/auth.php';
 require_admin();
 
-const CATEGORIES = [
-    'tricycle'     => 'Tricycle',
-    'bicycle'      => 'Bicycle',
-    'motorcycle'   => 'Motorcycle',
-    'four-wheeler' => 'Four-Wheeler',
-    'motor'        => 'Motor',
-    'controller'   => 'Controller',
-    'battery'      => 'Battery & Charger',
-    'frame'        => 'Frame & Body Part',
-    'wiring'       => 'Wiring Harness',
-];
 const BADGE_COLORS = ['red', 'navy', 'green', 'blue'];
+
+// Categories are managed from admin/categories.php — add/edit/remove them there.
+$allCategories = db_all('SELECT slug, name FROM categories ORDER BY sort_order, name');
+$categoryNames = array_column($allCategories, 'name', 'slug');
+$categorySlugsValid = array_column($allCategories, 'slug');
 
 $action = $_GET['action'] ?? 'list';
 $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
@@ -44,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_product'])) {
         'sort_order'  => (int) ($_POST['sort_order'] ?? 0),
     ];
 
-    if (!array_key_exists($data['category'], CATEGORIES)) {
+    if (!in_array($data['category'], $categorySlugsValid, true)) {
         $errors[] = 'Please choose a valid category.';
     }
     if ($data['name'] === '') {
@@ -108,10 +102,11 @@ if ($action === 'new' || $action === 'edit') {
           <div class="field">
             <label for="category">Category</label>
             <select id="category" name="category">
-              <?php foreach (CATEGORIES as $slug => $label): ?>
-                <option value="<?= h($slug) ?>" <?= $product['category'] === $slug ? 'selected' : '' ?>><?= h($label) ?></option>
+              <?php foreach ($allCategories as $c): ?>
+                <option value="<?= h($c['slug']) ?>" <?= $product['category'] === $c['slug'] ? 'selected' : '' ?>><?= h($c['name']) ?></option>
               <?php endforeach; ?>
             </select>
+            <small>Need a new one? <a href="categories.php?action=new" target="_blank" rel="noopener">Add a category</a>.</small>
           </div>
           <div class="field">
             <label for="name">Name</label>
@@ -200,7 +195,7 @@ $products = db_all('SELECT * FROM products ORDER BY category, sort_order, id');
         <tr>
           <td><img class="thumb" src="../assets/images/<?= h($p['image']) ?>" alt="" onerror="this.style.visibility='hidden'"></td>
           <td><strong><?= h($p['name']) ?></strong><br><span style="color:var(--muted)"><?= h($p['spec']) ?></span></td>
-          <td><?= h(CATEGORIES[$p['category']] ?? $p['category']) ?></td>
+          <td><?= h($categoryNames[$p['category']] ?? $p['category']) ?></td>
           <td><?= $p['badge_text'] !== '' ? '<span class="pill-badge">' . h($p['badge_text']) . '</span>' : '—' ?></td>
           <td><span class="pill-badge<?= $p['featured'] ? ' pill-badge--on' : '' ?>"><?= $p['featured'] ? 'Yes' : 'No' ?></span></td>
           <td><?= (int) $p['sort_order'] ?></td>
