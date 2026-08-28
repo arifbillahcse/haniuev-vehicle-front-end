@@ -16,21 +16,27 @@ python3 -m http.server 8000
 ## Structure
 
 ```
-index.html              Home page
-about-us.html           About page
-contact.html            Contact page
-assets/css/style.css    Design tokens + everything shared (header, footer, buttons, forms,
-                         the compact page hero, contact-detail rows)
-assets/css/about.css    Only what the About page adds; loads after style.css
-assets/css/contact.css  Only what the Contact page adds; loads after style.css
-assets/js/main.js       Header, menus, scroll reveal, counters, form — drives all three pages
-assets/images/          Drop your photography here (see below)
+index.html                Home page
+about-us.html             About page
+contact.html              Contact page
+electric-bicycles.html    Electric Bicycles category page
+assets/css/style.css      Design tokens + everything shared (header, footer, buttons, forms,
+                           the compact page hero, contact-detail rows, product cards)
+assets/css/about.css      Only what the About page adds; loads after style.css
+assets/css/contact.css    Only what the Contact page adds; loads after style.css
+assets/js/main.js         Header, menus, scroll reveal, counters, form — drives every page
+assets/images/            Drop your photography here (see below)
 ```
 
-All three pages share one header, footer and script. The SVG icon sprite is inlined at the
+All pages share one header, footer and script. The SVG icon sprite is inlined at the
 top of each HTML file — Chrome does not support external `<use href="sprite.svg#id">`
-references, so the sprite is duplicated rather than linked. **Keep all three
-`<svg class="svg-sprite">` blocks identical** when adding an icon.
+references, so the sprite is duplicated rather than linked. **Keep every
+`<svg class="svg-sprite">` block identical** when adding an icon.
+
+`electric-bicycles.html` needed no new CSS at all — it's just the shared page hero plus the
+same `.prod-grid`/`.prod` card component the homepage's "Popular Models" section already
+uses. That's the pattern for any other single-category page (tricycles, motorcycles,
+four-wheelers): reuse `.prod-grid`, don't invent a new card.
 
 A component gets promoted from a page's own stylesheet into the shared `style.css` the
 moment a second page needs it — that's how the page hero (`.page-hero`, `.pill`,
@@ -72,6 +78,12 @@ Contact page:
 | File | Used for | Suggested size |
 | --- | --- | --- |
 | `contact-map.jpg` | Find-us panel — location map | 600×400 |
+
+Electric Bicycles page:
+
+| File | Used for | Suggested size |
+| --- | --- | --- |
+| `bike-urban.jpg` `bike-commuter.jpg` `bike-sport.jpg` `bike-city.jpg` `bike-cargo.jpg` `bike-folding.jpg` | Model cards | 600×400 |
 
 ## Design system
 
