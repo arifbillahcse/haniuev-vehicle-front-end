@@ -4,6 +4,7 @@ require __DIR__ . '/includes/inquiry-handler.php';
 
 $product = db_one('SELECT * FROM products WHERE slug = ?', [(string) ($_GET['slug'] ?? '')]);
 $gallery = $product ? db_all('SELECT * FROM product_images WHERE product_id = ? ORDER BY sort_order, id', [$product['id']]) : [];
+$specs = $product ? db_all('SELECT * FROM product_specs WHERE product_id = ? ORDER BY sort_order, id', [$product['id']]) : [];
 $related = $product ? db_all(
     'SELECT * FROM products WHERE category = ? AND id != ? ORDER BY sort_order LIMIT 3',
     [$product['category'], $product['id']]
@@ -82,6 +83,14 @@ require __DIR__ . '/includes/header.php';
               <p><?= h($para) ?></p>
             <?php endforeach; ?>
           </div>
+        <?php endif; ?>
+
+        <?php if ($specs): ?>
+          <table class="spec-table">
+            <?php foreach ($specs as $s): ?>
+              <tr><th><?= h($s['label']) ?></th><td><?= h($s['value']) ?></td></tr>
+            <?php endforeach; ?>
+          </table>
         <?php endif; ?>
 
         <?php if ($product['catalog_pdf'] !== ''): ?>

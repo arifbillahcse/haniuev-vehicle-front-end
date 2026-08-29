@@ -118,6 +118,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_product'])) {
             $productId = (int) db()->lastInsertId();
         }
 
+        // Specs — full replace: drop the old rows, insert whatever was submitted.
+        db_run('DELETE FROM product_specs WHERE product_id = ?', [$productId]);
+        $specLabels = $_POST['spec_label'] ?? [];
+        $specValues = $_POST['spec_value'] ?? [];
+        $specOrder = 0;
+        foreach ($specLabels as $i => $label) {
+            $label = trim((string) $label);
+            $value = trim((string) ($specValues[$i] ?? ''));
+            if ($label === '' || $value === '') {
+                continue;
+            }
+            $specOrder += 10;
+            db_run('INSERT INTO product_specs (product_id, label, value, sort_order) VALUES (?,?,?,?)', [$productId, $label, $value, $specOrder]);
+        }
+
         // Gallery photos — append any newly uploaded ones after existing sort orders.
         if (!empty($_FILES['gallery_images']['name'][0])) {
             $nextOrder = (int) (db_one('SELECT COALESCE(MAX(sort_order), 0) AS m FROM product_images WHERE product_id = ?', [$productId])['m']);
@@ -161,6 +176,16 @@ if ($action === 'new' || $action === 'edit') {
     $product = $data ?? ($id ? db_one('SELECT * FROM products WHERE id = ?', [$id]) : null);
     $product = $product ?? ['category' => 'bicycle', 'name' => '', 'cat_label' => '', 'spec' => '', 'description' => '', 'badge_text' => '', 'badge_color' => 'navy', 'image' => '', 'catalog_pdf' => '', 'featured' => 0, 'sort_order' => 0];
     $gallery = $id ? db_all('SELECT * FROM product_images WHERE product_id = ? ORDER BY sort_order, id', [$id]) : [];
+    // On a validation-failure re-render, rebuild the rows from what was just
+    // submitted so nothing the admin typed gets lost; otherwise load from the DB.
+    if (isset($_POST['spec_label'])) {
+        $specs = [];
+        foreach ($_POST['spec_label'] as $i => $label) {
+            $specs[] = ['label' => $label, 'value' => $_POST['spec_value'][$i] ?? ''];
+        }
+    } else {
+        $specs = $id ? db_all('SELECT * FROM product_specs WHERE product_id = ? ORDER BY sort_order, id', [$id]) : [];
+    }
     ?>
     <div class="admin-head">
       <div><h1><?= $id ? 'Edit Product' : 'Add Product' ?></h1></div>
@@ -222,6 +247,26 @@ if ($action === 'new' || $action === 'edit') {
         </div>
 
         <div class="field">
+          <label>Specifications</label>
+          <small style="display:block;margin-bottom:8px">Add whatever fields make sense for this product — Motor, Battery, Range, Colors, Certification, etc. Blank rows are ignored.</small>
+          <div id="specRows">
+            <?php foreach ($specs as $s): ?>
+              <div class="spec-row" style="display:flex;gap:8px;margin-bottom:8px">
+                <input type="text" name="spec_label[]" value="<?= h($s['label']) ?>" placeholder="e.g. Battery" style="flex:1">
+                <input type="text" name="spec_value[]" value="<?= h($s['value']) ?>" placeholder="e.g. 48V 20Ah Lithium" style="flex:1.4">
+                <button type="button" class="btn btn--ghost btn--sm" onclick="this.closest('.spec-row').remove()">Remove</button>
+              </div>
+            <?php endforeach; ?>
+            <div class="spec-row" style="display:flex;gap:8px;margin-bottom:8px">
+              <input type="text" name="spec_label[]" placeholder="e.g. Battery" style="flex:1">
+              <input type="text" name="spec_value[]" placeholder="e.g. 48V 20Ah Lithium" style="flex:1.4">
+              <button type="button" class="btn btn--ghost btn--sm" onclick="this.closest('.spec-row').remove()">Remove</button>
+            </div>
+          </div>
+          <button type="button" class="btn btn--ghost btn--sm" id="addSpecRow">+ Add Spec</button>
+        </div>
+
+        <div class="field">
           <label for="image_file">Main Image</label>
           <?php if ($product['image'] !== ''): ?>
             <div style="margin-bottom:8px">
@@ -267,6 +312,19 @@ if ($action === 'new' || $action === 'edit') {
         <button type="submit" class="btn btn--red"><?= $id ? 'Save Changes' : 'Add Product' ?></button>
       </form>
     </div>
+
+    <script>
+      document.getElementById('addSpecRow').addEventListener('click', function () {
+        var row = document.createElement('div');
+        row.className = 'spec-row';
+        row.style.cssText = 'display:flex;gap:8px;margin-bottom:8px';
+        row.innerHTML =
+          '<input type="text" name="spec_label[]" placeholder="e.g. Battery" style="flex:1">' +
+          '<input type="text" name="spec_value[]" placeholder="e.g. 48V 20Ah Lithium" style="flex:1.4">' +
+          '<button type="button" class="btn btn--ghost btn--sm" onclick="this.closest(\'.spec-row\').remove()">Remove</button>';
+        document.getElementById('specRows').appendChild(row);
+      });
+    </script>
 
     <?php if ($id): ?>
     <div class="card" style="max-width:640px;margin-top:20px">
