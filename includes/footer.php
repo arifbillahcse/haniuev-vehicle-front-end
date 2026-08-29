@@ -33,10 +33,6 @@ $ctaHref = $ctaHref ?? 'contact.php#contact-form';
           OEM/ODM fulfillment, and global distribution support from our 200,000 m² Tianjin
           headquarters.
         </p>
-        <p class="fcol__mini">CERTIFICATIONS</p>
-        <ul class="cert-chips">
-          <li>ISO 9001</li><li>EEC</li><li>COC</li><li>CCC</li><li>WMI</li>
-        </ul>
       </div>
 
       <div class="fcol" data-reveal data-reveal-delay="80">
