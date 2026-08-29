@@ -261,15 +261,33 @@
 .certcard__list li svg{flex:none;width:18px;height:18px;color:rgba(255,255,255,.9)}
 .certcard__list li:hover{transform:translateX(5px)}
 
-.certcard__proof{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.certcard__proof a{
-  width:64px;height:64px;flex:none;display:block;overflow:hidden;
-  border:2px solid rgba(255,255,255,.35);
-  transition:border-color .3s var(--ease);
+/* ==========================================================================
+   8b. CERTIFICATE GALLERY + LIGHTBOX
+   ========================================================================== */
+.cert-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.cert-gallery__item{
+  cursor:pointer;background:#fff;border:1px solid var(--line);padding:16px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
+  font:inherit;transition:transform .32s var(--ease),box-shadow .32s var(--ease);
 }
-.certcard__proof a:hover{border-color:#fff}
-.certcard__proof img{width:100%;height:100%;object-fit:cover;display:block}
-.certcard__proof-note{margin:10px 0 0;font-size:11.5px;color:rgba(255,255,255,.7)}
+.cert-gallery__item:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+.cert-gallery__item img{width:100%;height:200px;object-fit:contain;background:var(--bg-alt)}
+.cert-gallery__name{font-size:13.5px;font-weight:600;color:var(--ink)}
+
+.cert-modal{
+  position:fixed;inset:0;z-index:300;background:rgba(8,17,30,.92);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 20px;
+}
+.cert-modal[hidden]{display:none}
+.cert-modal__img{max-width:min(900px,92vw);max-height:78vh;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.cert-modal__caption{margin:18px 0 0;color:#fff;font-size:14px;text-align:center}
+.cert-modal__close{
+  position:absolute;top:20px;right:20px;width:42px;height:42px;border-radius:50%;
+  border:none;background:rgba(255,255,255,.12);color:#fff;font-size:26px;line-height:1;
+  cursor:pointer;transition:background-color .25s var(--ease);
+}
+.cert-modal__close:hover{background:rgba(255,255,255,.24)}
 
 /* ==========================================================================
    9. COMPETITIVE EDGE

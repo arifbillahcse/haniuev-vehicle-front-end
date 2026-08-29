@@ -403,22 +403,43 @@ require __DIR__ . '/includes/header.php';
             <li><svg><use href="#i-check-circle"/></svg>WMI World Factory Verified</li>
             <li><svg><use href="#i-check-circle"/></svg>CCC China Compulsory Cert.</li>
           </ul>
-          <?php $certificates = db_all('SELECT * FROM certificates ORDER BY sort_order, id'); ?>
-          <?php if ($certificates): ?>
-            <div class="certcard__proof">
-              <?php foreach ($certificates as $cert): ?>
-                <a href="assets/images/<?= h($cert['image']) ?>" target="_blank" rel="noopener" title="<?= h($cert['name']) ?>">
-                  <img src="assets/images/<?= h($cert['image']) ?>" alt="<?= h($cert['name']) ?>">
-                </a>
-              <?php endforeach; ?>
-            </div>
-            <p class="certcard__proof-note">Click a certificate to view full size</p>
-          <?php endif; ?>
         </div>
       </aside>
     </div>
   </div>
 </section>
+
+<!-- ============================================================
+     CERTIFICATE GALLERY
+     ============================================================ -->
+<?php $certificates = db_all('SELECT * FROM certificates ORDER BY sort_order, id'); ?>
+<?php if ($certificates): ?>
+<section class="section section--alt" id="certificates">
+  <div class="container">
+    <header class="sec-head">
+      <p class="eyebrow eyebrow--center" data-reveal><span class="eyebrow__rule"></span>QUALITY &amp; COMPLIANCE<span class="eyebrow__rule"></span></p>
+      <h2 class="h2" data-reveal data-reveal-delay="80">Our Certifications</h2>
+      <span class="sec-head__rule" data-reveal data-reveal-delay="120"></span>
+      <p class="sec-head__sub" data-reveal data-reveal-delay="160">Click any certificate to view it in full detail.</p>
+    </header>
+
+    <div class="cert-gallery">
+      <?php foreach ($certificates as $i => $cert): ?>
+        <button type="button" class="cert-gallery__item" data-reveal data-reveal-delay="<?= ($i % 4) * 80 ?>" data-full="assets/images/<?= h($cert['image']) ?>" data-name="<?= h($cert['name']) ?>">
+          <img src="assets/images/<?= h($cert['image']) ?>" alt="<?= h($cert['name']) ?>">
+          <span class="cert-gallery__name"><?= h($cert['name']) ?></span>
+        </button>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<div class="cert-modal" id="certModal" hidden>
+  <button type="button" class="cert-modal__close" id="certModalClose" aria-label="Close">&times;</button>
+  <img class="cert-modal__img" id="certModalImg" src="" alt="">
+  <p class="cert-modal__caption" id="certModalCaption"></p>
+</div>
+<?php endif; ?>
 
 <!-- ============================================================
      COMPETITIVE EDGE

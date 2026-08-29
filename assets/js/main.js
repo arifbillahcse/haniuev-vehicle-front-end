@@ -406,7 +406,40 @@
   }
 
   /* ------------------------------------------------------------------
-     12. FOOTER YEAR
+     12. CERTIFICATE GALLERY LIGHTBOX
+     Clicking a certificate opens it full-size in a modal overlay.
+     No-ops on any page without a .cert-gallery.
+     ------------------------------------------------------------------ */
+  function initCertGallery() {
+    var items = $$('.cert-gallery__item');
+    var modal = $('#certModal');
+    if (!items.length || !modal) return;
+
+    var modalImg = $('#certModalImg', modal);
+    var modalCaption = $('#certModalCaption', modal);
+    var closeBtn = $('#certModalClose', modal);
+
+    function open(item) {
+      modalImg.src = item.getAttribute('data-full') || '';
+      modalCaption.textContent = item.getAttribute('data-name') || '';
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    items.forEach(function (item) {
+      item.addEventListener('click', function () { open(item); });
+    });
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) close(); });
+  }
+
+  /* ------------------------------------------------------------------
+     13. FOOTER YEAR
      ------------------------------------------------------------------ */
   function initYear() {
     var el = $('#year');
@@ -427,6 +460,7 @@
     initToTop();
     initImageFallback();
     initProductGallery();
+    initCertGallery();
     initForm();
     initYear();
   }
