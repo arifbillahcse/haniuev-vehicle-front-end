@@ -99,6 +99,22 @@ function db_run(string $sql, array $params = []): int
     return $stmt->rowCount();
 }
 
+/** All site settings as [key => value], e.g. social media links. Cached per-request. */
+function settings(): array
+{
+    static $cache = null;
+    if ($cache === null) {
+        $cache = array_column(db_all('SELECT setting_key, setting_value FROM settings'), 'setting_value', 'setting_key');
+    }
+    return $cache;
+}
+
+/** One setting's value, or '' if not set. */
+function setting(string $key): string
+{
+    return settings()[$key] ?? '';
+}
+
 /**
  * Move an uploaded file (one entry from $_FILES) into $destDir with a
  * randomly generated filename — the original filename is never trusted or

@@ -60,6 +60,7 @@ require __DIR__ . '/includes/chrome-top.php';
   <a class="btn btn--ghost btn--sm" href="products.php?action=new">+ Add Product</a>
   <a class="btn btn--ghost btn--sm" href="posts.php?action=new">+ Add Blog Post</a>
   <a class="btn btn--ghost btn--sm" href="messages.php">View Messages</a>
+  <a class="btn btn--ghost btn--sm" href="settings.php">Edit Settings</a>
 </div>
 
 <div class="card" style="max-width:440px">

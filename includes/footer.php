@@ -75,14 +75,15 @@ $ctaHref = $ctaHref ?? 'contact.php#contact-form';
           <li><a href="tel:+8618841800421"><span class="fcontact__ico"><svg><use href="#i-phone"/></svg></span><span>+86 18841800421</span></a></li>
         </ul>
 
+        <?php $social = settings(); ?>
         <p class="fcol__mini fcol__mini--gap">FOLLOW US</p>
         <ul class="socials">
-          <li><a href="#" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a></li>
-          <li><a href="#" aria-label="Facebook"><svg><use href="#i-facebook"/></svg></a></li>
-          <li><a href="#" aria-label="Instagram"><svg><use href="#i-instagram"/></svg></a></li>
-          <li><a href="#" aria-label="YouTube"><svg><use href="#i-youtube"/></svg></a></li>
-          <li><a href="#" aria-label="TikTok"><svg><use href="#i-tiktok"/></svg></a></li>
-          <li><a href="#" aria-label="WhatsApp"><svg><use href="#i-whatsapp"/></svg></a></li>
+          <?php if ($social['social_linkedin'] !== ''): ?><li><a href="<?= h($social['social_linkedin']) ?>" target="_blank" rel="noopener" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a></li><?php endif; ?>
+          <?php if ($social['social_facebook'] !== ''): ?><li><a href="<?= h($social['social_facebook']) ?>" target="_blank" rel="noopener" aria-label="Facebook"><svg><use href="#i-facebook"/></svg></a></li><?php endif; ?>
+          <?php if ($social['social_instagram'] !== ''): ?><li><a href="<?= h($social['social_instagram']) ?>" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-instagram"/></svg></a></li><?php endif; ?>
+          <?php if ($social['social_youtube'] !== ''): ?><li><a href="<?= h($social['social_youtube']) ?>" target="_blank" rel="noopener" aria-label="YouTube"><svg><use href="#i-youtube"/></svg></a></li><?php endif; ?>
+          <?php if ($social['social_tiktok'] !== ''): ?><li><a href="<?= h($social['social_tiktok']) ?>" target="_blank" rel="noopener" aria-label="TikTok"><svg><use href="#i-tiktok"/></svg></a></li><?php endif; ?>
+          <?php if ($social['social_whatsapp'] !== ''): ?><li><a href="<?= h($social['social_whatsapp']) ?>" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-whatsapp"/></svg></a></li><?php endif; ?>
         </ul>
       </div>
 
