@@ -288,9 +288,10 @@ if ($action === 'new' || $action === 'edit') {
 
         <?php if (!$id): ?>
         <div class="field">
-          <label>Gallery Images</label>
-          <input type="file" name="gallery_images[]" accept=".jpg,.jpeg,.png,.webp,.gif" multiple>
-          <small>Optional. You can also add more gallery photos later from the edit screen.</small>
+          <label for="gallery_images_new">Gallery Images</label>
+          <input type="file" id="gallery_images_new" name="gallery_images[]" accept=".jpg,.jpeg,.png,.webp,.gif" multiple>
+          <small>Optional — select several files at once (Ctrl/Cmd-click or Shift-click in the file picker) to upload them all together. You can also add more later from the edit screen.</small>
+          <div class="gallery-preview" id="galleryPreviewNew" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>
         </div>
         <?php endif; ?>
 
@@ -312,19 +313,6 @@ if ($action === 'new' || $action === 'edit') {
         <button type="submit" class="btn btn--red"><?= $id ? 'Save Changes' : 'Add Product' ?></button>
       </form>
     </div>
-
-    <script>
-      document.getElementById('addSpecRow').addEventListener('click', function () {
-        var row = document.createElement('div');
-        row.className = 'spec-row';
-        row.style.cssText = 'display:flex;gap:8px;margin-bottom:8px';
-        row.innerHTML =
-          '<input type="text" name="spec_label[]" placeholder="e.g. Battery" style="flex:1">' +
-          '<input type="text" name="spec_value[]" placeholder="e.g. 48V 20Ah Lithium" style="flex:1.4">' +
-          '<button type="button" class="btn btn--ghost btn--sm" onclick="this.closest(\'.spec-row\').remove()">Remove</button>';
-        document.getElementById('specRows').appendChild(row);
-      });
-    </script>
 
     <?php if ($id): ?>
     <div class="card" style="max-width:640px;margin-top:20px">
@@ -354,12 +342,56 @@ if ($action === 'new' || $action === 'edit') {
         <div class="field">
           <label for="gallery_images">Add Photos</label>
           <input type="file" id="gallery_images" name="gallery_images[]" accept=".jpg,.jpeg,.png,.webp,.gif" multiple>
-          <small>Select one or more image files. They're added to the gallery, not replaced.</small>
+          <small>Select several files at once (Ctrl/Cmd-click or Shift-click in the file picker) — they're all added to the gallery together, not replaced.</small>
+          <div class="gallery-preview" id="galleryPreviewEdit" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>
         </div>
         <button type="submit" class="btn btn--red">Upload</button>
       </form>
     </div>
     <?php endif; ?>
+
+    <script>
+      document.getElementById('addSpecRow').addEventListener('click', function () {
+        var row = document.createElement('div');
+        row.className = 'spec-row';
+        row.style.cssText = 'display:flex;gap:8px;margin-bottom:8px';
+        row.innerHTML =
+          '<input type="text" name="spec_label[]" placeholder="e.g. Battery" style="flex:1">' +
+          '<input type="text" name="spec_value[]" placeholder="e.g. 48V 20Ah Lithium" style="flex:1.4">' +
+          '<button type="button" class="btn btn--ghost btn--sm" onclick="this.closest(\'.spec-row\').remove()">Remove</button>';
+        document.getElementById('specRows').appendChild(row);
+      });
+
+      // Shows a thumbnail + filename for every file picked, so it's obvious
+      // a multi-select actually grabbed all the intended photos.
+      function wireGalleryPreview(inputId, previewId) {
+        var input = document.getElementById(inputId);
+        var preview = document.getElementById(previewId);
+        if (!input || !preview) return;
+        input.addEventListener('change', function () {
+          preview.innerHTML = '';
+          Array.prototype.forEach.call(input.files, function (file) {
+            if (!file.type.startsWith('image/')) return;
+            var wrap = document.createElement('div');
+            wrap.style.cssText = 'text-align:center;font-size:11px;color:var(--muted)';
+            var img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.style.cssText = 'width:70px;height:50px;object-fit:cover;display:block;margin-bottom:3px;border-radius:4px';
+            wrap.appendChild(img);
+            wrap.appendChild(document.createTextNode(file.name));
+            preview.appendChild(wrap);
+          });
+          if (input.files.length) {
+            var count = document.createElement('p');
+            count.style.cssText = 'width:100%;margin:4px 0 0;font-size:12.5px;color:var(--ink);font-weight:600';
+            count.textContent = input.files.length + ' file' + (input.files.length > 1 ? 's' : '') + ' selected';
+            preview.appendChild(count);
+          }
+        });
+      }
+      wireGalleryPreview('gallery_images_new', 'galleryPreviewNew');
+      wireGalleryPreview('gallery_images', 'galleryPreviewEdit');
+    </script>
     <?php
     require __DIR__ . '/includes/chrome-bottom.php';
     exit;
