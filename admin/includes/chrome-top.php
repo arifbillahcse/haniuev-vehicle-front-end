@@ -1,5 +1,5 @@
 <?php
-/** Expects $pageTitle and $activeAdminNav ('dashboard'|'categories'|'products'|'posts'|'messages'|'settings'). */
+/** Expects $pageTitle and $activeAdminNav ('dashboard'|'categories'|'products'|'posts'|'certificates'|'messages'|'settings'). */
 $activeAdminNav = $activeAdminNav ?? '';
 $navClass = fn(string $key) => $activeAdminNav === $key ? 'is-active' : '';
 ?>
@@ -20,6 +20,7 @@ $navClass = fn(string $key) => $activeAdminNav === $key ? 'is-active' : '';
     <a class="<?= $navClass('dashboard') ?>" href="index.php">Dashboard</a>
     <a class="<?= $navClass('products') ?>" href="products.php">Products</a>
     <a class="<?= $navClass('posts') ?>" href="posts.php">Blog Posts</a>
+    <a class="<?= $navClass('certificates') ?>" href="certificates.php">Certificates</a>
     <a class="<?= $navClass('messages') ?>" href="messages.php">Messages</a>
     <a class="<?= $navClass('settings') ?>" href="settings.php">Settings</a>
   </nav>

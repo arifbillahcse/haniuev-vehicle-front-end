@@ -261,14 +261,14 @@
 .certcard__list li svg{flex:none;width:18px;height:18px;color:rgba(255,255,255,.9)}
 .certcard__list li:hover{transform:translateX(5px)}
 
-.certcard__proof{display:flex;gap:10px;margin-top:22px}
+.certcard__proof{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .certcard__proof a{
-  flex:1;display:block;overflow:hidden;
+  width:64px;height:64px;flex:none;display:block;overflow:hidden;
   border:2px solid rgba(255,255,255,.35);
   transition:border-color .3s var(--ease);
 }
 .certcard__proof a:hover{border-color:#fff}
-.certcard__proof img{width:100%;height:90px;object-fit:cover;display:block}
+.certcard__proof img{width:100%;height:100%;object-fit:cover;display:block}
 .certcard__proof-note{margin:10px 0 0;font-size:11.5px;color:rgba(255,255,255,.7)}
 
 /* ==========================================================================

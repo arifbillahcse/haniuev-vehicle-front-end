@@ -59,6 +59,7 @@ require __DIR__ . '/includes/chrome-top.php';
   <a class="btn btn--red btn--sm" href="categories.php?action=new">+ Add Category</a>
   <a class="btn btn--ghost btn--sm" href="products.php?action=new">+ Add Product</a>
   <a class="btn btn--ghost btn--sm" href="posts.php?action=new">+ Add Blog Post</a>
+  <a class="btn btn--ghost btn--sm" href="certificates.php?action=new">+ Add Certificate</a>
   <a class="btn btn--ghost btn--sm" href="messages.php">View Messages</a>
   <a class="btn btn--ghost btn--sm" href="settings.php">Edit Settings</a>
 </div>
