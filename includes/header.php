@@ -72,10 +72,7 @@ $isActive = fn(string $key) => $activeNav === $key ? ' is-active' : '';
   <div class="container header__inner">
 
     <a href="index.php" class="brand" aria-label="HANIU — home">
-      <span class="brand__mark">
-        <span class="brand__n">N</span>
-        <span class="brand__word">HANIU</span>
-      </span>
+      <img src="assets/images/h-logo.jpeg" alt="HANIU" class="brand__logo">
     </a>
 
     <nav class="nav" id="primaryNav" aria-label="Primary">

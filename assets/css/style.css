@@ -248,21 +248,12 @@ sup{font-size:.55em;vertical-align:super;line-height:0}
 
 /* brand */
 .brand{display:flex;align-items:center;flex:none}
-.brand__mark{
-  display:flex;align-items:center;gap:7px;
-  background:#fff;padding:7px 11px;
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease);
+.brand__logo{
+  display:block;height:36px;width:auto;
+  transition:height .4s var(--ease),transform .35s var(--ease);
 }
-.brand:hover .brand__mark{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.35)}
-.brand__n{
-  display:grid;place-items:center;width:20px;height:20px;
-  background:#1b3f8f;color:#fff;font-family:var(--font-display);
-  font-weight:700;font-size:14px;line-height:1;
-}
-.brand__word{
-  font-family:var(--font-display);font-weight:700;font-size:14px;
-  letter-spacing:.12em;color:#12275c;line-height:1;
-}
+.brand:hover .brand__logo{transform:translateY(-2px)}
+.site-header.is-scrolled .brand__logo{height:30px}
 
 /* nav */
 .nav__list{display:flex;align-items:center;gap:4px}
