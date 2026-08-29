@@ -96,7 +96,7 @@ require __DIR__ . '/includes/header.php';
         <?php if ($product['catalog_pdf'] !== ''): ?>
           <div class="product-info__actions">
             <a class="btn btn--ghost" href="assets/catalogs/<?= h($product['catalog_pdf']) ?>" target="_blank" rel="noopener">
-              Download Catalog (PDF) <svg><use href="#i-arrow-right"/></svg>
+              Catalog PDF Download <svg><use href="#i-arrow-right"/></svg>
             </a>
           </div>
         <?php endif; ?>
