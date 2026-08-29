@@ -8,7 +8,10 @@ CREATE TABLE certificates (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Carries over the two certificates already uploaded, so nothing regresses.
+-- Seeded with the certificates already uploaded, so nothing regresses.
 INSERT INTO certificates (name, image, sort_order) VALUES
-    ('ISO 9001:2015 Quality Management (Chinese)', 'certificates1.jpeg', 10),
-    ('ISO 9001:2015 Quality Management (English)', 'certificates2.jpeg', 20);
+    ('ISO 9001:2015 Quality Management (English)', 'certificate-iso9001-en.png', 10),
+    ('ISO 9001:2015 Quality Management (Chinese)', 'certificate-iso9001-cn.png', 20),
+    ('World Manufacturer Identifier (WMI) Certificate', 'certificate-wmi-1.png', 30),
+    ('World Manufacturer Identifier (WMI) Certificate — Renewal', 'certificate-wmi-2.png', 40),
+    ('HANIU Trademark Registration Certificate', 'certificate-trademark.png', 50);
