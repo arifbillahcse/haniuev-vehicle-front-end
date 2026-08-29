@@ -66,6 +66,11 @@ table.list td.actions{white-space:nowrap;text-align:right}
 .pill-badge--on{background:#e8f8ee;color:#0b7a41}
 .thumb{width:48px;height:32px;object-fit:cover;border-radius:4px;background:#eef1f6;display:block}
 
+.gallery-slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.gallery-slot{padding:8px;border:1px solid var(--line);border-radius:var(--radius);background:#fafbfc}
+.gallery-slot__input{font-size:12px}
+.gallery-slot__preview{width:100%;height:70px;object-fit:cover;display:block;margin-top:8px;border-radius:4px;background:#eef1f6}
+
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .field{margin-bottom:16px}
 .field label{display:block;font-size:12.5px;font-weight:700;color:var(--body);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}

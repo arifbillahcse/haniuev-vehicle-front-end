@@ -288,10 +288,16 @@ if ($action === 'new' || $action === 'edit') {
 
         <?php if (!$id): ?>
         <div class="field">
-          <label for="gallery_images_new">Gallery Images</label>
-          <input type="file" id="gallery_images_new" name="gallery_images[]" accept=".jpg,.jpeg,.png,.webp,.gif" multiple>
-          <small>Optional — select several files at once (Ctrl/Cmd-click or Shift-click in the file picker) to upload them all together. You can also add more later from the edit screen.</small>
-          <div class="gallery-preview" id="galleryPreviewNew" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>
+          <label>Gallery Images</label>
+          <small style="display:block;margin-bottom:8px">Optional — one photo per box below, add as many as you like. Works the same whether your file picker supports multi-select or not. You can also add more later from the edit screen.</small>
+          <div class="gallery-slots" id="gallerySlotsNew">
+            <?php for ($i = 0; $i < 6; $i++): ?>
+              <div class="gallery-slot">
+                <input type="file" name="gallery_images[]" accept=".jpg,.jpeg,.png,.webp,.gif" class="gallery-slot__input">
+                <img class="gallery-slot__preview" alt="" hidden>
+              </div>
+            <?php endfor; ?>
+          </div>
         </div>
         <?php endif; ?>
 
@@ -340,10 +346,16 @@ if ($action === 'new' || $action === 'edit') {
         <input type="hidden" name="add_gallery_images" value="1">
         <input type="hidden" name="product_id" value="<?= (int) $id ?>">
         <div class="field">
-          <label for="gallery_images">Add Photos</label>
-          <input type="file" id="gallery_images" name="gallery_images[]" accept=".jpg,.jpeg,.png,.webp,.gif" multiple>
-          <small>Select several files at once (Ctrl/Cmd-click or Shift-click in the file picker) — they're all added to the gallery together, not replaced.</small>
-          <div class="gallery-preview" id="galleryPreviewEdit" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>
+          <label>Add Photos</label>
+          <small style="display:block;margin-bottom:8px">One photo per box below, add as many as you like — they're all added to the gallery together, not replaced.</small>
+          <div class="gallery-slots" id="gallerySlotsEdit">
+            <?php for ($i = 0; $i < 6; $i++): ?>
+              <div class="gallery-slot">
+                <input type="file" name="gallery_images[]" accept=".jpg,.jpeg,.png,.webp,.gif" class="gallery-slot__input">
+                <img class="gallery-slot__preview" alt="" hidden>
+              </div>
+            <?php endfor; ?>
+          </div>
         </div>
         <button type="submit" class="btn btn--red">Upload</button>
       </form>
@@ -362,35 +374,21 @@ if ($action === 'new' || $action === 'edit') {
         document.getElementById('specRows').appendChild(row);
       });
 
-      // Shows a thumbnail + filename for every file picked, so it's obvious
-      // a multi-select actually grabbed all the intended photos.
-      function wireGalleryPreview(inputId, previewId) {
-        var input = document.getElementById(inputId);
-        var preview = document.getElementById(previewId);
-        if (!input || !preview) return;
+      // Each gallery box is its own single-file input, so multi-image adds
+      // work identically everywhere — no dependency on a device/browser's
+      // native multi-select gesture. Show a thumbnail as each one is filled.
+      document.querySelectorAll('.gallery-slot__input').forEach(function (input) {
         input.addEventListener('change', function () {
-          preview.innerHTML = '';
-          Array.prototype.forEach.call(input.files, function (file) {
-            if (!file.type.startsWith('image/')) return;
-            var wrap = document.createElement('div');
-            wrap.style.cssText = 'text-align:center;font-size:11px;color:var(--muted)';
-            var img = document.createElement('img');
-            img.src = URL.createObjectURL(file);
-            img.style.cssText = 'width:70px;height:50px;object-fit:cover;display:block;margin-bottom:3px;border-radius:4px';
-            wrap.appendChild(img);
-            wrap.appendChild(document.createTextNode(file.name));
-            preview.appendChild(wrap);
-          });
-          if (input.files.length) {
-            var count = document.createElement('p');
-            count.style.cssText = 'width:100%;margin:4px 0 0;font-size:12.5px;color:var(--ink);font-weight:600';
-            count.textContent = input.files.length + ' file' + (input.files.length > 1 ? 's' : '') + ' selected';
-            preview.appendChild(count);
+          var preview = input.nextElementSibling;
+          var file = input.files[0];
+          if (file && file.type.startsWith('image/')) {
+            preview.src = URL.createObjectURL(file);
+            preview.hidden = false;
+          } else {
+            preview.hidden = true;
           }
         });
-      }
-      wireGalleryPreview('gallery_images_new', 'galleryPreviewNew');
-      wireGalleryPreview('gallery_images', 'galleryPreviewEdit');
+      });
     </script>
     <?php
     require __DIR__ . '/includes/chrome-bottom.php';
