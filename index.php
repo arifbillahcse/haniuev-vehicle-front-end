@@ -102,7 +102,7 @@ require __DIR__ . '/includes/header.php';
     <div class="split__visual" data-reveal data-reveal-delay="160">
       <span class="deco-square"></span>
       <div class="media media--16x9 media--zoom" data-label="Aerial · Tianjin HQ">
-        <img src="assets/images/hq-aerial.jpg" alt="Aerial view of HANIU Tianjin manufacturing base">
+        <img src="assets/images/factory-full.png" alt="Aerial view of HANIU Tianjin manufacturing base">
       </div>
       <div class="stat-badge">
         <p class="stat-badge__num">200,000 m<sup>2</sup></p>
