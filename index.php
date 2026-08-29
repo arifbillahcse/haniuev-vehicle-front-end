@@ -128,35 +128,35 @@ require __DIR__ . '/includes/header.php';
     </header>
 
     <div class="cat-grid">
-      <a class="cat" href="#models" data-reveal data-reveal-delay="0">
-        <div class="media media--cat" data-label="E-Tricycle"><img src="assets/images/cat-tricycle.jpg" alt="HANIU electric tricycle"></div>
-        <div class="cat__body">
-          <p class="cat__kicker">CARGO &amp; UTILITY</p>
-          <h3 class="cat__title">E-Tricycles</h3>
-        </div>
-        <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
-      </a>
-      <a class="cat" href="electric-bicycles.php" data-reveal data-reveal-delay="90">
-        <div class="media media--cat" data-label="E-Bicycle"><img src="assets/images/cat-bicycle.png" alt="HANIU electric bicycle"></div>
+      <a class="cat" href="electric-bicycles.php" data-reveal data-reveal-delay="0">
+        <div class="media media--cat" data-label="Electric Bicycle"><img src="assets/images/cat-bicycle.png" alt="HANIU electric bicycle"></div>
         <div class="cat__body">
           <p class="cat__kicker">URBAN MOBILITY</p>
-          <h3 class="cat__title">E-Bicycles</h3>
+          <h3 class="cat__title">Electric Bicycle</h3>
         </div>
         <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
       </a>
-      <a class="cat" href="#models" data-reveal data-reveal-delay="180">
-        <div class="media media--cat" data-label="E-Motorcycle"><img src="assets/images/cat-motorcycle.png" alt="HANIU electric motorcycle"></div>
+      <a class="cat" href="electric-bike.php" data-reveal data-reveal-delay="90">
+        <div class="media media--cat" data-label="Electric Bike"><img src="assets/images/cat-motorcycle.png" alt="HANIU electric bike"></div>
         <div class="cat__body">
           <p class="cat__kicker">HIGH PERFORMANCE</p>
-          <h3 class="cat__title">E-Motorcycles</h3>
+          <h3 class="cat__title">Electric Bike</h3>
         </div>
         <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
       </a>
-      <a class="cat" href="#models" data-reveal data-reveal-delay="270">
-        <div class="media media--cat" data-label="Four-Wheeler"><img src="assets/images/cat-fourwheeler.jpg" alt="HANIU electric four-wheeler"></div>
+      <a class="cat" href="electric-three-wheeler.php" data-reveal data-reveal-delay="180">
+        <div class="media media--cat" data-label="Electric Three Wheeler"><img src="assets/images/cat-tricycle.jpg" alt="HANIU electric three wheeler"></div>
+        <div class="cat__body">
+          <p class="cat__kicker">CARGO &amp; UTILITY</p>
+          <h3 class="cat__title">Electric Three Wheeler</h3>
+        </div>
+        <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
+      </a>
+      <a class="cat" href="electric-four-wheeler.php" data-reveal data-reveal-delay="270">
+        <div class="media media--cat" data-label="Electric Four Wheeler"><img src="assets/images/cat-fourwheeler.jpg" alt="HANIU electric four wheeler"></div>
         <div class="cat__body">
           <p class="cat__kicker">LEISURE &amp; TRANSPORT</p>
-          <h3 class="cat__title">Four-Wheelers</h3>
+          <h3 class="cat__title">Electric Four Wheeler</h3>
         </div>
         <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
       </a>
