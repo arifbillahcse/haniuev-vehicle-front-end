@@ -403,6 +403,15 @@ require __DIR__ . '/includes/header.php';
             <li><svg><use href="#i-check-circle"/></svg>WMI World Factory Verified</li>
             <li><svg><use href="#i-check-circle"/></svg>CCC China Compulsory Cert.</li>
           </ul>
+          <div class="certcard__proof">
+            <a href="assets/images/certificates1.jpeg" target="_blank" rel="noopener">
+              <img src="assets/images/certificates1.jpeg" alt="HANIU ISO 9001 quality management certificate (Chinese)">
+            </a>
+            <a href="assets/images/certificates2.jpeg" target="_blank" rel="noopener">
+              <img src="assets/images/certificates2.jpeg" alt="HANIU ISO 9001 quality management certificate (English)">
+            </a>
+          </div>
+          <p class="certcard__proof-note">Click a certificate to view full size</p>
         </div>
       </aside>
     </div>

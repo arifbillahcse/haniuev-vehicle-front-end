@@ -479,7 +479,7 @@ require __DIR__ . '/includes/header.php';
       </div>
       <div class="commit__visual">
         <div class="media media--4x3 media--zoom" data-label="QC lab · 300×200">
-          <img src="assets/images/quality-lab.jpg" alt="HANIU quality control inspection">
+          <img src="assets/images/quality-commitment.jpeg" alt="HANIU quality control inspection">
         </div>
       </div>
     </div>
