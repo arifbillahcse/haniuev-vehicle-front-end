@@ -150,48 +150,6 @@ require __DIR__ . '/includes/header.php';
 </section>
 
 <!-- ============================================================
-     DOMESTIC STRENGTH
-     ============================================================ -->
-<section class="section section--alt">
-  <div class="container split">
-    <div class="split__visual" data-reveal>
-      <span class="deco-outline deco-outline--br"></span>
-      <div class="shot">
-        <div class="media media--3x2 media--zoom" data-label="Retail store"><img src="assets/images/retail-store.avif" alt="HANIU retail store interior"></div>
-        <div class="shot__bar">
-          <div><p class="shot__num" data-count="500" data-suffix="+">0</p><p class="shot__label">STORES NATIONWIDE</p></div>
-          <div><p class="shot__num" data-count="30" data-suffix="+">0</p><p class="shot__label">PROVINCES COVERED</p></div>
-          <div><p class="shot__num">#1</p><p class="shot__label">BRAND RECOGNITION</p></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="split__text">
-      <p class="eyebrow" data-reveal>DOMESTIC STRENGTH</p>
-      <h2 class="h2" data-reveal data-reveal-delay="80">500+ Offline Stores<br>Across China</h2>
-      <span class="rule-red" data-reveal data-reveal-delay="120"></span>
-
-      <p class="lead" data-reveal data-reveal-delay="160">
-        HANIU's extensive offline retail network across China is a powerful proof of our brand
-        credibility and product quality. With over 500 physical stores spanning 30+ provinces, we
-        have built deep consumer trust that few manufacturers can match.
-      </p>
-      <p class="lead" data-reveal data-reveal-delay="200">
-        This domestic success provides our international partners with confidence: when you choose
-        HANIU, you're partnering with a brand that has proven itself in the world's most competitive
-        EV market -- China itself.
-      </p>
-
-      <div class="checkrows">
-        <div class="checkrow" data-reveal data-reveal-delay="240"><svg><use href="#i-check-circle"/></svg><p>Proven brand recognition in China's competitive EV market</p></div>
-        <div class="checkrow" data-reveal data-reveal-delay="290"><svg><use href="#i-check-circle"/></svg><p>Standardized retail experience &amp; after-sales service network</p></div>
-        <div class="checkrow" data-reveal data-reveal-delay="340"><svg><use href="#i-check-circle"/></svg><p>Real-world product validation from millions of domestic customers</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
      FACTORY SCALE & TEAM
      ============================================================ -->
 <section class="section" id="team">
