@@ -264,12 +264,12 @@
 /* ==========================================================================
    8b. CERTIFICATE GALLERY + LIGHTBOX
    ========================================================================== */
-/* Masonry via CSS columns — each certificate keeps its natural aspect
-   ratio, so the row heights stagger like a photo-gallery masonry wall
-   instead of being cropped into uniform boxes. */
-.cert-gallery{column-count:4;column-gap:18px}
+/* Flex-wrap "gallery" grid — each certificate keeps its natural aspect
+   ratio (no cropping), and justify-content:center means a half-empty
+   last row centers itself instead of hugging the left edge. */
+.cert-gallery{display:flex;flex-wrap:wrap;justify-content:center;gap:18px}
 .cert-gallery__item{
-  display:block;width:100%;break-inside:avoid;margin:0 0 18px;padding:10px;
+  display:block;flex:0 0 calc(25% - 14px);margin:0;padding:10px;
   cursor:pointer;background:#fff;border:1px solid var(--line);text-align:center;
   font:inherit;transition:transform .32s var(--ease),box-shadow .32s var(--ease);
 }
@@ -396,7 +396,7 @@
   .partner{grid-template-columns:1fr;gap:44px}
   .float-card{left:0;bottom:-18px;max-width:280px}
   .deco-fill,.deco-outline{display:none}
-  .cert-gallery{column-count:3}
+  .cert-gallery__item{flex-basis:calc(33.333% - 12px)}
 }
 
 @media (max-width:720px){
@@ -416,11 +416,12 @@
   .shot__label{font-size:8.5px;letter-spacing:.08em}
   .cred-chips{gap:9px}
   .cred-chips li{padding:9px 14px;font-size:12.5px}
-  .cert-gallery{column-count:2}
+  .cert-gallery__item{flex-basis:calc(50% - 9px)}
 }
 
 @media (max-width:420px){
   .rd-tiles{grid-template-columns:1fr}
   .partner__actions .btn{width:100%;justify-content:center}
   .float-card{position:static;max-width:none;margin-top:16px}
+  .cert-gallery__item{flex-basis:100%}
 }
