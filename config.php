@@ -41,6 +41,7 @@ function db(): PDO
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
+        PDO::MYSQL_ATTR_MULTI_STATEMENTS => true, // migration files run several ;-separated statements at once
     ]);
 
     run_migrations($pdo);
@@ -69,7 +70,18 @@ function run_migrations(PDO $pdo): void
         if (in_array($filename, $applied, true)) {
             continue;
         }
-        $pdo->exec(file_get_contents($file));
+        try {
+            $pdo->exec(file_get_contents($file));
+        } catch (PDOException $e) {
+            // "Table already exists" (SQLSTATE 42S01) means this file's schema
+            // already landed on this database outside of proper tracking —
+            // e.g. a previous run applied it but errored before it could be
+            // recorded below. Treat it as done instead of fatally blocking
+            // every request on this database from here on.
+            if ($e->getCode() !== '42S01') {
+                throw $e;
+            }
+        }
         $pdo->prepare('INSERT INTO _migrations (filename) VALUES (?)')->execute([$filename]);
     }
 }
