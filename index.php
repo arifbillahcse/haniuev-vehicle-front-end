@@ -214,7 +214,7 @@ require __DIR__ . '/includes/header.php';
     <div class="fact">
       <div class="fact__visual" data-reveal>
         <div class="media media--4x3 media--zoom" data-label="Main assembly hall">
-          <img src="assets/images/factory-floor.jpg" alt="HANIU main production facility interior">
+          <img src="assets/images/factory-floor.png" alt="HANIU main production facility interior">
         </div>
         <div class="fact__caption">
           <span class="tag tag--red">TIANJIN HQ</span>
