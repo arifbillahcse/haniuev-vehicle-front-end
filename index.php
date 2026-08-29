@@ -137,7 +137,7 @@ require __DIR__ . '/includes/header.php';
         <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
       </a>
       <a class="cat" href="electric-bicycles.php" data-reveal data-reveal-delay="90">
-        <div class="media media--cat" data-label="E-Bicycle"><img src="assets/images/cat-bicycle.jpg" alt="HANIU electric bicycle"></div>
+        <div class="media media--cat" data-label="E-Bicycle"><img src="assets/images/cat-bicycle.png" alt="HANIU electric bicycle"></div>
         <div class="cat__body">
           <p class="cat__kicker">URBAN MOBILITY</p>
           <h3 class="cat__title">E-Bicycles</h3>
@@ -145,7 +145,7 @@ require __DIR__ . '/includes/header.php';
         <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
       </a>
       <a class="cat" href="#models" data-reveal data-reveal-delay="180">
-        <div class="media media--cat" data-label="E-Motorcycle"><img src="assets/images/cat-motorcycle.jpg" alt="HANIU electric motorcycle"></div>
+        <div class="media media--cat" data-label="E-Motorcycle"><img src="assets/images/cat-motorcycle.png" alt="HANIU electric motorcycle"></div>
         <div class="cat__body">
           <p class="cat__kicker">HIGH PERFORMANCE</p>
           <h3 class="cat__title">E-Motorcycles</h3>

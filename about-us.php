@@ -15,7 +15,7 @@ require __DIR__ . '/includes/header.php';
 <section class="page-hero">
   <div class="page-hero__bg" id="heroBg">
     <div class="media media--fill" data-label="Workshop · 1920×900">
-      <img src="assets/images/about-hero.jpg" alt="HANIU technicians on the production line">
+      <img src="assets/images/about-hero.avif" alt="HANIU technicians on the production line">
     </div>
   </div>
   <div class="page-hero__scrim"></div>
@@ -80,13 +80,13 @@ require __DIR__ . '/includes/header.php';
       <span class="deco-fill"></span>
       <div class="collage">
         <div class="collage__col">
-          <div class="media media--zoom collage__a" data-label="HQ building"><img src="assets/images/story-hq.jpg" alt="HANIU headquarters building"></div>
-          <div class="media media--zoom collage__c" data-label="Frame welding"><img src="assets/images/story-welding.jpg" alt="Welder working on a vehicle frame"></div>
+          <div class="media media--zoom collage__a" data-label="HQ building"><img src="assets/images/story-hq.avif" alt="HANIU headquarters building"></div>
+          <div class="media media--zoom collage__c" data-label="Frame welding"><img src="assets/images/story-welding.avif" alt="Welder working on a vehicle frame"></div>
           <span class="deco-outline"></span>
         </div>
         <div class="collage__col collage__col--drop">
-          <div class="media media--zoom collage__b" data-label="Design desk"><img src="assets/images/story-design.jpg" alt="Engineer sketching a vehicle design"></div>
-          <div class="media media--zoom collage__d" data-label="Electronics"><img src="assets/images/story-electronics.jpg" alt="EV controller circuit board"></div>
+          <div class="media media--zoom collage__b" data-label="Design desk"><img src="assets/images/story-design.avif" alt="Engineer sketching a vehicle design"></div>
+          <div class="media media--zoom collage__d" data-label="Electronics"><img src="assets/images/story-electronics.avif" alt="EV controller circuit board"></div>
         </div>
       </div>
     </div>
@@ -157,7 +157,7 @@ require __DIR__ . '/includes/header.php';
     <div class="split__visual" data-reveal>
       <span class="deco-outline deco-outline--br"></span>
       <div class="shot">
-        <div class="media media--3x2 media--zoom" data-label="Retail store"><img src="assets/images/retail-store.jpg" alt="HANIU retail store interior"></div>
+        <div class="media media--3x2 media--zoom" data-label="Retail store"><img src="assets/images/retail-store.avif" alt="HANIU retail store interior"></div>
         <div class="shot__bar">
           <div><p class="shot__num" data-count="500" data-suffix="+">0</p><p class="shot__label">STORES NATIONWIDE</p></div>
           <div><p class="shot__num" data-count="30" data-suffix="+">0</p><p class="shot__label">PROVINCES COVERED</p></div>
@@ -230,7 +230,7 @@ require __DIR__ . '/includes/header.php';
     </div>
 
     <div class="banner" data-reveal>
-      <div class="media media--fill media--zoom" data-label="Team on site"><img src="assets/images/team-banner.jpg" alt="HANIU production team at the Tianjin facility"></div>
+      <div class="media media--fill media--zoom" data-label="Team on site"><img src="assets/images/team-banner.avif" alt="HANIU production team at the Tianjin facility"></div>
       <div class="banner__scrim"></div>
       <div class="banner__body">
         <h3 class="banner__title">People Power Our Production</h3>
@@ -326,7 +326,7 @@ require __DIR__ . '/includes/header.php';
     </div>
 
     <div class="split__visual" data-reveal data-reveal-delay="160">
-      <div class="media media--4x3 media--zoom" data-label="R&amp;D lab"><img src="assets/images/rd-lab.jpg" alt="EV controller board under development"></div>
+      <div class="media media--4x3 media--zoom" data-label="R&amp;D lab"><img src="assets/images/rd-lab.avif" alt="EV controller board under development"></div>
       <div class="float-card">
         <p class="float-card__kicker"><i></i>ACTIVE R&amp;D PROJECTS</p>
         <h3 class="float-card__title">New Models</h3>

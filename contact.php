@@ -13,6 +13,11 @@ require __DIR__ . '/includes/header.php';
      PAGE HERO
      ============================================================ -->
 <section class="page-hero">
+  <div class="page-hero__bg" id="heroBg">
+    <div class="media media--fill" data-label="Contact · 1920×900">
+      <img src="assets/images/contact-hero.avif" alt="HANIU export team ready to assist distributors">
+    </div>
+  </div>
   <div class="page-hero__scrim"></div>
   <div class="grid-texture"></div>
 
