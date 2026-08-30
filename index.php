@@ -432,7 +432,7 @@ require __DIR__ . '/includes/header.php';
     </header>
 
     <div class="video-embed" data-reveal data-reveal-delay="180">
-      <iframe src="https://www.youtube.com/watch?v=k7AQHC5KlMY" title="HANIU Electric Vehicle promotional video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/k7AQHC5KlMY" title="HANIU Electric Vehicle promotional video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
   </div>
 </section>
