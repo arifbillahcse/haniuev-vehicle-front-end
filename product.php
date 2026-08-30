@@ -54,7 +54,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container product-detail">
 
       <div class="product-gallery" data-reveal>
-        <div class="product-gallery__main media media--4x3" data-label="600 × 400">
+        <div class="product-gallery__main media" data-label="600 × 400">
           <img src="<?= $allImages[0] !== '' ? h('assets/images/' . $allImages[0]) : '' ?>" alt="<?= h($product['name']) ?>" id="productMainImg">
         </div>
         <?php if (count($allImages) > 1): ?>
