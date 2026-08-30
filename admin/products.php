@@ -19,6 +19,20 @@ $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 $flash = '';
 $errors = [];
 
+// A POST that blows past PHP's post_max_size arrives with $_POST and $_FILES
+// silently emptied out — no per-field upload error to catch, the form just
+// looks like it did nothing. Catch that case directly so there's a clear
+// reason shown instead of a confusing, unexplained failure.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST) && empty($_FILES) && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
+    $pageTitle = 'Products';
+    $activeAdminNav = 'products';
+    require __DIR__ . '/includes/chrome-top.php';
+    echo '<div class="flash flash--err">The file you tried to upload is too large for this server to accept. Try a smaller file, or ask your hosting provider to raise the upload size limit (upload_max_filesize / post_max_size).</div>';
+    echo '<p><a class="btn btn--ghost btn--sm" href="products.php">&larr; Back to list</a></p>';
+    require __DIR__ . '/includes/chrome-bottom.php';
+    exit;
+}
+
 // ---- delete ---------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     db_run('DELETE FROM products WHERE id = ?', [(int) $_POST['delete_id']]);
@@ -44,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_gallery_id']))
 // re-validate/re-save every other field on the product.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_gallery_images'])) {
     $pid = (int) $_POST['product_id'];
+    $galleryErrors = [];
     if ($pid && !empty($_FILES['gallery_images']['name'][0])) {
         $nextOrder = (int) (db_one('SELECT COALESCE(MAX(sort_order), 0) AS m FROM product_images WHERE product_id = ?', [$pid])['m']);
         foreach ($_FILES['gallery_images']['name'] as $i => $name) {
@@ -54,12 +69,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_gallery_images'])
                 'error'    => $_FILES['gallery_images']['error'][$i],
                 'size'     => $_FILES['gallery_images']['size'][$i],
             ];
-            $filename = save_uploaded_file($file, IMAGE_DIR, IMAGE_EXTS, true);
+            $filename = save_uploaded_file($file, IMAGE_DIR, IMAGE_EXTS, true, $galleryError);
             if ($filename !== null) {
                 $nextOrder += 10;
                 db_run('INSERT INTO product_images (product_id, image, sort_order) VALUES (?,?,?)', [$pid, $filename, $nextOrder]);
+            } elseif ($galleryError !== null) {
+                $galleryErrors[] = ($name ?: 'A file') . ': ' . $galleryError;
             }
         }
+    }
+    if ($galleryErrors) {
+        $_SESSION['gallery_errors'] = $galleryErrors;
     }
     header('Location: products.php?action=edit&id=' . $pid . '&gallery_updated=1');
     exit;
@@ -83,11 +103,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_product'])) {
     ];
 
     // New file uploads are optional — keep the existing file if none was chosen.
-    $uploadedImage = save_uploaded_file($_FILES['image_file'] ?? [], IMAGE_DIR, IMAGE_EXTS, true);
+    $uploadedImage = save_uploaded_file($_FILES['image_file'] ?? [], IMAGE_DIR, IMAGE_EXTS, true, $imageError);
     $data['image'] = $uploadedImage ?? ($existing['image'] ?? '');
+    if ($imageError !== null) {
+        $errors[] = 'Main image: ' . $imageError;
+    }
 
-    $uploadedPdf = save_uploaded_file($_FILES['catalog_pdf_file'] ?? [], CATALOG_DIR, PDF_EXTS, false);
+    $uploadedPdf = save_uploaded_file($_FILES['catalog_pdf_file'] ?? [], CATALOG_DIR, PDF_EXTS, false, $pdfError);
     $data['catalog_pdf'] = $uploadedPdf ?? ($existing['catalog_pdf'] ?? '');
+    if ($pdfError !== null) {
+        $errors[] = 'Catalog PDF: ' . $pdfError;
+    }
 
     if (!in_array($data['category'], $categorySlugsValid, true)) {
         $errors[] = 'Please choose a valid category.';
@@ -136,6 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_product'])) {
         // Gallery photos — append any newly uploaded ones after existing sort orders.
         if (!empty($_FILES['gallery_images']['name'][0])) {
             $nextOrder = (int) (db_one('SELECT COALESCE(MAX(sort_order), 0) AS m FROM product_images WHERE product_id = ?', [$productId])['m']);
+            $galleryErrors = [];
             foreach ($_FILES['gallery_images']['name'] as $i => $name) {
                 $file = [
                     'name'     => $_FILES['gallery_images']['name'][$i],
@@ -144,11 +171,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_product'])) {
                     'error'    => $_FILES['gallery_images']['error'][$i],
                     'size'     => $_FILES['gallery_images']['size'][$i],
                 ];
-                $filename = save_uploaded_file($file, IMAGE_DIR, IMAGE_EXTS, true);
+                $filename = save_uploaded_file($file, IMAGE_DIR, IMAGE_EXTS, true, $galleryError);
                 if ($filename !== null) {
                     $nextOrder += 10;
                     db_run('INSERT INTO product_images (product_id, image, sort_order) VALUES (?,?,?)', [$productId, $filename, $nextOrder]);
+                } elseif ($galleryError !== null) {
+                    $galleryErrors[] = ($name ?: 'A file') . ': ' . $galleryError;
                 }
+            }
+            if ($galleryErrors) {
+                $_SESSION['gallery_errors'] = $galleryErrors;
             }
         }
 
@@ -168,6 +200,10 @@ require __DIR__ . '/includes/chrome-top.php';
 if (isset($_GET['saved'])) echo '<div class="flash flash--ok">Product saved.</div>';
 if (isset($_GET['deleted'])) echo '<div class="flash flash--ok">Product deleted.</div>';
 foreach ($errors as $e) echo '<div class="flash flash--err">' . h($e) . '</div>';
+if (!empty($_SESSION['gallery_errors'])) {
+    foreach ($_SESSION['gallery_errors'] as $ge) echo '<div class="flash flash--err">' . h($ge) . '</div>';
+    unset($_SESSION['gallery_errors']);
+}
 
 // =====================================================================
 // FORM (new / edit)

@@ -10,6 +10,19 @@ $action = $_GET['action'] ?? 'list';
 $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 $errors = [];
 
+// A POST that blows past PHP's post_max_size arrives with $_POST and $_FILES
+// silently emptied out — catch that case directly so there's a clear reason
+// shown instead of the form just looking like it did nothing.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST) && empty($_FILES) && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
+    $pageTitle = 'Certificates';
+    $activeAdminNav = 'certificates';
+    require __DIR__ . '/includes/chrome-top.php';
+    echo '<div class="flash flash--err">That file is too large for this server to accept. Try a smaller file, or ask your hosting provider to raise the upload size limit.</div>';
+    echo '<p><a class="btn btn--ghost btn--sm" href="certificates.php">&larr; Back to list</a></p>';
+    require __DIR__ . '/includes/chrome-bottom.php';
+    exit;
+}
+
 // ---- delete ---------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     $delId = (int) $_POST['delete_id'];
@@ -32,8 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_certificate'])) 
         'sort_order' => (int) ($_POST['sort_order'] ?? 0),
     ];
 
-    $uploadedImage = save_uploaded_file($_FILES['image_file'] ?? [], CERT_IMAGE_DIR, CERT_IMAGE_EXTS, true);
+    $uploadedImage = save_uploaded_file($_FILES['image_file'] ?? [], CERT_IMAGE_DIR, CERT_IMAGE_EXTS, true, $imageError);
     $data['image'] = $uploadedImage ?? ($existing['image'] ?? '');
+    if ($imageError !== null) {
+        $errors[] = 'Image: ' . $imageError;
+    }
 
     if ($data['name'] === '') {
         $errors[] = 'Name is required.';

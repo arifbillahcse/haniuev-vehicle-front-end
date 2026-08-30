@@ -134,23 +134,44 @@ function setting(string $key): string
  * extension isn't in $allowedExt, or (when $isImage) the content doesn't
  * actually decode as an image. Used for product images, gallery photos, and
  * catalog PDFs uploaded from the admin.
+ *
+ * On failure, $error is set to a human-readable reason — except when no
+ * file was chosen at all, which isn't an error and leaves $error null.
  */
-function save_uploaded_file(array $file, string $destDir, array $allowedExt, bool $isImage): ?string
+function save_uploaded_file(array $file, string $destDir, array $allowedExt, bool $isImage, ?string &$error = null): ?string
 {
-    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+    $error = null;
+    $code = $file['error'] ?? UPLOAD_ERR_NO_FILE;
+
+    if ($code === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+
+    if ($code !== UPLOAD_ERR_OK) {
+        $error = match ($code) {
+            UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE =>
+                'That file is too large for this server to accept (check your host\'s upload size limit).',
+            UPLOAD_ERR_PARTIAL => 'The upload was interrupted partway through. Please try again.',
+            UPLOAD_ERR_NO_TMP_DIR, UPLOAD_ERR_CANT_WRITE, UPLOAD_ERR_EXTENSION =>
+                'The server could not accept the upload. Contact your hosting provider.',
+            default => 'The upload failed for an unknown reason. Please try again.',
+        };
         return null;
     }
 
     $ext = strtolower(pathinfo((string) $file['name'], PATHINFO_EXTENSION));
     if (!in_array($ext, $allowedExt, true)) {
+        $error = 'That file type isn\'t allowed here (allowed: ' . implode(', ', $allowedExt) . ').';
         return null;
     }
 
     if ($isImage) {
         if (@getimagesize($file['tmp_name']) === false) {
+            $error = 'That file doesn\'t look like a valid image.';
             return null;
         }
     } elseif (substr((string) file_get_contents($file['tmp_name'], false, null, 0, 4), 0, 4) !== '%PDF') {
+        $error = 'That file doesn\'t look like a valid PDF.';
         return null;
     }
 
@@ -159,7 +180,12 @@ function save_uploaded_file(array $file, string $destDir, array $allowedExt, boo
     }
 
     $filename = bin2hex(random_bytes(8)) . '.' . $ext;
-    return move_uploaded_file($file['tmp_name'], $destDir . '/' . $filename) ? $filename : null;
+    if (!move_uploaded_file($file['tmp_name'], $destDir . '/' . $filename)) {
+        $error = 'The server could not save the uploaded file — check that the assets folder is writable.';
+        return null;
+    }
+
+    return $filename;
 }
 
 /** Escape for safe HTML output. */
