@@ -195,6 +195,7 @@ sup{font-size:.55em;vertical-align:super;line-height:0}
 .media--4x3{aspect-ratio:4/3}
 .media--3x2{aspect-ratio:3/2}
 .media--cat{aspect-ratio:3/4}
+#portfolio .media--cat{aspect-ratio:1}
 .media--circle{aspect-ratio:1;border-radius:50%}
 .media--zoom:hover img{transform:scale(1.07)}
 
