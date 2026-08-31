@@ -114,6 +114,8 @@ require __DIR__ . '/includes/header.php';
       <div class="media mosaic__item" data-label="Machinery"><img src="assets/images/factory-images/factory-machinery.jpg" alt="Production machinery"></div>
       <div class="media mosaic__item" data-label="Workers / production"><img src="assets/images/factory-images/factory-workers.jpg" alt="Workers on the production line"></div>
       <div class="media mosaic__item" data-label="Finished vehicles"><img src="assets/images/factory-images/factory-finished-vehicles.jpg" alt="Finished HANIU vehicles"></div>
+      <div class="media mosaic__item" data-label="Factory complex"><img src="assets/images/factory-images/factory-extra-1.jpg" alt="HANIU factory complex"></div>
+      <div class="media mosaic__item" data-label="Factory complex"><img src="assets/images/factory-images/factory-extra-2.jpg" alt="HANIU factory complex"></div>
     </div>
   </div>
 </section>
@@ -138,10 +140,10 @@ require __DIR__ . '/includes/header.php';
 
     <div class="workshop__gallery" data-reveal data-reveal-delay="160">
       <div class="media" data-label="Workshop overview"><img src="assets/images/factory-images/motor-workshop-overview.jpg" alt="Motor workshop overview"></div>
-      <div class="media" data-label="Automatic winding machine"><img src="assets/images/factory-images/motor-winding-machine.jpg" alt="Automatic winding machine"></div>
+      <div class="media" data-label="Automatic winding machine"><img src="assets/images/factory-images/motor-winding-machine.png" alt="Automatic winding machine"></div>
       <div class="media" data-label="Magnet bonding machine"><img src="assets/images/factory-images/motor-magnet-bonding.jpg" alt="Magnet bonding machine"></div>
-      <div class="media" data-label="Motor assembly"><img src="assets/images/factory-images/motor-assembly.jpg" alt="Motor assembly"></div>
-      <div class="media" data-label="Motor components"><img src="assets/images/factory-images/motor-components.jpg" alt="Motor components"></div>
+      <div class="media" data-label="Motor assembly"><img src="assets/images/factory-images/motor-assembly.png" alt="Motor assembly"></div>
+      <div class="media" data-label="Motor components"><img src="assets/images/factory-images/motor-components.png" alt="Motor components"></div>
       <div class="media" data-label="Finished motor"><img src="assets/images/factory-images/motor-finished.jpg" alt="Finished motor"></div>
     </div>
 
@@ -213,6 +215,7 @@ require __DIR__ . '/includes/header.php';
       <div class="media" data-label="Welding / fabrication"><img src="assets/images/factory-images/frame-welding-1.jpg" alt="Robotic welding of vehicle frames"></div>
       <div class="media" data-label="Frame assembly"><img src="assets/images/factory-images/frame-welding-2.jpg" alt="Frame welding cell"></div>
       <div class="media" data-label="Vibration testing"><img src="assets/images/factory-images/frame-vibration-testing.jpg" alt="Vibration testing"></div>
+      <div class="media" data-label="Robotic welding"><img src="assets/images/factory-images/frame-welding-extra.png" alt="Robotic welding arm"></div>
     </div>
 
     <ol class="flow-line" id="frameFlow">
@@ -252,6 +255,7 @@ require __DIR__ . '/includes/header.php';
       <div class="media" data-label="Baking oven"><img src="assets/images/factory-images/paint-baking-oven.jpg" alt="Baking oven"></div>
       <div class="media" data-label="Finished body"><img src="assets/images/factory-images/paint-finished-body.jpg" alt="Finished body"></div>
       <div class="media" data-label="Paint inspection"><img src="assets/images/factory-images/paint-inspection.jpg" alt="Paint inspection"></div>
+      <div class="media" data-label="Spray painting"><img src="assets/images/factory-images/paint-extra.png" alt="Workers spray painting vehicle parts"></div>
     </div>
 
     <ol class="flow-vertical center" id="paintFlow" style="margin:36px auto 0">
@@ -289,6 +293,12 @@ require __DIR__ . '/includes/header.php';
       <div class="media" data-label="Molded components"><img src="assets/images/factory-images/molding-components.jpg" alt="Molded components"></div>
       <div class="media" data-label="Quality inspection"><img src="assets/images/factory-images/molding-inspection.jpg" alt="Quality inspection"></div>
       <div class="media" data-label="Workshop overview"><img src="assets/images/factory-images/molding-overview.jpg" alt="Injection molding workshop overview"></div>
+      <div class="media" data-label="Injection molding"><img src="assets/images/factory-images/molding-extra-1.jpg" alt="Injection molding shop"></div>
+      <div class="media" data-label="Injection molding"><img src="assets/images/factory-images/molding-extra-2.jpg" alt="Injection molding shop"></div>
+      <div class="media" data-label="Injection molding"><img src="assets/images/factory-images/molding-extra-3.jpg" alt="Injection molding shop"></div>
+      <div class="media" data-label="Injection molding"><img src="assets/images/factory-images/molding-extra-4.jpg" alt="Injection molding shop"></div>
+      <div class="media" data-label="Injection molding"><img src="assets/images/factory-images/molding-extra-5.jpg" alt="Injection molding shop"></div>
+      <div class="media" data-label="Injection molding"><img src="assets/images/factory-images/molding-extra-6.jpg" alt="Injection molding shop"></div>
     </div>
 
     <ul class="chip-row">
@@ -325,6 +335,7 @@ require __DIR__ . '/includes/header.php';
     <div class="media media--zoom" data-label="Electrical installation"><img src="assets/images/factory-images/electrical-installation.jpg" alt="Electrical installation"></div>
     <div class="media media--zoom" data-label="Body installation"><img src="assets/images/factory-images/body-installation.jpg" alt="Body installation"></div>
     <div class="media media--zoom" data-label="Product finishing"><img src="assets/images/factory-images/product-finishing.jpg" alt="Product finishing"></div>
+    <div class="media media--zoom" data-label="eBike production"><img src="assets/images/factory-images/ebike-production-extra.jpg" alt="Finished eBikes ready for shipment"></div>
   </div>
 </section>
 
@@ -352,7 +363,9 @@ require __DIR__ . '/includes/header.php';
       <div class="media mosaic__item" data-label="Body installation"><img src="assets/images/factory-images/assembly-body.jpg" alt="Body installation"></div>
       <div class="media mosaic__item" data-label="Interior / seat installation"><img src="assets/images/factory-images/interior-installation.jpg" alt="Interior and seat installation"></div>
       <div class="media mosaic__item" data-label="Final inspection"><img src="assets/images/factory-images/final-inspection.jpg" alt="Final inspection"></div>
-      <div class="media mosaic__item" data-label="Finished vehicle"><img src="assets/images/factory-images/finished-vehicle.jpg" alt="Finished vehicle"></div>
+      <div class="media mosaic__item" data-label="Finished vehicle"><img src="assets/images/factory-images/factory-finished-vehicles.jpg" alt="Finished HANIU vehicles ready for shipment"></div>
+      <div class="media mosaic__item" data-label="Warehouse"><img src="assets/images/factory-images/finished-vehicle-extra-1.jpg" alt="HANIU finished goods warehouse"></div>
+      <div class="media mosaic__item" data-label="Warehouse"><img src="assets/images/factory-images/finished-vehicle-extra-2.jpg" alt="HANIU finished goods warehouse"></div>
     </div>
 
     <ol class="flow-line flow-line--long" id="assemblyFlow">
