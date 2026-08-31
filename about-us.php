@@ -59,7 +59,7 @@ require __DIR__ . '/includes/header.php';
 
       <div class="stat-row" data-reveal data-reveal-delay="200">
         <div class="stat-row__item">
-          <p class="stat-row__num" data-count="2021">0</p>
+          <p class="stat-row__num">2021</p>
           <p class="stat-row__label">Founded</p>
         </div>
         <div class="stat-row__item">
