@@ -496,7 +496,6 @@ require __DIR__ . '/includes/header.php';
         <p class="eyebrow" data-reveal><span class="eyebrow__rule"></span>HOT PRODUCTS</p>
         <h2 class="h2" data-reveal data-reveal-delay="80">Popular Models</h2>
       </div>
-      <a class="link-dark" href="#inquiry" data-reveal data-reveal-delay="120">View All Products <svg><use href="#i-arrow-right"/></svg></a>
     </header>
 
     <div class="prod-grid">
