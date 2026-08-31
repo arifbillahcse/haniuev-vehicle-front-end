@@ -145,7 +145,7 @@ require __DIR__ . '/includes/header.php';
         <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
       </a>
       <a class="cat" href="electric-three-wheeler.php" data-reveal data-reveal-delay="180">
-        <div class="media media--cat" data-label="Electric Three Wheeler"><img src="assets/images/cat-tricycle.jpg" alt="HANIU electric three wheeler"></div>
+        <div class="media media--cat" data-label="Electric Three Wheeler"><img src="assets/images/3wheelar.png" alt="HANIU electric three wheeler"></div>
         <div class="cat__body">
           <p class="cat__kicker">CARGO &amp; UTILITY</p>
           <h3 class="cat__title">Electric Three Wheeler</h3>
