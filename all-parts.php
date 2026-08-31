@@ -7,9 +7,8 @@ require __DIR__ . '/includes/header.php';
 
 // Every category except the 4 vehicle types — so a new category added from
 // admin/categories.php shows up here automatically, with no code change.
-$vehicleCategories = ['bicycle', 'motorcycle', 'tricycle', 'four-wheeler'];
-$placeholders = implode(',', array_fill(0, count($vehicleCategories), '?'));
-$partCategories = db_all("SELECT * FROM categories WHERE slug NOT IN ($placeholders) ORDER BY sort_order", $vehicleCategories);
+$placeholders = implode(',', array_fill(0, count(VEHICLE_CATEGORY_SLUGS), '?'));
+$partCategories = db_all("SELECT * FROM categories WHERE slug NOT IN ($placeholders) ORDER BY sort_order", VEHICLE_CATEGORY_SLUGS);
 
 // Only build a section for categories that actually have products yet, so
 // a freshly added category with nothing in it doesn't clutter the page.

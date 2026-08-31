@@ -125,6 +125,17 @@ $categories = db_all(
     'SELECT c.*, (SELECT COUNT(*) FROM products p WHERE p.category = c.slug) AS product_count
      FROM categories c ORDER BY c.sort_order, c.name'
 );
+
+// The 4 vehicle types are the "boss" categories — pin them to the top of the
+// list regardless of sort order, ahead of the open-ended parts categories.
+usort($categories, function ($a, $b) {
+    $aVehicle = in_array($a['slug'], VEHICLE_CATEGORY_SLUGS, true);
+    $bVehicle = in_array($b['slug'], VEHICLE_CATEGORY_SLUGS, true);
+    if ($aVehicle !== $bVehicle) {
+        return $aVehicle ? -1 : 1;
+    }
+    return 0; // preserve the existing sort_order/name order within each group
+});
 ?>
 
 <div class="admin-head">
@@ -145,7 +156,13 @@ $categories = db_all(
     <tbody>
       <?php foreach ($categories as $c): ?>
         <tr>
-          <td><strong><?= h($c['name']) ?></strong><?php if ($c['pill'] !== ''): ?><br><span style="color:var(--muted)"><?= h($c['pill']) ?></span><?php endif; ?></td>
+          <td>
+            <strong><?= h($c['name']) ?></strong>
+            <?php if (in_array($c['slug'], VEHICLE_CATEGORY_SLUGS, true)): ?>
+              <span class="pill-badge" style="background:var(--red);color:#fff;margin-left:6px">VEHICLE</span>
+            <?php endif; ?>
+            <?php if ($c['pill'] !== ''): ?><br><span style="color:var(--muted)"><?= h($c['pill']) ?></span><?php endif; ?>
+          </td>
           <td><code><?= h($c['slug']) ?></code></td>
           <td>
             <?= (int) $c['product_count'] ?>

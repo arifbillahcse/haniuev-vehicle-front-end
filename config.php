@@ -30,6 +30,11 @@ require BASE_PATH . '/db-config.php';
 
 define('DB_DSN', 'mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME . ';charset=utf8mb4');
 
+// The 4 fixed vehicle types, as opposed to everything else (parts categories,
+// which are open-ended and admin-managed). Used to keep the Spare Parts page
+// vehicle-free and to flag/pin these 4 in the admin category list.
+const VEHICLE_CATEGORY_SLUGS = ['bicycle', 'motorcycle', 'tricycle', 'four-wheeler'];
+
 function db(): PDO
 {
     static $pdo = null;
