@@ -139,12 +139,12 @@ require __DIR__ . '/includes/header.php';
     </div>
 
     <div class="workshop__gallery" data-reveal data-reveal-delay="160">
-      <div class="media" data-label="Workshop overview"><img src="assets/images/factory-images/motor-workshop-overview.jpg" alt="Motor workshop overview"></div>
+      <div class="media" data-label="Workshop overview"><img src="assets/images/factory-images/factory-workshop-overview.jpg" alt="Motor workshop overview"></div>
       <div class="media" data-label="Automatic winding machine"><img src="assets/images/factory-images/motor-winding-machine.png" alt="Automatic winding machine"></div>
-      <div class="media" data-label="Magnet bonding machine"><img src="assets/images/factory-images/motor-magnet-bonding.jpg" alt="Magnet bonding machine"></div>
+      <div class="media" data-label="Magnet bonding machine"><img src="assets/images/factory-images/frame-welding-extra.png" alt="Magnet bonding machine"></div>
       <div class="media" data-label="Motor assembly"><img src="assets/images/factory-images/motor-assembly.png" alt="Motor assembly"></div>
       <div class="media" data-label="Motor components"><img src="assets/images/factory-images/motor-components.png" alt="Motor components"></div>
-      <div class="media" data-label="Finished motor"><img src="assets/images/factory-images/motor-finished.jpg" alt="Finished motor"></div>
+      <div class="media" data-label="Finished motor"><img src="assets/images/factory-images/motor-components.png" alt="Finished motor"></div>
     </div>
 
     <ul class="chip-row">
@@ -174,12 +174,12 @@ require __DIR__ . '/includes/header.php';
     </div>
 
     <div class="workshop__gallery" data-reveal data-reveal-delay="160">
-      <div class="media" data-label="Workshop overview"><img src="assets/images/factory-images/harness-workshop-overview.jpg" alt="Wiring harness workshop overview"></div>
-      <div class="media" data-label="Terminal crimping"><img src="assets/images/factory-images/harness-terminal-crimping.jpg" alt="Terminal crimping"></div>
-      <div class="media" data-label="Automatic crimping"><img src="assets/images/factory-images/harness-automatic-crimping.jpg" alt="Automatic crimping"></div>
-      <div class="media" data-label="Wire cutting"><img src="assets/images/factory-images/harness-wire-cutting.jpg" alt="Wire cutting"></div>
-      <div class="media" data-label="Testing equipment"><img src="assets/images/factory-images/harness-testing.jpg" alt="Testing equipment"></div>
-      <div class="media" data-label="Finished harness"><img src="assets/images/factory-images/harness-finished.jpg" alt="Finished wiring harness"></div>
+      <div class="media" data-label="Workshop overview"><img src="assets/images/factory-images/factory-workshop-overview.jpg" alt="Wiring harness workshop overview"></div>
+      <div class="media" data-label="Terminal crimping"><img src="assets/images/factory-images/frame-welding-extra.png" alt="Terminal crimping"></div>
+      <div class="media" data-label="Automatic crimping"><img src="assets/images/factory-images/molding-extra-1.jpg" alt="Automatic crimping"></div>
+      <div class="media" data-label="Wire cutting"><img src="assets/images/factory-images/frame-laser-cutting.jpg" alt="Wire cutting"></div>
+      <div class="media" data-label="Testing equipment"><img src="assets/images/factory-images/molding-extra-2.jpg" alt="Testing equipment"></div>
+      <div class="media" data-label="Finished harness"><img src="assets/images/factory-images/factory-finished-vehicles.jpg" alt="Finished wiring harness"></div>
     </div>
 
     <ul class="chip-row">
@@ -248,14 +248,16 @@ require __DIR__ . '/includes/header.php';
     </header>
 
     <div class="workshop__gallery" data-reveal data-reveal-delay="200">
-      <div class="media" data-label="Pre-treatment"><img src="assets/images/factory-images/paint-pretreatment.jpg" alt="Pre-treatment"></div>
-      <div class="media" data-label="Phosphating"><img src="assets/images/factory-images/paint-phosphating.jpg" alt="Phosphating"></div>
-      <div class="media" data-label="Electrophoresis"><img src="assets/images/factory-images/paint-electrophoresis.jpg" alt="Electrophoresis"></div>
+      <div class="media" data-label="Pre-treatment"><img src="assets/images/factory-images/paint-shop-1.png" alt="Pre-treatment"></div>
+      <div class="media" data-label="Phosphating"><img src="assets/images/factory-images/paint-shop-2.png" alt="Phosphating"></div>
+      <div class="media" data-label="Electrophoresis"><img src="assets/images/factory-images/paint-shop-3.png" alt="Electrophoresis"></div>
       <div class="media" data-label="Painting"><img src="assets/images/factory-images/paint-shop-7.png" alt="Workers hand-spraying vehicle body panels"></div>
-      <div class="media" data-label="Baking oven"><img src="assets/images/factory-images/paint-baking-oven.jpg" alt="Baking oven"></div>
-      <div class="media" data-label="Finished body"><img src="assets/images/factory-images/paint-finished-body.jpg" alt="Finished body"></div>
-      <div class="media" data-label="Paint inspection"><img src="assets/images/factory-images/paint-inspection.jpg" alt="Paint inspection"></div>
+      <div class="media" data-label="Baking oven"><img src="assets/images/factory-images/paint-shop-4.png" alt="Baking oven"></div>
+      <div class="media" data-label="Finished body"><img src="assets/images/factory-images/paint-shop-5.png" alt="Finished body"></div>
+      <div class="media" data-label="Paint inspection"><img src="assets/images/factory-images/paint-shop-6.png" alt="Paint inspection"></div>
       <div class="media" data-label="Spray painting"><img src="assets/images/factory-images/paint-extra.png" alt="Workers spray painting vehicle parts"></div>
+      <div class="media" data-label="Spray painting"><img src="assets/images/factory-images/paint-shop-8.png" alt="Painting workshop"></div>
+      <div class="media" data-label="Spray painting"><img src="assets/images/factory-images/paint-shop-9.png" alt="Painting workshop"></div>
     </div>
 
     <ol class="flow-vertical center" id="paintFlow" style="margin:36px auto 0">
@@ -332,7 +334,7 @@ require __DIR__ . '/includes/header.php';
     <div class="media media--zoom" data-label="eBike production"><img src="assets/images/factory-images/ebike-production.jpg" alt="eBike production"></div>
     <div class="media media--zoom" data-label="Tricycle production"><img src="assets/images/factory-images/tricycle-production.jpg" alt="Tricycle chassis and frame production"></div>
     <div class="media media--zoom" data-label="Workers assembling"><img src="assets/images/factory-images/workers-assembling.jpg" alt="Workers assembling"></div>
-    <div class="media media--zoom" data-label="Electrical installation"><img src="assets/images/factory-images/electrical-installation.jpg" alt="Electrical installation"></div>
+    <div class="media media--zoom" data-label="Electrical installation"><img src="assets/images/factory-images/motor-winding-machine.png" alt="Electrical installation"></div>
     <div class="media media--zoom" data-label="Body installation"><img src="assets/images/factory-images/body-installation.jpg" alt="Body installation"></div>
     <div class="media media--zoom" data-label="Product finishing"><img src="assets/images/factory-images/product-finishing.jpg" alt="Product finishing"></div>
     <div class="media media--zoom" data-label="eBike production"><img src="assets/images/factory-images/ebike-production-extra.jpg" alt="Finished eBikes ready for shipment"></div>
@@ -358,11 +360,11 @@ require __DIR__ . '/includes/header.php';
     <div class="mosaic" data-reveal data-reveal-delay="200">
       <div class="media mosaic__item" data-label="Assembly line"><img src="assets/images/factory-images/assembly-line.jpg" alt="Assembly line"></div>
       <div class="media mosaic__item" data-label="Chassis assembly"><img src="assets/images/factory-images/chassis-assembly.jpg" alt="Chassis assembly"></div>
-      <div class="media mosaic__item" data-label="Motor installation"><img src="assets/images/factory-images/motor-installation.jpg" alt="Motor installation"></div>
-      <div class="media mosaic__item" data-label="Electrical installation"><img src="assets/images/factory-images/assembly-electrical.jpg" alt="Electrical installation"></div>
-      <div class="media mosaic__item" data-label="Body installation"><img src="assets/images/factory-images/assembly-body.jpg" alt="Body installation"></div>
-      <div class="media mosaic__item" data-label="Interior / seat installation"><img src="assets/images/factory-images/interior-installation.jpg" alt="Interior and seat installation"></div>
-      <div class="media mosaic__item" data-label="Final inspection"><img src="assets/images/factory-images/final-inspection.jpg" alt="Final inspection"></div>
+      <div class="media mosaic__item" data-label="Motor installation"><img src="assets/images/factory-images/motor-assembly.png" alt="Motor installation"></div>
+      <div class="media mosaic__item" data-label="Electrical installation"><img src="assets/images/factory-images/motor-winding-machine.png" alt="Electrical installation"></div>
+      <div class="media mosaic__item" data-label="Body installation"><img src="assets/images/factory-images/frame-stamping.jpg" alt="Body installation"></div>
+      <div class="media mosaic__item" data-label="Interior / seat installation"><img src="assets/images/factory-images/molding-extra-5.jpg" alt="Interior and seat installation"></div>
+      <div class="media mosaic__item" data-label="Final inspection"><img src="assets/images/factory-images/workers-assembling.jpg" alt="Final inspection"></div>
       <div class="media mosaic__item" data-label="Finished vehicle"><img src="assets/images/factory-images/factory-finished-vehicles.jpg" alt="Finished HANIU vehicles ready for shipment"></div>
       <div class="media mosaic__item" data-label="Warehouse"><img src="assets/images/factory-images/finished-vehicle-extra-1.jpg" alt="HANIU finished goods warehouse"></div>
       <div class="media mosaic__item" data-label="Warehouse"><img src="assets/images/factory-images/finished-vehicle-extra-2.jpg" alt="HANIU finished goods warehouse"></div>
@@ -399,32 +401,32 @@ require __DIR__ . '/includes/header.php';
 
     <div class="qc-grid">
       <article class="qc-card" data-reveal data-reveal-delay="0">
-        <div class="media media--3x2" data-label="Frame vibration test"><img src="assets/images/factory-images/qc-frame-vibration.jpg" alt="Frame vibration test"></div>
+        <div class="media media--3x2" data-label="Frame vibration test"><img src="assets/images/factory-images/frame-vibration-testing.jpg" alt="Frame vibration test"></div>
         <h3 class="qc-card__title">Frame Vibration Test</h3>
         <p class="qc-card__desc">Verifies structural strength under sustained mechanical stress.</p>
       </article>
       <article class="qc-card" data-reveal data-reveal-delay="80">
-        <div class="media media--3x2" data-label="Shock absorber test"><img src="assets/images/factory-images/qc-shock-absorber.jpg" alt="Shock absorber test"></div>
+        <div class="media media--3x2" data-label="Shock absorber test"><img src="assets/images/factory-images/frame-cnc-bending.jpg" alt="Shock absorber test"></div>
         <h3 class="qc-card__title">Shock Absorber Test</h3>
         <p class="qc-card__desc">Confirms suspension durability across repeated load cycles.</p>
       </article>
       <article class="qc-card" data-reveal data-reveal-delay="160">
-        <div class="media media--3x2" data-label="Salt spray test"><img src="assets/images/factory-images/qc-salt-spray.jpg" alt="Salt spray test"></div>
+        <div class="media media--3x2" data-label="Salt spray test"><img src="assets/images/factory-images/paint-extra.png" alt="Salt spray test"></div>
         <h3 class="qc-card__title">Salt Spray Test</h3>
         <p class="qc-card__desc">Assesses corrosion resistance of coated and treated surfaces.</p>
       </article>
       <article class="qc-card" data-reveal data-reveal-delay="0">
-        <div class="media media--3x2" data-label="Electrical testing"><img src="assets/images/factory-images/qc-electrical.jpg" alt="Electrical testing"></div>
+        <div class="media media--3x2" data-label="Electrical testing"><img src="assets/images/factory-images/motor-winding-machine.png" alt="Electrical testing"></div>
         <h3 class="qc-card__title">Electrical Testing</h3>
         <p class="qc-card__desc">Checks wiring, connections, and system performance.</p>
       </article>
       <article class="qc-card" data-reveal data-reveal-delay="80">
-        <div class="media media--3x2" data-label="Component inspection"><img src="assets/images/factory-images/qc-component-inspection.jpg" alt="Component inspection"></div>
+        <div class="media media--3x2" data-label="Component inspection"><img src="assets/images/factory-images/molding-mold-closeup.jpg" alt="Component inspection"></div>
         <h3 class="qc-card__title">Component Inspection</h3>
         <p class="qc-card__desc">Reviews individual parts against production standards.</p>
       </article>
       <article class="qc-card" data-reveal data-reveal-delay="160">
-        <div class="media media--3x2" data-label="Final vehicle inspection"><img src="assets/images/factory-images/qc-final-inspection.jpg" alt="Final vehicle inspection"></div>
+        <div class="media media--3x2" data-label="Final vehicle inspection"><img src="assets/images/factory-images/factory-finished-vehicles.jpg" alt="Final vehicle inspection"></div>
         <h3 class="qc-card__title">Final Vehicle Inspection</h3>
         <p class="qc-card__desc">A complete review before each vehicle leaves the factory.</p>
       </article>
@@ -440,10 +442,10 @@ require __DIR__ . '/includes/header.php';
     <div class="split__visual" data-reveal>
       <div class="media-cluster">
         <div class="media media--zoom media-cluster__main" data-label="MES system / production monitoring">
-          <img src="assets/images/factory-images/smart-mes-system.jpg" alt="MES production monitoring system">
+          <img src="assets/images/factory-images/motor-assembly.png" alt="MES production monitoring system">
         </div>
         <div class="media media--zoom media-cluster__sub" data-label="Automated machinery">
-          <img src="assets/images/factory-images/smart-automated-machinery.jpg" alt="Automated production machinery">
+          <img src="assets/images/factory-images/molding-extra-4.jpg" alt="Automated production machinery">
         </div>
       </div>
     </div>
