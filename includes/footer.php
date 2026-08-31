@@ -48,6 +48,7 @@ $ctaHref = $ctaHref ?? 'contact.php#contact-form';
       <div class="fcol" data-reveal data-reveal-delay="160">
         <h3 class="fcol__title"><span class="fcol__rule"></span>COMPANY</h3>
         <ul class="flist">
+          <li><a href="about-us.php"><svg><use href="#i-chevron-right"/></svg>About HANIU</a></li>
           <li><a href="index.php#factory"><svg><use href="#i-chevron-right"/></svg>Factory Tour</a></li>
           <li><a href="blog.php"><svg><use href="#i-chevron-right"/></svg>News &amp; Updates</a></li>
           <li><a href="contact.php"><svg><use href="#i-chevron-right"/></svg>Contact Us</a></li>

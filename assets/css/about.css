@@ -1,272 +1,94 @@
 /* ==========================================================================
    HANIU — About page
-   Loads after style.css and only adds what this page introduces.
-   The compact interior-page hero (.page-hero, .pill, .rule-red, .hero-stats)
-   lives in style.css — About and Contact both use it as-is.
+   Loads after style.css and only adds what this page introduces. Shared
+   components (page-hero, hero-stats, split, sec-head--row, tag, media,
+   btn, contact-rows, video-embed) live in style.css and are used as-is.
    ========================================================================== */
 
 /* ==========================================================================
-   2. OUR STORY — collage + credential chips
+   02. WHO WE ARE — light stat row + offset media cluster
    ========================================================================== */
-.collage{
-  position:relative;z-index:1;
-  display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;
-}
-/* Each column carries its own stack so the ragged bottom edge stays
-   predictable and the decorative square can anchor to the left column. */
-.collage__col{position:relative;display:flex;flex-direction:column;gap:16px}
-.collage__col--drop{margin-top:38px}
-.collage .media{background:linear-gradient(135deg,#dfe4ea,#c4ccd6)}
-.collage__a{aspect-ratio:4/5}
-.collage__b{aspect-ratio:4/3}
-.collage__c{aspect-ratio:4/3}
-.collage__d{aspect-ratio:4/5}
+.stat-row{display:flex;flex-wrap:wrap;gap:14px 0;margin-top:34px}
+.stat-row__item{padding:0 28px}
+.stat-row__item:first-child{padding-left:0}
+.stat-row__item + .stat-row__item{border-left:1px solid var(--line);padding-left:28px}
+.stat-row__num{font-family:var(--font-display);font-weight:700;font-size:32px;line-height:1;color:var(--ink);margin:0 0 6px}
+.stat-row__label{margin:0;font-size:11px;font-weight:600;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
 
-.deco-fill{
-  position:absolute;top:-26px;right:-22px;width:96px;height:64px;
-  background:rgba(218,26,45,.16);z-index:0;
+.media-cluster{position:relative}
+.media-cluster__main{aspect-ratio:4/3}
+.media-cluster__sub{
+  position:absolute;left:-8%;bottom:-12%;width:56%;aspect-ratio:3/2;
+  border:6px solid var(--bg);box-shadow:var(--shadow-lg);z-index:2;
 }
-.deco-outline{
-  position:absolute;left:-26px;bottom:-24px;width:96px;height:96px;
-  border:1px solid rgba(218,26,45,.5);z-index:2;pointer-events:none;
-}
-.deco-outline--br{left:auto;right:-24px;bottom:-24px}
-
-.cred-chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.cred-chips li{
-  padding:11px 18px;background:var(--bg-alt);border-left:3px solid var(--red);
-  font-size:13.5px;font-weight:500;color:var(--ink);
-  transition:transform .32s var(--ease),background-color .32s var(--ease),box-shadow .32s var(--ease);
-}
-.cred-chips li:hover{transform:translateY(-3px);background:#fff;box-shadow:var(--shadow-md)}
 
 /* ==========================================================================
-   3. HEADQUARTERS & PRODUCTION NETWORK
+   03 / 10. ASYMMETRIC PHOTO MOSAIC (Our Factory, Final Assembly)
+   One flexible grid: the first tile always runs large, the rest fall in
+   around it — works whether a section supplies 6 photos or 8.
    ========================================================================== */
-.hq-grid{
-  display:grid;grid-template-columns:1fr 1fr 1fr;
-  grid-template-areas:"hq base1 base2" "hq wide wide";
-  gap:22px;align-items:stretch;
-}
-.hq{
-  grid-area:hq;position:relative;overflow:hidden;
-  display:flex;flex-direction:column;
-  padding:34px 32px;border:1px solid var(--red);
-  background:
-    radial-gradient(circle at 90% 8%,rgba(218,26,45,.20),transparent 58%),
-    var(--navy-850);
-  transition:transform .45s var(--ease),box-shadow .45s var(--ease);
-}
-.hq:hover{transform:translateY(-6px);box-shadow:0 22px 50px rgba(0,0,0,.4)}
-.hq__ghost{
-  position:absolute;top:26px;right:22px;width:64px;height:64px;
-  color:rgba(218,26,45,.32);stroke-width:1.2;
-}
-.hq__icon{
-  display:grid;place-items:center;width:44px;height:44px;margin-bottom:26px;
-  background:rgba(218,26,45,.16);color:var(--red);
-}
-.hq__icon svg{width:21px;height:21px}
-.hq__kicker{margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:.15em;color:var(--red);text-transform:uppercase}
-.hq__title{font-size:27px;color:#fff;margin-bottom:14px}
-.hq__text{margin:0 0 26px;font-size:14.5px;line-height:1.75;color:var(--on-dark-soft)}
-.hq__stats{display:flex;gap:0;margin-top:auto}
-.hq__stats > div{padding-right:26px}
-.hq__stats > div + div{padding-left:26px;border-left:1px solid rgba(255,255,255,.14)}
-.hq__num{font-family:var(--font-display);font-weight:700;font-size:24px;line-height:1;color:#fff;margin:0 0 5px}
-.hq__label{margin:0;font-size:10px;font-weight:600;letter-spacing:.13em;color:var(--on-dark-faint);text-transform:uppercase}
-
-.base-card{
-  padding:26px 26px 24px;background:var(--navy-800);
-  border:1px solid rgba(255,255,255,.06);
-  transition:transform .42s var(--ease),background-color .42s var(--ease),border-color .42s var(--ease);
-}
-.base-card--a{grid-area:base1}
-.base-card--b{grid-area:base2}
-.base-card--wide{grid-area:wide}
-.base-card:hover{transform:translateY(-5px);background:var(--navy-700);border-color:rgba(218,26,45,.45)}
-.base-card__icon{
-  display:grid;place-items:center;width:38px;height:38px;margin-bottom:18px;
-  background:rgba(255,255,255,.07);color:#fff;
-  transition:background-color .35s var(--ease),color .35s var(--ease);
-}
-.base-card__icon svg{width:19px;height:19px}
-.base-card:hover .base-card__icon{background:var(--red);color:#fff}
-.base-card__title{font-size:19px;color:#fff;margin-bottom:10px}
-.base-card__text{margin:0 0 14px;font-size:14px;line-height:1.7;color:var(--on-dark-soft)}
-.base-card__tag{margin:0;font-size:10.5px;font-weight:700;letter-spacing:.13em;color:var(--red);text-transform:uppercase}
+.mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:150px;gap:14px;grid-auto-flow:dense}
+.mosaic__item:first-child{grid-column:span 2;grid-row:span 2}
 
 /* ==========================================================================
-   4. DOMESTIC STRENGTH — image with stat overlay + check rows
+   04–08 / 12. WORKSHOP SECTIONS — photo galleries + highlight chips
    ========================================================================== */
-.shot{position:relative;z-index:1;box-shadow:var(--shadow-md)}
-.shot__bar{
-  position:absolute;left:0;right:0;bottom:0;z-index:2;
-  display:grid;grid-template-columns:repeat(3,1fr);
-  padding:20px 10px;
-  background:linear-gradient(to top,rgba(8,17,30,.94),rgba(8,17,30,.55));
-}
-.shot__bar > div{text-align:center;padding:0 8px}
-.shot__bar > div + div{border-left:1px solid rgba(255,255,255,.18)}
-.shot__num{font-family:var(--font-display);font-weight:700;font-size:25px;line-height:1;color:#fff;margin:0 0 5px}
-.shot__label{margin:0;font-size:9.5px;font-weight:600;letter-spacing:.12em;color:#a8b8cc;text-transform:uppercase}
-
-.checkrows{display:flex;flex-direction:column;gap:12px;margin-top:30px}
-.checkrow{
-  display:flex;align-items:center;gap:14px;padding:16px 20px;
-  background:#fff;border-left:3px solid var(--red);
-  transition:transform .34s var(--ease),box-shadow .34s var(--ease);
-}
-.checkrow:hover{transform:translateX(7px);box-shadow:var(--shadow-md)}
-.checkrow svg{flex:none;width:20px;height:20px;color:var(--red)}
-.checkrow p{margin:0;font-size:14.5px;color:var(--ink)}
+.workshop__gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:36px 0}
+.workshop__gallery .media{aspect-ratio:4/3}
+.chip-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
 
 /* ==========================================================================
-   5. FACTORY SCALE & TEAM
+   06 / 10. PROCESS FLOWS — horizontal (light) and vertical (dark) steps
    ========================================================================== */
-.scale-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:54px}
-.scale{
-  padding:34px 20px;text-align:center;background:var(--bg-alt);
-  transition:transform .42s var(--ease),box-shadow .42s var(--ease),background-color .42s var(--ease);
+.flow-line{
+  counter-reset:step;position:relative;
+  display:flex;justify-content:space-between;gap:6px;margin-top:40px;padding-top:4px;
 }
-.scale:hover{transform:translateY(-6px);background:#fff;box-shadow:var(--shadow-md)}
-.scale__icon{
-  display:grid;place-items:center;width:48px;height:48px;margin:0 auto 20px;
-  background:#fff;color:var(--red);
-  transition:background-color .35s var(--ease),color .35s var(--ease),transform .42s var(--ease);
+.flow-line::before{content:"";position:absolute;top:24px;left:6%;right:6%;height:2px;background:var(--line);z-index:0}
+.flow-line__step{position:relative;z-index:1;flex:1;text-align:center;padding:0 4px}
+.flow-line__step::before{
+  content:counter(step);counter-increment:step;
+  display:grid;place-items:center;width:40px;height:40px;margin:0 auto;border-radius:50%;
+  background:#fff;border:2px solid var(--red);color:var(--red);
+  font-family:var(--font-display);font-weight:700;font-size:15px;
 }
-.scale__icon svg{width:22px;height:22px}
-.scale:hover .scale__icon{background:var(--red);color:#fff;transform:translateY(-3px)}
-.scale__num{font-family:var(--font-display);font-weight:700;font-size:34px;line-height:1;color:var(--ink);margin:0 0 8px}
-.scale__label{margin:0;font-size:11px;font-weight:600;letter-spacing:.13em;color:var(--muted);text-transform:uppercase}
+.flow-line__step span{display:block;margin-top:12px;font-size:12.5px;font-weight:600;color:var(--ink)}
+.flow-line--long .flow-line__step span{font-size:11.5px}
 
-.banner{position:relative;overflow:hidden;min-height:340px;display:flex;align-items:flex-end}
-.banner .media{background:linear-gradient(135deg,var(--navy-850),var(--navy-950))}
-.banner__scrim{
-  position:absolute;inset:0;
-  background:linear-gradient(95deg,rgba(8,17,30,.94) 0%,rgba(8,17,30,.78) 45%,rgba(8,17,30,.30) 100%);
+.flow-vertical{position:relative;display:flex;flex-direction:column;counter-reset:vstep;max-width:360px}
+.flow-vertical::before{content:"";position:absolute;top:20px;bottom:20px;left:19px;width:2px;background:rgba(255,255,255,.18)}
+.flow-vertical li{position:relative;z-index:1;display:flex;align-items:center;gap:18px;padding:13px 0}
+.flow-vertical li::before{
+  content:counter(vstep);counter-increment:vstep;flex:none;
+  display:grid;place-items:center;width:40px;height:40px;border-radius:50%;
+  background:var(--navy-900);border:2px solid var(--red);color:#fff;
+  font-family:var(--font-display);font-weight:700;font-size:15px;
 }
-.banner__body{position:relative;z-index:2;padding:44px 46px;max-width:640px}
-.banner__title{font-size:clamp(22px,2.4vw,30px);color:#fff;margin-bottom:14px}
-.banner__text{margin:0;font-size:15px;line-height:1.8;color:#c3d0df}
-.banner:hover .media img{transform:scale(1.05)}
+.flow-vertical li span{font-size:15px;font-weight:600;color:#fff}
 
 /* ==========================================================================
-   6. CORE WORKSHOP CAPABILITIES
+   09. eBIKE & TRICYCLE PRODUCTION — horizontal scroll gallery, no JS
    ========================================================================== */
-.shop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.shop{
-  position:relative;padding:32px 30px 34px;background:#fff;overflow:hidden;
-  transition:transform .45s var(--ease),box-shadow .45s var(--ease);
+.hgallery{
+  display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:6px var(--gutter) 22px;margin:0 calc(var(--gutter) * -1);
+  scrollbar-width:none;
 }
-.shop::before{
-  content:"";position:absolute;left:0;top:0;width:100%;height:3px;
-  background:var(--red);transform:scaleX(0);transform-origin:0 50%;
-  transition:transform .45s var(--ease);
-}
-.shop:hover{transform:translateY(-7px);box-shadow:var(--shadow-lg)}
-.shop:hover::before{transform:scaleX(1)}
-.shop__icon{
-  display:grid;place-items:center;width:46px;height:46px;margin-bottom:26px;
-  background:rgba(218,26,45,.09);color:var(--red);
-  transition:background-color .35s var(--ease),color .35s var(--ease),transform .42s var(--ease);
-}
-.shop__icon svg{width:21px;height:21px}
-.shop:hover .shop__icon{background:var(--red);color:#fff;transform:rotate(-6deg) scale(1.05)}
-.shop__title{font-size:18.5px;margin-bottom:12px}
-.shop__text{margin:0;font-size:14.5px;line-height:1.75}
-.shop--dark{
-  background:
-    radial-gradient(circle at 92% 6%,rgba(218,26,45,.24),transparent 52%),
-    var(--navy-900);
-}
-.shop--dark .shop__title{color:#fff}
-.shop--dark .shop__text{color:var(--on-dark-soft)}
-.shop--dark .shop__icon{background:rgba(255,255,255,.08)}
-.shop__tag{margin:16px 0 0;font-size:10.5px;font-weight:700;letter-spacing:.13em;color:var(--red);text-transform:uppercase}
+.hgallery::-webkit-scrollbar{display:none}
+.hgallery .media{flex:0 0 300px;scroll-snap-align:start}
 
 /* ==========================================================================
-   7. R&D CENTER
+   11. TESTING & QUALITY CONTROL — photo cards
    ========================================================================== */
-.rd-tiles{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px}
-.rd-tile{
-  padding:20px 22px;background:var(--navy-800);border-left:3px solid transparent;
-  transition:transform .38s var(--ease),background-color .38s var(--ease),border-color .38s var(--ease);
-}
-.rd-tile:hover{transform:translateY(-4px);background:var(--navy-700);border-left-color:var(--red)}
-.rd-tile h3{font-size:19px;color:#fff;margin-bottom:5px}
-.rd-tile p{margin:0;font-size:13px;color:var(--on-dark-soft)}
-
-.float-card{
-  position:absolute;left:-28px;bottom:-26px;z-index:3;max-width:310px;
-  padding:22px 26px;
-  background:rgba(30,53,96,.88);border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  transition:transform .42s var(--ease);
-}
-.split__visual:hover .float-card{transform:translateY(-5px)}
-.float-card__kicker{
-  display:flex;align-items:center;gap:9px;margin:0 0 10px;
-  font-size:10.5px;font-weight:700;letter-spacing:.14em;color:#c6d4e4;text-transform:uppercase;
-}
-.float-card__kicker i{
-  width:7px;height:7px;border-radius:50%;background:var(--red);flex:none;
-  animation:pulse 2.4s var(--ease) infinite;
-}
-.float-card__title{font-size:23px;color:#fff;margin-bottom:8px}
-.float-card__text{margin:0;font-size:13.5px;line-height:1.65;color:var(--on-dark-soft)}
+.qc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.qc-card{background:#fff;overflow:hidden;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.qc-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.qc-card__title{font-size:17px;margin:20px 22px 8px}
+.qc-card__desc{margin:0 22px 22px;font-size:14px;color:var(--body)}
 
 /* ==========================================================================
-   8. EXPORT EXPERIENCE
+   13. CERTIFICATE GALLERY + LIGHTBOX (dynamic, admin-managed)
    ========================================================================== */
-.export{display:grid;grid-template-columns:1.55fr 1fr;gap:30px;align-items:start}
-.export__list{display:flex;flex-direction:column;gap:16px}
-.xfeat{
-  display:flex;gap:18px;padding:26px 28px;background:var(--bg-alt);
-  border-left:3px solid transparent;
-  transition:transform .4s var(--ease),background-color .4s var(--ease),border-color .4s var(--ease);
-}
-.xfeat:hover{transform:translateX(7px);background:#fff;border-left-color:var(--red);box-shadow:var(--shadow-sm)}
-.xfeat__icon{
-  flex:none;display:grid;place-items:center;width:44px;height:44px;
-  background:rgba(218,26,45,.10);color:var(--red);
-  transition:background-color .35s var(--ease),color .35s var(--ease);
-}
-.xfeat__icon svg{width:20px;height:20px}
-.xfeat:hover .xfeat__icon{background:var(--red);color:#fff}
-.xfeat__title{font-size:17.5px;margin-bottom:9px}
-.xfeat__text{margin:0;font-size:14px;line-height:1.75}
-
-.export__side{display:flex;flex-direction:column;gap:24px}
-.dest{padding:28px 26px;background:var(--navy-900)}
-.dest__title{font-size:19px;color:#fff;margin-bottom:20px}
-.dest__list{display:flex;flex-wrap:wrap;gap:9px}
-.dest__list li{
-  display:inline-flex;align-items:center;gap:7px;
-  padding:8px 13px;font-size:13px;color:#dce6f2;
-  background:var(--navy-800);border:1px solid rgba(255,255,255,.09);
-  transition:background-color .3s var(--ease),border-color .3s var(--ease),transform .3s var(--ease);
-}
-.dest__list li b{font-size:9.5px;font-weight:700;letter-spacing:.08em;color:var(--on-dark-faint);text-transform:uppercase}
-.dest__list li:hover{background:var(--red);border-color:var(--red);transform:translateY(-3px)}
-.dest__list li:hover b{color:rgba(255,255,255,.75)}
-
-.certcard{padding:28px 26px;background:var(--red);box-shadow:0 16px 40px rgba(218,26,45,.28)}
-.certcard__title{font-size:19px;color:#fff;margin-bottom:20px}
-.certcard__list{display:flex;flex-direction:column;gap:14px}
-.certcard__list li{
-  display:flex;align-items:center;gap:11px;font-size:14px;font-weight:600;color:#fff;
-  transition:transform .3s var(--ease);
-}
-.certcard__list li svg{flex:none;width:18px;height:18px;color:rgba(255,255,255,.9)}
-.certcard__list li:hover{transform:translateX(5px)}
-
-/* ==========================================================================
-   8b. CERTIFICATE GALLERY + LIGHTBOX
-   ========================================================================== */
-/* Flex-wrap "gallery" grid — each certificate keeps its natural aspect
-   ratio (no cropping), and justify-content:center means a half-empty
-   last row centers itself instead of hugging the left edge. */
 .cert-gallery{display:flex;flex-wrap:wrap;justify-content:center;gap:18px}
 .cert-gallery__item{
   display:block;flex:0 0 calc(25% - 14px);margin:0;padding:10px;
@@ -293,53 +115,57 @@
 .cert-modal__close:hover{background:rgba(255,255,255,.24)}
 
 /* ==========================================================================
-   9. COMPETITIVE EDGE
+   14. GLOBAL PRESENCE — decorative dot-map + market tags
    ========================================================================== */
-.edge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.edge{
-  position:relative;padding:34px 32px 36px;background:#fff;overflow:hidden;
-  transition:transform .45s var(--ease),box-shadow .45s var(--ease);
+.world-map{
+  position:relative;height:320px;margin:40px 0 8px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  background:
+    radial-gradient(rgba(218,26,45,.55) 1.5px,transparent 1.6px) 0 0/28px 28px,
+    var(--navy-950);
 }
-.edge:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
-.edge__no{
-  position:absolute;top:14px;right:22px;
-  font-family:var(--font-display);font-weight:700;font-size:62px;line-height:1;
-  color:rgba(15,31,53,.05);transition:color .45s var(--ease),transform .45s var(--ease);
+.world-map::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 42%,transparent 28%,var(--navy-950) 84%);
 }
-.edge:hover .edge__no{transform:scale(1.06)}
-.edge__icon{
-  display:grid;place-items:center;width:46px;height:46px;margin-bottom:26px;
-  background:rgba(218,26,45,.09);color:var(--red);
-  transition:background-color .35s var(--ease),color .35s var(--ease),transform .42s var(--ease);
+.world-map__icon{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:170px;height:170px;color:rgba(218,26,45,.32);z-index:1;
 }
-.edge__icon svg{width:21px;height:21px}
-.edge:hover .edge__icon{transform:translateY(-3px)}
-.edge__title{font-size:18.5px;margin-bottom:12px}
-.edge__text{margin:0;font-size:14.5px;line-height:1.75}
-
-.edge--top{border-top:3px solid var(--red)}
-
-.edge--dark{background:var(--navy-900)}
-.edge--dark .edge__title{color:#fff}
-.edge--dark .edge__text{color:var(--on-dark-soft)}
-.edge--dark .edge__no{color:rgba(255,255,255,.06)}
-.edge--dark .edge__icon{background:rgba(218,26,45,.18)}
-
-.edge--navy{background:var(--navy-800)}
-.edge--navy .edge__title{color:#fff}
-.edge--navy .edge__text{color:var(--on-dark-soft)}
-.edge--navy .edge__no{color:rgba(255,255,255,.07)}
-.edge--navy .edge__icon{background:rgba(255,255,255,.09);color:#fff}
-
-.edge--red{background:var(--red);box-shadow:0 14px 36px rgba(218,26,45,.26)}
-.edge--red .edge__title{color:#fff}
-.edge--red .edge__text{color:rgba(255,255,255,.92)}
-.edge--red .edge__no{color:rgba(255,255,255,.16)}
-.edge--red .edge__icon{background:rgba(255,255,255,.16);color:#fff}
-.edge--red:hover{box-shadow:0 24px 54px rgba(218,26,45,.36)}
+.market-tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:28px}
 
 /* ==========================================================================
-   10. PARTNER WITH US
+   15. OEM / ODM — numbered chain, visually distinct from the factory flows
+   ========================================================================== */
+.oem-flow{counter-reset:oem;display:flex;flex-wrap:wrap;gap:16px 14px;justify-content:center;margin-top:8px}
+.oem-flow li{
+  position:relative;display:flex;align-items:center;gap:10px;
+  padding:14px 24px;background:var(--navy-900);color:#fff;
+  font-family:var(--font-display);font-weight:600;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;
+}
+.oem-flow li::before{
+  content:counter(oem);counter-increment:oem;
+  display:grid;place-items:center;width:24px;height:24px;border-radius:50%;
+  background:var(--red);color:#fff;font-size:12px;flex:none;
+}
+.oem-flow li:not(:last-child)::after{
+  content:"";position:absolute;right:-13px;top:50%;width:9px;height:9px;
+  border-top:2px solid var(--muted);border-right:2px solid var(--muted);
+  transform:translateY(-50%) rotate(45deg);
+}
+
+/* ==========================================================================
+   18. FINAL STATEMENT — dark closing section
+   ========================================================================== */
+.final-statement__title{font-size:clamp(28px,4vw,46px);line-height:1.28}
+.final-statement__title span{display:block}
+.final-statement__title .is-red{color:var(--red)}
+.final-statement__brand{margin-top:42px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.final-statement__logo{height:38px;padding:8px 16px;background:#fff}
+.final-statement__brand p{margin:0;font-size:13.5px;color:var(--on-dark-soft)}
+
+/* ==========================================================================
+   PARTNER WITH US — inquiry form (dark)
    ========================================================================== */
 .partner{
   position:relative;z-index:1;
@@ -381,47 +207,38 @@
 .btn--block{width:100%;justify-content:center;margin-top:6px}
 
 /* ==========================================================================
-   11. RESPONSIVE
+   RESPONSIVE
    ========================================================================== */
 @media (max-width:1080px){
-  .scale-grid{grid-template-columns:repeat(2,1fr)}
-  .shop-grid,.edge-grid{grid-template-columns:repeat(2,1fr)}
-  .export{grid-template-columns:1fr;gap:26px}
-  .export__side{flex-direction:row;flex-wrap:wrap}
-  .export__side > *{flex:1 1 300px}
+  .qc-grid{grid-template-columns:repeat(2,1fr)}
 }
 
 @media (max-width:960px){
-  .hq-grid{grid-template-columns:1fr 1fr;grid-template-areas:"hq hq" "base1 base2" "wide wide"}
   .partner{grid-template-columns:1fr;gap:44px}
-  .float-card{left:0;bottom:-18px;max-width:280px}
-  .deco-fill,.deco-outline{display:none}
+  .mosaic{grid-template-columns:repeat(2,1fr)}
   .cert-gallery__item{flex-basis:calc(33.333% - 12px)}
+  .media-cluster__sub{left:0;width:52%}
 }
 
 @media (max-width:720px){
-  .hq-grid{grid-template-columns:1fr;grid-template-areas:"hq" "base1" "base2" "wide"}
-  .shop-grid,.edge-grid{grid-template-columns:1fr}
-  .scale-grid{gap:16px}
-  .hq,.shop,.edge{padding:28px 24px}
-  .banner__body{padding:32px 24px}
-  .banner{min-height:300px}
+  .qc-grid{grid-template-columns:1fr}
   .msg-card{padding:28px 22px}
-  .export__side{flex-direction:column}
-  .collage{gap:12px}
-  .collage__col{gap:12px}
-  .collage__col--drop{margin-top:0}
-  .shot__bar{padding:14px 6px}
-  .shot__num{font-size:20px}
-  .shot__label{font-size:8.5px;letter-spacing:.08em}
-  .cred-chips{gap:9px}
-  .cred-chips li{padding:9px 14px;font-size:12.5px}
   .cert-gallery__item{flex-basis:calc(50% - 9px)}
+  .stat-row{gap:18px 0}
+  .stat-row__item{flex:1 0 42%;padding:0 14px}
+  .stat-row__item:nth-child(odd){padding-left:0;border-left:0}
+  .stat-row__item + .stat-row__item{border-left:1px solid var(--line)}
+  .flow-line{flex-direction:column;align-items:flex-start;gap:22px}
+  .flow-line::before{display:none}
+  .flow-line__step{display:flex;align-items:center;gap:16px;text-align:left;padding:0}
+  .flow-line__step span{margin:0}
+  .world-map{height:240px}
+  .world-map__icon{width:120px;height:120px}
 }
 
 @media (max-width:420px){
-  .rd-tiles{grid-template-columns:1fr}
   .partner__actions .btn{width:100%;justify-content:center}
-  .float-card{position:static;max-width:none;margin-top:16px}
   .cert-gallery__item{flex-basis:100%}
+  .mosaic{grid-template-columns:1fr;grid-auto-rows:180px}
+  .mosaic__item:first-child{grid-column:span 1;grid-row:span 1;aspect-ratio:4/3}
 }

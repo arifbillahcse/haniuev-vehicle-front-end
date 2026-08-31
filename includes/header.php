@@ -37,6 +37,7 @@ $isActive = fn(string $key) => $activeNav === $key ? ' is-active' : '';
     <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.3l2.4 2.4 4.6-4.9"/></symbol>
     <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
     <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></symbol>
     <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9.5l6 6 6-6"/></symbol>
     <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></symbol>
     <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M6 21V15M6 11V3M12 21v-9M12 8V3M18 21v-5M18 12V3M3 15h6M9 8h6M15 16h6"/></symbol>
@@ -78,6 +79,7 @@ $isActive = fn(string $key) => $activeNav === $key ? ' is-active' : '';
     <nav class="nav" id="primaryNav" aria-label="Primary">
       <ul class="nav__list">
         <li class="nav__item"><a class="nav__link<?= $isActive('home') ?>" href="index.php"<?= $activeNav === 'home' ? ' aria-current="page"' : '' ?>>Home</a></li>
+        <li class="nav__item"><a class="nav__link<?= $isActive('about') ?>" href="about-us.php"<?= $activeNav === 'about' ? ' aria-current="page"' : '' ?>>About</a></li>
 
         <li class="nav__item has-dropdown">
           <button class="nav__link nav__toggle" aria-expanded="false" aria-haspopup="true">
