@@ -104,7 +104,7 @@ $isActive = fn(string $key) => $activeNav === $key ? ' is-active' : '';
               <li><a href="batteries-chargers.php"><span class="dropdown__dot"></span>Batteries &amp; Chargers<small>Lithium &amp; lead-acid</small></a></li>
               <li><a href="frames-body-parts.php"><span class="dropdown__dot"></span>Frames &amp; Body Parts<small>In-house welding</small></a></li>
               <li><a href="wiring-harness.php"><span class="dropdown__dot"></span>Wiring Harness<small>Custom looms</small></a></li>
-              <li><a href="all-parts.php" class="dropdown__all">View All Parts <svg><use href="#i-arrow-right"/></svg></a></li>
+              <li><a href="all-parts.php" class="dropdown__all">View Spare Parts <svg><use href="#i-arrow-right"/></svg></a></li>
             </ul>
           </div>
         </li>
