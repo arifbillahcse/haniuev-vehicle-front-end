@@ -505,32 +505,29 @@ sup{font-size:.55em;vertical-align:super;line-height:0}
    ========================================================================== */
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:52px}
 .cat{
-  position:relative;display:block;overflow:hidden;background:var(--navy-900);
+  position:relative;display:block;overflow:hidden;background:#fff;
+  box-shadow:0 1px 0 var(--line);
   transition:transform .5s var(--ease),box-shadow .5s var(--ease);
 }
 .cat:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
 .cat .media{background:linear-gradient(180deg,#eef1f4,#b9c2cc)}
-.cat::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(8,17,30,.93) 8%,rgba(8,17,30,.35) 42%,transparent 68%);
-  transition:opacity .5s var(--ease);
-}
-.cat:hover::after{opacity:.86}
 .cat:hover img{transform:scale(1.08)}
-.cat__body{position:absolute;left:22px;right:64px;bottom:20px;z-index:2}
+.cat__body{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:18px 20px;
+}
 .cat__kicker{
   margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.14em;
   color:var(--red);text-transform:uppercase;
 }
-.cat__title{font-size:22px;color:#fff}
+.cat__title{font-size:20px;color:var(--ink)}
 .cat__arrow{
-  position:absolute;right:20px;bottom:22px;z-index:2;
-  display:grid;place-items:center;width:38px;height:38px;border-radius:50%;
-  border:1px solid rgba(255,255,255,.4);color:#fff;
-  transition:background-color .4s var(--ease),border-color .4s var(--ease),transform .4s var(--ease);
+  flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--line);color:var(--ink);
+  transition:background-color .4s var(--ease),border-color .4s var(--ease),transform .4s var(--ease),color .4s var(--ease);
 }
 .cat__arrow svg{width:16px;height:16px;transition:transform .4s var(--ease)}
-.cat:hover .cat__arrow{background:var(--red);border-color:var(--red);transform:scale(1.08)}
+.cat:hover .cat__arrow{background:var(--red);border-color:var(--red);color:#fff;transform:scale(1.08)}
 .cat:hover .cat__arrow svg{transform:translateX(3px)}
 
 /* ==========================================================================

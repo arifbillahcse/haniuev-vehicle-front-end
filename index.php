@@ -131,34 +131,42 @@ require __DIR__ . '/includes/header.php';
       <a class="cat" href="electric-bicycles.php" data-reveal data-reveal-delay="0">
         <div class="media media--cat" data-label="Electric Bicycle"><img src="assets/images/cat-bicycle.png" alt="HANIU electric bicycle"></div>
         <div class="cat__body">
-          <p class="cat__kicker">URBAN MOBILITY</p>
-          <h3 class="cat__title">Electric Bicycle</h3>
+          <div>
+            <p class="cat__kicker">URBAN MOBILITY</p>
+            <h3 class="cat__title">Electric Bicycle</h3>
+          </div>
+          <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
         </div>
-        <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
       </a>
       <a class="cat" href="electric-bike.php" data-reveal data-reveal-delay="90">
         <div class="media media--cat" data-label="Electric Bike"><img src="assets/images/cat-motorcycle.png" alt="HANIU electric bike"></div>
         <div class="cat__body">
-          <p class="cat__kicker">HIGH PERFORMANCE</p>
-          <h3 class="cat__title">Electric Bike</h3>
+          <div>
+            <p class="cat__kicker">HIGH PERFORMANCE</p>
+            <h3 class="cat__title">Electric Bike</h3>
+          </div>
+          <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
         </div>
-        <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
       </a>
       <a class="cat" href="electric-three-wheeler.php" data-reveal data-reveal-delay="180">
         <div class="media media--cat" data-label="Electric Three Wheeler"><img src="assets/images/3wheelar.png" alt="HANIU electric three wheeler"></div>
         <div class="cat__body">
-          <p class="cat__kicker">CARGO &amp; UTILITY</p>
-          <h3 class="cat__title">Electric Three Wheeler</h3>
+          <div>
+            <p class="cat__kicker">CARGO &amp; UTILITY</p>
+            <h3 class="cat__title">Electric Three Wheeler</h3>
+          </div>
+          <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
         </div>
-        <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
       </a>
       <a class="cat" href="electric-four-wheeler.php" data-reveal data-reveal-delay="270">
         <div class="media media--cat" data-label="Electric Four Wheeler"><img src="assets/images/cat-fourwheeler.jpg" alt="HANIU electric four wheeler"></div>
         <div class="cat__body">
-          <p class="cat__kicker">LEISURE &amp; TRANSPORT</p>
-          <h3 class="cat__title">Electric Four Wheeler</h3>
+          <div>
+            <p class="cat__kicker">LEISURE &amp; TRANSPORT</p>
+            <h3 class="cat__title">Electric Four Wheeler</h3>
+          </div>
+          <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
         </div>
-        <span class="cat__arrow"><svg><use href="#i-arrow-right"/></svg></span>
       </a>
     </div>
   </div>
