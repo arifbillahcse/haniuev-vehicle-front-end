@@ -14,6 +14,17 @@ $allCategories = db_all('SELECT slug, name FROM categories ORDER BY sort_order, 
 $categoryNames = array_column($allCategories, 'name', 'slug');
 $categorySlugsValid = array_column($allCategories, 'slug');
 
+// The 4 vehicle types are the "boss" categories — pin them to the top of the
+// category dropdown, ahead of the open-ended parts categories.
+usort($allCategories, function ($a, $b) {
+    $aVehicle = in_array($a['slug'], VEHICLE_CATEGORY_SLUGS, true);
+    $bVehicle = in_array($b['slug'], VEHICLE_CATEGORY_SLUGS, true);
+    if ($aVehicle !== $bVehicle) {
+        return $aVehicle ? -1 : 1;
+    }
+    return 0; // preserve the existing sort_order/name order within each group
+});
+
 $action = $_GET['action'] ?? 'list';
 $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 $flash = '';
@@ -239,9 +250,18 @@ if ($action === 'new' || $action === 'edit') {
           <div class="field">
             <label for="category">Category</label>
             <select id="category" name="category">
-              <?php foreach ($allCategories as $c): ?>
-                <option value="<?= h($c['slug']) ?>" <?= $product['category'] === $c['slug'] ? 'selected' : '' ?>><?= h($c['name']) ?></option>
-              <?php endforeach; ?>
+              <optgroup label="★ Vehicle Categories">
+                <?php foreach ($allCategories as $c): ?>
+                  <?php if (!in_array($c['slug'], VEHICLE_CATEGORY_SLUGS, true)) continue; ?>
+                  <option value="<?= h($c['slug']) ?>" <?= $product['category'] === $c['slug'] ? 'selected' : '' ?>><?= h($c['name']) ?></option>
+                <?php endforeach; ?>
+              </optgroup>
+              <optgroup label="Parts & Other Categories">
+                <?php foreach ($allCategories as $c): ?>
+                  <?php if (in_array($c['slug'], VEHICLE_CATEGORY_SLUGS, true)) continue; ?>
+                  <option value="<?= h($c['slug']) ?>" <?= $product['category'] === $c['slug'] ? 'selected' : '' ?>><?= h($c['name']) ?></option>
+                <?php endforeach; ?>
+              </optgroup>
             </select>
             <small>Need a new one? <a href="categories.php?action=new" target="_blank" rel="noopener">Add a category</a>.</small>
           </div>
