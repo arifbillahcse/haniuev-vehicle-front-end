@@ -78,7 +78,6 @@ $isActive = fn(string $key) => $activeNav === $key ? ' is-active' : '';
     <nav class="nav" id="primaryNav" aria-label="Primary">
       <ul class="nav__list">
         <li class="nav__item"><a class="nav__link<?= $isActive('home') ?>" href="index.php"<?= $activeNav === 'home' ? ' aria-current="page"' : '' ?>>Home</a></li>
-        <li class="nav__item"><a class="nav__link<?= $isActive('about') ?>" href="about-us.php"<?= $activeNav === 'about' ? ' aria-current="page"' : '' ?>>About</a></li>
 
         <li class="nav__item has-dropdown">
           <button class="nav__link nav__toggle" aria-expanded="false" aria-haspopup="true">
