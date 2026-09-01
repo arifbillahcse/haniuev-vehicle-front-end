@@ -277,6 +277,21 @@ sup{font-size:.55em;vertical-align:super;line-height:0}
 .nav__item.is-open .nav__link::after{transform:scaleX(1)}
 .nav__item--cta{margin-left:10px}
 
+/* language switcher — reuses .nav__caret's sizing but must not spin with it */
+.lang-switcher__icon{width:14px;height:14px;stroke-width:2;margin-right:5px}
+.dropdown--lang{left:auto;right:0;width:200px;transform:translateY(12px)}
+.nav__item.is-open .dropdown--lang{transform:translateY(0)}
+
+/* Google Website Translator runs headless — hide every bit of its default
+   chrome (top banner iframe, body offset, dotted highlight on translated
+   text) so only our own dropdown is visible. */
+.goog-te-banner-frame,
+.skiptranslate > iframe{display:none !important}
+body{top:0 !important}
+body.is-locked{top:0 !important}
+.goog-text-highlight{background:none !important;box-shadow:none !important}
+#google_translate_element{display:none !important}
+
 /* dropdown */
 .dropdown{
   position:absolute;top:calc(100% + 12px);left:50%;width:290px;

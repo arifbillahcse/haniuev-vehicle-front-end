@@ -111,6 +111,24 @@ $isActive = fn(string $key) => $activeNav === $key ? ' is-active' : '';
         </li>
 
         <li class="nav__item"><a class="nav__link<?= $isActive('blog') ?>" href="blog.php"<?= $activeNav === 'blog' ? ' aria-current="page"' : '' ?>>Blog</a></li>
+
+        <li class="nav__item has-dropdown lang-switcher notranslate" translate="no">
+          <button class="nav__link nav__toggle" aria-expanded="false" aria-haspopup="true">
+            <svg class="lang-switcher__icon"><use href="#i-globe"/></svg>
+            <span id="currentLangLabel">EN</span>
+            <svg class="nav__caret"><use href="#i-chevron-down"/></svg>
+          </button>
+          <div class="dropdown dropdown--lang">
+            <ul class="dropdown__list">
+              <li><a href="#" class="lang-option" data-lang="en"><span class="dropdown__dot"></span>English</a></li>
+              <li><a href="#" class="lang-option" data-lang="zh-CN"><span class="dropdown__dot"></span>中文 (Chinese)</a></li>
+              <li><a href="#" class="lang-option" data-lang="es"><span class="dropdown__dot"></span>Español</a></li>
+              <li><a href="#" class="lang-option" data-lang="it"><span class="dropdown__dot"></span>Italiano</a></li>
+              <li><a href="#" class="lang-option" data-lang="pt"><span class="dropdown__dot"></span>Português</a></li>
+            </ul>
+          </div>
+        </li>
+
         <li class="nav__item nav__item--cta"><a class="btn btn--red btn--sm" href="contact.php">Contact</a></li>
       </ul>
     </nav>

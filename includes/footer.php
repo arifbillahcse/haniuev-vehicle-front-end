@@ -95,6 +95,17 @@ $ctaHref = $ctaHref ?? 'contact.php#contact-form';
 
 <button class="to-top" id="toTop" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
 
+<div id="google_translate_element" class="notranslate" translate="no" hidden></div>
+<script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'en,zh-CN,es,it,pt',
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

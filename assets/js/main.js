@@ -447,6 +447,62 @@
   }
 
   /* ------------------------------------------------------------------
+     14. LANGUAGE SWITCHER (drives the hidden Google Website Translator)
+     ------------------------------------------------------------------ */
+  function initLanguageSwitcher() {
+    var options = $$('.lang-option');
+    if (!options.length) return;
+
+    var LABELS = { en: 'EN', 'zh-CN': '中文', es: 'ES', it: 'IT', pt: 'PT' };
+
+    function currentLangFromCookie() {
+      var m = document.cookie.match(/(?:^|;\s*)googtrans=([^;]*)/);
+      if (!m) return 'en';
+      var parts = decodeURIComponent(m[1]).split('/'); // "/en/es" -> ["", "en", "es"]
+      return parts[2] || 'en';
+    }
+
+    function setCookie(lang) {
+      var value = '/en/' + lang;
+      var host = window.location.hostname;
+      // Plain path=/ covers this host; the explicit domain copy covers hosts
+      // that serve www. and bare-domain as the same site with different cookie scopes.
+      document.cookie = 'googtrans=' + value + '; path=/';
+      if (host) document.cookie = 'googtrans=' + value + '; path=/; domain=' + host;
+    }
+
+    function updateLabel(lang) {
+      var label = $('#currentLangLabel');
+      if (label) label.textContent = LABELS[lang] || 'EN';
+    }
+
+    function applyLanguage(lang) {
+      setCookie(lang);
+      updateLabel(lang);
+      closeAllDropdowns();
+      var combo = document.querySelector('select.goog-te-combo');
+      if (combo) {
+        // Widget already loaded on this page — flip it without a reload.
+        combo.value = lang;
+        combo.dispatchEvent(new Event('change'));
+      } else {
+        // Widget hasn't finished loading yet; the cookie alone will make it
+        // apply the right language as soon as the page reloads.
+        window.location.reload();
+      }
+    }
+
+    options.forEach(function (opt) {
+      opt.addEventListener('click', function (e) {
+        e.preventDefault();
+        applyLanguage(opt.getAttribute('data-lang'));
+      });
+    });
+
+    updateLabel(currentLangFromCookie());
+  }
+
+  /* ------------------------------------------------------------------
      BOOT
      ------------------------------------------------------------------ */
   function init() {
@@ -463,6 +519,7 @@
     initCertGallery();
     initForm();
     initYear();
+    initLanguageSwitcher();
   }
 
   document.readyState === 'loading'
