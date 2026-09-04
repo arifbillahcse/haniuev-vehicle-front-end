@@ -1,3 +1,6 @@
 # Real MySQL credentials — copy db-config.sample.php to create this file.
 # Never commit it.
 /db-config.php
+
+# Runtime error log written by config.php's fatal-error handler — never commit.
+/logs/*.log

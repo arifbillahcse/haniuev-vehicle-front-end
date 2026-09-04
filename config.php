@@ -16,6 +16,60 @@ declare(strict_types=1);
 error_reporting(E_ALL);
 ini_set('display_errors', '0'); // flip to '1' while developing locally
 
+/**
+ * With display_errors off, a fatal error on any page (a bad row's data
+ * shape, a missing file, a DB hiccup) used to just show a blank page or
+ * the browser's generic "HTTP ERROR 500" with zero information anywhere
+ * easy to find. Catch every uncaught exception and fatal error here so a
+ * visitor sees one plain message instead of a blank screen, and the real
+ * error always lands in logs/app-error.log — no hosting-panel hunting
+ * needed to see what actually broke.
+ */
+function hn_log_fatal(string $message): void
+{
+    $dir = __DIR__ . '/logs';
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0755, true);
+    }
+    $line = '[' . date('Y-m-d H:i:s') . '] ' . ($_SERVER['REQUEST_URI'] ?? '') . ' — ' . $message . "\n";
+    @file_put_contents($dir . '/app-error.log', $line, FILE_APPEND);
+    error_log($message); // also goes to the host's normal PHP error log
+}
+
+function hn_show_fatal_page(): void
+{
+    $message = '<div style="font-family:Arial,sans-serif;text-align:center;padding:80px 20px;color:#333">'
+        . '<h1 style="margin-bottom:10px">This page hit an unexpected error</h1>'
+        . '<p>Please try again in a moment. If it keeps happening, let us know at '
+        . '<a href="mailto:export@haniu.com">export@haniu.com</a>.</p>'
+        . '</div>';
+
+    if (!headers_sent()) {
+        http_response_code(500);
+        header('Content-Type: text/html; charset=UTF-8');
+        echo '<!doctype html><html><head><meta charset="UTF-8"><title>Temporarily Unavailable</title></head><body>' . $message . '</body></html>';
+        return;
+    }
+
+    // The crash happened mid-page (some HTML already sent) — headers can no
+    // longer be changed, but the visitor should still see something rather
+    // than a page that just stops.
+    echo $message;
+}
+
+set_exception_handler(function (Throwable $e) {
+    hn_log_fatal(get_class($e) . ': ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
+    hn_show_fatal_page();
+});
+
+register_shutdown_function(function () {
+    $err = error_get_last();
+    if ($err && in_array($err['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR], true)) {
+        hn_log_fatal($err['message'] . ' in ' . $err['file'] . ':' . $err['line']);
+        hn_show_fatal_page();
+    }
+});
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
